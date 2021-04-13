@@ -42,7 +42,7 @@ const createCards1 = (searchedRecipes) => {
     colDiv.classList.add(
       'col',
       's12',
-      'm6',
+      'm12',
       'l6',
       'col-Div',
       'id-' + searchedRecipes[i].id
