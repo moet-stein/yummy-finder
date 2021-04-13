@@ -1,0 +1,12 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.delete-modal-a {
+  display: flex;
+  justify-content: space-around;
+}
+
+.my-right-align {
+  margin-left: 95%;
+}

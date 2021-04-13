@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../pics/favicon.png" />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <!-- Material Icons -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- CSS -->
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../styles/saved.css" />
+    <title>Saved</title>
+  </head>
+  <body>
+    <!-- NAVIGATION BAR -->
+    <nav class="blue-grey lighten-2">
+      <div class="nav-wrapper">
+        <a href="../index.html" class="brand-logo"
+          ><img class="logo-image" src="../pics/logo-home.png" alt=""
+        /></a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul class="right hide-on-med-and-down">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="./recipes.html">Search Recipes</a></li>
+          <li class="active"><a href="#">Saved</a></li>
+          <li><a href="./videos.html">Videos</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- SIDE NAV (PHONE SIZE) -->
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="./recipes.html">Recipes</a></li>
+      <li class="active"><a href="#">Saved</a></li>
+      <li><a href="./videos.html">Videos</a></li>
+    </ul>
+    <!-- Parallax -->
+
+    <div class="parallax-container">
+      <div class="section no-pad-bot">
+        <div class="container">
+          <br />
+          <br />
+          <h1 class="header center white-text my-font">Saved Recipes</h1>
+          <div class="row center">
+            <h5 class="header col s12 light white-text">What's for today?</h5>
+            <h5 class="header col s12 light white-text">
+              Save ingredients and make a shopping list!
+            </h5>
+          </div>
+          <div class="row center">
+            <a
+              href="#savedRecipesContainer"
+              class="btn-large waves-effect waves-light orange lighten-2"
+              >Saved recipes</a
+            >
+          </div>
+          <br />
+          <br />
+        </div>
+      </div>
+      <div class="parallax">
+        <img src="../pics/saved_pic_1.png" />
+        <div class="overlay"></div>
+      </div>
+    </div>
+    <!-- SAVED RECIPES -->
+    <div class="section white" id="savedRecipesContainer">
+      <div class="row container">
+        <h2 class="header">Saved Recipes</h2>
+        <!-- CONRAINER -->
+        <div class="container">
+          <div class="row" id="savedRow">
+            <!-- CARD LOOP (EACH DATA IN LOCAL STORAGE) -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="parallax-container">
+      <div class="parallax"><img src="../pics/saved_pic_1.png" /></div>
+    </div>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="../script.js"></script>
+    <script src="../jsFiles/saved.js"></script>
+  </body>
+</html>

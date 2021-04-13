@@ -1,0 +1,35 @@
+/* Just showing the grid class */
+.row > div {
+  padding: 10px;
+  line-height: 60px;
+}
+
+.my-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-add-ing-btn:hover {
+  cursor: pointer;
+}
+
+.col-Div {
+  position: relative;
+}
+
+.overlay-favorite {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 98%;
+  height: 98%;
+  background-color: rgba(216, 97, 0, 0.6);
+}
+
+.saved-recipe {
+  color: white;
+  margin-top: 100px;
+}
