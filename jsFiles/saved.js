@@ -95,7 +95,7 @@ const createCards = () => {
     //parent <div class="card">
     //child <div class="card-action">
     const cardAction = document.createElement('div');
-    cardAction.classList.add('card-action');
+    cardAction.classList.add('card-action', 'center-align', 'my-action');
     card.appendChild(cardAction);
     //<a href="#details" class="modal-trigger">Details</a>
     const action1 = document.createElement('a');
@@ -147,36 +147,43 @@ const createCards = () => {
     ingColHeader.innerHTML = 'Ingredients';
     ingCollection.appendChild(ingColHeader);
     // INGREDIENTS LOOP
-    // REMOVE DUPICATE ING. FROM INGREDIENTS ARR
-    const origIngArr = recipesData[i].ingredients;
-    const uniIngArr = origIngArr.filter(
-      (item, index) => origIngArr.indexOf(item) === index
-    );
-    for (let j = 0; j < uniIngArr.length; j++) {
-      //parent ul ingCollection
-      //<li class="collection-item">
-      const ingColLi = document.createElement('li');
-      ingColLi.classList.add('collection-item');
-      ingCollection.appendChild(ingColLi);
-      //<span class="title">tumeric</span>
-      const ingTitle = document.createElement('span');
-      ingTitle.classList.add('title');
-      ingTitle.innerHTML = uniIngArr[j];
-      ingColLi.appendChild(ingTitle);
-      //parent li ingColLi
-      //child <a href="#" class="secondary-content">
-      const addIngA = document.createElement('a');
-      addIngA.classList.add('secondary-content');
-      ingColLi.appendChild(addIngA);
-      //<i class="material-icons">
-      const addInI = document.createElement('i');
-      addInI.classList.add('material-icons');
-      addIngA.appendChild(addInI);
-      //<span class="material-icons">add_circle_outline</span>
-      const addInSpan = document.createElement('span');
-      addInSpan.classList.add('material-icons');
-      addInSpan.innerHTML = 'add_circle_outline';
-      addInI.appendChild(addInSpan);
+    if (recipesData[i].ingredients && recipesData[i].ingredients.length > 0) {
+      // REMOVE DUPICATE ING. FROM INGREDIENTS ARR
+      const origIngArr = recipesData[i].ingredients;
+      const uniIngArr = origIngArr.filter(
+        (item, index) => origIngArr.indexOf(item) === index
+      );
+      for (let j = 0; j < uniIngArr.length; j++) {
+        //parent ul ingCollection
+        //<li class="collection-item">
+        const ingColLi = document.createElement('li');
+        ingColLi.classList.add('collection-item');
+        ingCollection.appendChild(ingColLi);
+        //<span class="title">tumeric</span>
+        const ingTitle = document.createElement('span');
+        ingTitle.classList.add('title');
+        ingTitle.innerHTML = uniIngArr[j];
+        ingColLi.appendChild(ingTitle);
+        //parent li ingColLi
+        //child <a href="#" class="secondary-content">
+        const addIngA = document.createElement('a');
+        addIngA.classList.add('secondary-content');
+        ingColLi.appendChild(addIngA);
+        //<i class="material-icons">
+        const addInI = document.createElement('i');
+        addInI.classList.add('material-icons');
+        addIngA.appendChild(addInI);
+        //<span class="material-icons">add_circle_outline</span>
+        const addInSpan = document.createElement('span');
+        addInSpan.classList.add('material-icons');
+        addInSpan.innerHTML = 'add_circle_outline';
+        addInI.appendChild(addInSpan);
+      }
+    } else {
+      const notFoundDiv = document.createElement('div');
+      notFoundDiv.classList.add('collection-item');
+      notFoundDiv.innerHTML = 'No Ingredients Info Found';
+      ingCollection.appendChild(notFoundDiv);
     }
     //  PREPARATION COLLECTION
     //parent row detailsRow
@@ -195,18 +202,34 @@ const createCards = () => {
     prepCollection.appendChild(prepColHeader);
     // PREPARATION LOOP
     const prepArr = recipesData[i].preparation;
-    for (let j = 0; j < prepArr.length; j++) {
-      //parent ul prepCollection
-      //<li class="collection-item">
+    if (prepArr && prepArr.length > 0) {
+      for (let j = 0; j < prepArr.length; j++) {
+        //parent ul prepCollection
+        //<li class="collection-item">
+        const prepColLi = document.createElement('li');
+        prepColLi.classList.add('collection-item');
+        prepCollection.appendChild(prepColLi);
+        //<span class="title">Boil water.</span>
+        const prepContent = document.createElement('span');
+        prepContent.classList.add('title');
+        prepContent.innerHTML = [j + 1] + '. ' + prepArr[j];
+        prepColLi.appendChild(prepContent);
+      }
+    } else {
       const prepColLi = document.createElement('li');
       prepColLi.classList.add('collection-item');
       prepCollection.appendChild(prepColLi);
       //<span class="title">Boil water.</span>
       const prepContent = document.createElement('span');
       prepContent.classList.add('title');
-      prepContent.innerHTML = [j + 1] + '. ' + prepArr[j];
+      prepContent.innerHTML = 'No Preparation Info Found';
       prepColLi.appendChild(prepContent);
     }
+    const websiteA = document.createElement('a');
+    websiteA.setAttribute('href', recipesData[i].sourceUrl);
+    websiteA.setAttribute('target', '_blank');
+    websiteA.innerHTML = 'Recipe Website';
+    cardAction.appendChild(websiteA);
   }
 };
 
@@ -230,4 +253,28 @@ var modalOptions = {
 document.addEventListener('DOMContentLoaded', function () {
   var elems = document.querySelectorAll('.modal');
   var instances = M.Modal.init(elems, modalOptions);
+});
+
+var options = {
+  edge: 'left',
+};
+
+// SIDE NAV
+document.addEventListener('DOMContentLoaded', function () {
+  var elems = document.querySelectorAll('.sidenav');
+  var instances = M.Sidenav.init(elems, options);
+});
+
+// PARALLAX
+document.addEventListener('DOMContentLoaded', function () {
+  var elems = document.querySelectorAll('.parallax');
+  var instances = M.Parallax.init(elems, options);
+});
+
+// COLLAPSIBLE
+document.addEventListener('DOMContentLoaded', function () {
+  var elem = document.querySelector('.collapsible.expandable');
+  var instance = M.Collapsible.init(elem, {
+    accordion: false,
+  });
 });

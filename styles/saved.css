@@ -10,3 +10,9 @@ html {
 .my-right-align {
   margin-left: 95%;
 }
+
+.my-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -14,8 +14,13 @@
   cursor: pointer;
 }
 
+.my-right-align {
+  margin-left: 95%;
+}
+
 .col-Div {
   position: relative;
+  height: 600px;
 }
 
 .overlay-favorite {
@@ -25,7 +30,7 @@
   left: 0;
   right: 0;
   width: 98%;
-  height: 98%;
+  height: 85%;
   background-color: rgba(216, 97, 0, 0.6);
 }
 

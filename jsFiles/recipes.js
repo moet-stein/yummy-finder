@@ -19,14 +19,18 @@ const storeData = (recipe, pushedTo, ingredients, preparation) => {
   recipeObject['id'] = recipe.id;
   recipeObject['title'] = recipe.title;
   recipeObject['image'] = recipe.image;
-  ingredients.length > 0
-    ? (recipeObject['ingredients'] = [...ingredients])
-    : (recipeObject['ingredients'] = null);
-  preparation.length > 0
-    ? (recipeObject['preparation'] = [...preparation])
-    : (recipeObject['preparation'] = null);
   recipeObject['vegan'] = recipe.vegan;
   recipeObject['vegetarian'] = recipe.vegetarian;
+  recipeObject['glutenFree'] = recipe.glutenFree;
+  recipeObject['dairyFree'] = recipe.dairyFree;
+  recipeObject['veryHealthy'] = recipe.veryHealthy;
+  recipeObject['sourceUrl'] = recipe.sourceUrl;
+  ingredients && ingredients.length > 0
+    ? (recipeObject['ingredients'] = [...ingredients])
+    : (recipeObject['ingredients'] = null);
+  preparation && preparation.length > 0
+    ? (recipeObject['preparation'] = [...preparation])
+    : (recipeObject['preparation'] = null);
   pushedTo.push(recipeObject);
 };
 
@@ -129,29 +133,52 @@ const createCards1 = (searchedRecipes) => {
       '#showIngredients-' + searchedRecipes[i].id
     );
     ingredientsA.classList.add('modal-trigger');
-    ingredientsA.innerHTML = 'Ingredients';
+    ingredientsA.innerHTML = 'Ing. & Prep.';
     action.appendChild(ingredientsA);
-    // Creating ingredients modal 5-2
-    const ingModal = document.createElement('div');
-    ingModal.classList.add('modal');
-    ingModal.setAttribute('id', 'showIngredients-' + searchedRecipes[i].id);
-    action.appendChild(ingModal);
-    // Creating ingredients modal 5-2-1
-    const modalContent = document.createElement('div');
-    modalContent.classList.add('modal-content');
-    ingModal.appendChild(modalContent);
 
-    // Inside ModalContetnt: Ingredients
-    const ingListsUl = document.createElement('ul');
-    ingListsUl.classList.add('collection', 'with-header');
-    modalContent.appendChild(ingListsUl);
-    // Collection header
-    const collHeader = document.createElement('li');
-    collHeader.classList.add('collection-header');
-    ingListsUl.appendChild(collHeader);
-    const collHeaderContent = document.createElement('h4');
-    collHeaderContent.innerHTML = 'Ingredients for ' + searchedRecipes[i].title;
-    collHeader.appendChild(collHeaderContent);
+    //parent <div class="card-action">
+    //child <div class="modal" id="details">
+    const detailsModal = document.createElement('div');
+    detailsModal.classList.add('modal');
+    detailsModal.setAttribute('id', 'showIngredients-' + searchedRecipes[i].id);
+    action.appendChild(detailsModal);
+    //<div class="modal-content">
+    const detailsModalContent = document.createElement('div');
+    detailsModalContent.classList.add('modal-content');
+    detailsModal.appendChild(detailsModalContent);
+    //   <a href="#" class="modal-close"><i class="material-icons">cancel</i></a>
+    const detailsModalCloseA = document.createElement('a');
+    detailsModalCloseA.classList.add('modal-close', 'my-right-align');
+    detailsModalContent.appendChild(detailsModalCloseA);
+    const detailsModalCloseI = document.createElement('i');
+    detailsModalCloseI.classList.add('material-icons');
+    detailsModalCloseI.innerHTML = 'cancel';
+    detailsModalCloseA.appendChild(detailsModalCloseI);
+
+    //   parent detailsModalContent
+    //  <h4 class="green-text center-align">TITLE</h4>
+    const detailsTitle = document.createElement('h4');
+    detailsTitle.classList.add('green-text', 'center-align');
+    detailsTitle.innerHTML = searchedRecipes[i].title;
+    detailsModalContent.appendChild(detailsTitle);
+    //   parent detailsModalContent
+    //child <div class="row">
+    const detailsRow = document.createElement('div');
+    detailsRow.classList.add('row');
+    detailsModalContent.appendChild(detailsRow);
+    //<div class="col s6">
+    const detailsCol = document.createElement('div');
+    detailsCol.classList.add('col', 's6');
+    detailsRow.appendChild(detailsCol);
+    //<ul class="collection with-header">
+    const ingCollection = document.createElement('ul');
+    ingCollection.classList.add('collection', 'with-header');
+    detailsCol.appendChild(ingCollection);
+    //<li class="collection-header">Ingredients</li>
+    const ingColHeader = document.createElement('li');
+    ingColHeader.classList.add('collection-header', 'orange-text');
+    ingColHeader.innerHTML = 'Ingredients';
+    ingCollection.appendChild(ingColHeader);
 
     // console.log(searchedRecipes[i]);
     if (
@@ -167,40 +194,62 @@ const createCards1 = (searchedRecipes) => {
       for (let j = 0; j < uniIngArr.length; j++) {
         const ingListsLi = document.createElement('li');
         ingListsLi.classList.add('collection-item');
-        ingListsUl.appendChild(ingListsLi);
+        ingCollection.appendChild(ingListsLi);
         // first content for the collection item
         const ingName = document.createElement('div');
         ingName.innerHTML = uniIngArr[j];
         ingListsLi.appendChild(ingName);
-        // // second content for the collection item (icon, saving function...comes)
-        // const secCon = document.createElement('a');
-        // secCon.classList.add('secondary-content', 'my-add-ing-btn');
-        // //secCon.setAttribute('onclick', 'addIngredient()');
-        // ingName.appendChild(secCon);
-        // // second content's icon which is inside the a tag above
-        // const saveIcon = document.createElement('i');
-        // saveIcon.classList.add('material-icons');
-        // saveIcon.innerHTML = 'add_circle_outline';
-        // secCon.appendChild(saveIcon);
       }
     } else {
       const notFoundDiv = document.createElement('div');
       notFoundDiv.classList.add('collection-item');
       notFoundDiv.innerHTML = 'No Ingredients Info Found';
-      ingListsUl.appendChild(notFoundDiv);
+      ingCollection.appendChild(notFoundDiv);
     }
-    // modalFooter: close button
-    const modalFooter = document.createElement('div');
-    modalFooter.classList.add('modal-footer');
-    ingModal.appendChild(modalFooter);
-    // Inside modalFooter
-    const modalClose = document.createElement('a');
-    modalClose.classList.add('modal-close', 'btn', 'orange');
-    modalClose.innerHTML = 'Close';
-    modalFooter.appendChild(modalClose);
-    // 5-1-2
+
+    //  PREPARATION COLLECTION
+    //parent row detailsRow
+    //child <div class="col s6">
+    const prepCol = document.createElement('div');
+    prepCol.classList.add('col', 's6');
+    detailsRow.appendChild(prepCol);
+    //<ul class="collection with-header">
+    const prepCollection = document.createElement('ul');
+    prepCollection.classList.add('collection', 'with-header');
+    prepCol.appendChild(prepCollection);
+    //<li class="collection-header">Preparation</li>
+    const prepColHeader = document.createElement('li');
+    prepColHeader.classList.add('collection-header', 'orange-text');
+    prepColHeader.innerHTML = 'Preparation';
+    prepCollection.appendChild(prepColHeader);
+    // PREPARATION LOOP
+    const prepArr = searchedRecipes[i].preparation;
+    if (prepArr && prepArr.length > 0) {
+      for (let j = 0; j < prepArr.length; j++) {
+        //parent ul prepCollection
+        //<li class="collection-item">
+        const prepColLi = document.createElement('li');
+        prepColLi.classList.add('collection-item');
+        prepCollection.appendChild(prepColLi);
+        //<span class="title">Boil water.</span>
+        const prepContent = document.createElement('span');
+        prepContent.classList.add('title');
+        prepContent.innerHTML = [j + 1] + '. ' + prepArr[j];
+        prepColLi.appendChild(prepContent);
+      }
+    } else {
+      const prepColLi = document.createElement('li');
+      prepColLi.classList.add('collection-item');
+      prepCollection.appendChild(prepColLi);
+      //<span class="title">Boil water.</span>
+      const prepContent = document.createElement('span');
+      prepContent.classList.add('title');
+      prepContent.innerHTML = 'No Preparation Info Found';
+      prepColLi.appendChild(prepContent);
+    }
     const websiteA = document.createElement('a');
-    websiteA.setAttribute('src', '#');
+    websiteA.setAttribute('href', searchedRecipes[i].sourceUrl);
+    websiteA.setAttribute('target', '_blank');
     websiteA.innerHTML = 'Recipe Website';
     action.appendChild(websiteA);
   }
@@ -211,7 +260,6 @@ const addNewRecipes = async () => {
   // GETTING DATA FROM API (CALLING THE FUNCTION)
   const recipes = await fetchRecipes();
   console.log(recipes);
-
   // 1. first store the searched recipes into local storage
   // 2. make elements by DOM with the localStorage data 'searchedRecipes'
 
