@@ -5,11 +5,12 @@ const createCards = (recipes) => {
   for (let i = 0; i < recipes.length; i++) {
     let colDiv = document.createElement('div');
     colDiv.setAttribute('id', 'colDiv-' + recipes[i].id);
+    let colSize = onRecipesPage ? 'l6' : 'l4';
     colDiv.classList.add(
       'col',
       's12',
       'm12',
-      'l6',
+      colSize,
       'col-Div',
       'id-' + recipes[i].id
     );
