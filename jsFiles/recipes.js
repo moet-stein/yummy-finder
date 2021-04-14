@@ -34,227 +34,6 @@ const storeData = (recipe, pushedTo, ingredients, preparation) => {
   pushedTo.push(recipeObject);
 };
 
-// CREATING RECIPE CARDS FROM ARRAY (GOT DATA FROM LOCAL STORAGE)
-const createCards1 = (searchedRecipes) => {
-  for (let i = 0; i < searchedRecipes.length; i++) {
-    let colDiv = document.createElement('div');
-    colDiv.setAttribute('id', 'colDiv');
-    colDiv.classList.add(
-      'col',
-      's12',
-      'm12',
-      'l6',
-      'col-Div',
-      'id-' + searchedRecipes[i].id
-    );
-    cards.appendChild(colDiv);
-    // 2
-    const card = document.createElement('div');
-    card.classList.add('card');
-    colDiv.appendChild(card);
-    // 3
-    const cardImage = document.createElement('div');
-    cardImage.classList.add('card-image');
-    card.appendChild(cardImage);
-    // 3-1
-    const image = document.createElement('img');
-    image.setAttribute('src', searchedRecipes[i].image);
-    image.setAttribute('alt', searchedRecipes[i].title);
-    cardImage.appendChild(image);
-    // 3-2
-    const favorite = document.createElement('a');
-    //favorite.setAttribute('href', '#');
-    favorite.classList.add(
-      'halfway-fab',
-      'btn-floating',
-      'orange',
-      'lighten-3'
-    );
-    cardImage.appendChild(favorite);
-    // 3-2-1
-    const favoriteIcon = document.createElement('i');
-    favoriteIcon.classList.add('material-icons');
-    favoriteIcon.innerHTML = 'favorite';
-    favorite.appendChild(favoriteIcon);
-    // FAVORITE ICON CLICKED EVENTLISTENER
-
-    // OVERLAYING COLOR & DISABLE THE BUTTON FOR THE RECIPE THAT IS SAVED(WHEN FAVORITE ICON IS CLICKED)
-    const overlaySaved = () => {
-      const shadow = document.createElement('div');
-      shadow.classList.add('overlay-favorite');
-      let colDivId = document.querySelector('.id-' + searchedRecipes[i].id);
-      colDivId.appendChild(shadow);
-      // OVERLAY TEXT
-      const overlayText = document.createElement('h2');
-      overlayText.innerHTML = 'SAVED!';
-      overlayText.classList.add('saved-recipe');
-      shadow.appendChild(overlayText);
-      // CHANGE ICON AND DISABLE THE BUTTON
-      favoriteIcon.innerHTML = 'check_circle_outline';
-      favorite.classList.add('disabled');
-    };
-
-    favoriteIcon.addEventListener('click', () => {
-      storeData(
-        searchedRecipes[i],
-        recipesData,
-        searchedRecipes[i].ingredients ? searchedRecipes[i].ingredients : [],
-        searchedRecipes[i].preparation
-      );
-      searchedRecipes[i]['saved'] = true;
-      // STROING FAVORITE RECIPE DATA INTO LOCAL STORAGE
-      localStorage.setItem('recipesData', JSON.stringify(recipesData));
-      localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
-      // OVERLAYING COLOR & DISABLE THE BUTTON FOR THE RECIPE THAT IS SAVED
-      overlaySaved();
-    });
-    if ('saved' in searchedRecipes[i]) {
-      overlaySaved();
-    }
-    //4 Card content
-    const content = document.createElement('div');
-    content.classList.add('card-content');
-    card.appendChild(content);
-    // 4-1
-    const title = document.createElement('span');
-    title.classList.add('card-title', 'center-align');
-    title.innerHTML = searchedRecipes[i].title;
-    content.appendChild(title);
-    // 5
-    const action = document.createElement('div');
-    action.classList.add('card-action', 'center-align', 'my-action');
-    card.appendChild(action);
-
-    //   MODAL
-    // 5-1-1
-    const ingredientsA = document.createElement('a');
-    ingredientsA.setAttribute(
-      'href',
-      '#showIngredients-' + searchedRecipes[i].id
-    );
-    ingredientsA.classList.add('modal-trigger');
-    ingredientsA.innerHTML = 'Ing. & Prep.';
-    action.appendChild(ingredientsA);
-
-    //parent <div class="card-action">
-    //child <div class="modal" id="details">
-    const detailsModal = document.createElement('div');
-    detailsModal.classList.add('modal');
-    detailsModal.setAttribute('id', 'showIngredients-' + searchedRecipes[i].id);
-    action.appendChild(detailsModal);
-    //<div class="modal-content">
-    const detailsModalContent = document.createElement('div');
-    detailsModalContent.classList.add('modal-content');
-    detailsModal.appendChild(detailsModalContent);
-    //   <a href="#" class="modal-close"><i class="material-icons">cancel</i></a>
-    const detailsModalCloseA = document.createElement('a');
-    detailsModalCloseA.classList.add('modal-close', 'my-right-align');
-    detailsModalContent.appendChild(detailsModalCloseA);
-    const detailsModalCloseI = document.createElement('i');
-    detailsModalCloseI.classList.add('material-icons');
-    detailsModalCloseI.innerHTML = 'cancel';
-    detailsModalCloseA.appendChild(detailsModalCloseI);
-
-    //   parent detailsModalContent
-    //  <h4 class="green-text center-align">TITLE</h4>
-    const detailsTitle = document.createElement('h4');
-    detailsTitle.classList.add('green-text', 'center-align');
-    detailsTitle.innerHTML = searchedRecipes[i].title;
-    detailsModalContent.appendChild(detailsTitle);
-    //   parent detailsModalContent
-    //child <div class="row">
-    const detailsRow = document.createElement('div');
-    detailsRow.classList.add('row');
-    detailsModalContent.appendChild(detailsRow);
-    //<div class="col s6">
-    const detailsCol = document.createElement('div');
-    detailsCol.classList.add('col', 's6');
-    detailsRow.appendChild(detailsCol);
-    //<ul class="collection with-header">
-    const ingCollection = document.createElement('ul');
-    ingCollection.classList.add('collection', 'with-header');
-    detailsCol.appendChild(ingCollection);
-    //<li class="collection-header">Ingredients</li>
-    const ingColHeader = document.createElement('li');
-    ingColHeader.classList.add('collection-header', 'orange-text');
-    ingColHeader.innerHTML = 'Ingredients';
-    ingCollection.appendChild(ingColHeader);
-
-    // console.log(searchedRecipes[i]);
-    if (
-      searchedRecipes[i].ingredients &&
-      searchedRecipes[i].ingredients.length > 0
-    ) {
-      // REMOVE DUPICATE ING. FROM INGREDIENTS ARR
-      const origIngArr = searchedRecipes[i].ingredients;
-      const uniIngArr = origIngArr.filter(
-        (item, index) => origIngArr.indexOf(item) === index
-      );
-      // Collection items
-      for (let j = 0; j < uniIngArr.length; j++) {
-        const ingListsLi = document.createElement('li');
-        ingListsLi.classList.add('collection-item');
-        ingCollection.appendChild(ingListsLi);
-        // first content for the collection item
-        const ingName = document.createElement('div');
-        ingName.innerHTML = uniIngArr[j];
-        ingListsLi.appendChild(ingName);
-      }
-    } else {
-      const notFoundDiv = document.createElement('div');
-      notFoundDiv.classList.add('collection-item');
-      notFoundDiv.innerHTML = 'No Ingredients Info Found';
-      ingCollection.appendChild(notFoundDiv);
-    }
-
-    //  PREPARATION COLLECTION
-    //parent row detailsRow
-    //child <div class="col s6">
-    const prepCol = document.createElement('div');
-    prepCol.classList.add('col', 's6');
-    detailsRow.appendChild(prepCol);
-    //<ul class="collection with-header">
-    const prepCollection = document.createElement('ul');
-    prepCollection.classList.add('collection', 'with-header');
-    prepCol.appendChild(prepCollection);
-    //<li class="collection-header">Preparation</li>
-    const prepColHeader = document.createElement('li');
-    prepColHeader.classList.add('collection-header', 'orange-text');
-    prepColHeader.innerHTML = 'Preparation';
-    prepCollection.appendChild(prepColHeader);
-    // PREPARATION LOOP
-    const prepArr = searchedRecipes[i].preparation;
-    if (prepArr && prepArr.length > 0) {
-      for (let j = 0; j < prepArr.length; j++) {
-        //parent ul prepCollection
-        //<li class="collection-item">
-        const prepColLi = document.createElement('li');
-        prepColLi.classList.add('collection-item');
-        prepCollection.appendChild(prepColLi);
-        //<span class="title">Boil water.</span>
-        const prepContent = document.createElement('span');
-        prepContent.classList.add('title');
-        prepContent.innerHTML = [j + 1] + '. ' + prepArr[j];
-        prepColLi.appendChild(prepContent);
-      }
-    } else {
-      const prepColLi = document.createElement('li');
-      prepColLi.classList.add('collection-item');
-      prepCollection.appendChild(prepColLi);
-      //<span class="title">Boil water.</span>
-      const prepContent = document.createElement('span');
-      prepContent.classList.add('title');
-      prepContent.innerHTML = 'No Preparation Info Found';
-      prepColLi.appendChild(prepContent);
-    }
-    const websiteA = document.createElement('a');
-    websiteA.setAttribute('href', searchedRecipes[i].sourceUrl);
-    websiteA.setAttribute('target', '_blank');
-    websiteA.innerHTML = 'Recipe Website';
-    action.appendChild(websiteA);
-  }
-};
-
 // ADD NEW RECIPES FUNCTIONS
 const addNewRecipes = async () => {
   // GETTING DATA FROM API (CALLING THE FUNCTION)
@@ -263,7 +42,7 @@ const addNewRecipes = async () => {
   // 1. first store the searched recipes into local storage
   // 2. make elements by DOM with the localStorage data 'searchedRecipes'
 
-  // STORE INGREDIENTS INFO
+  // 1. STORE INGREDIENTS INFO into local storage
   //   res.data.results[0].analyzedInstructions[0].steps[0].ingredients[0].name
   for (let i = 0; i < recipes.length; i++) {
     let ingredients = [];
@@ -287,7 +66,7 @@ const addNewRecipes = async () => {
 
   // 2.
   // MAKE ELEMENTS BY DOM with searchedRecipes Data from localStorage
-  createCards1(searchedRecipes);
+  createCards(searchedRecipes);
 };
 
 // Get an array of recipes with axios(and with async await func)
@@ -306,10 +85,12 @@ const fetchRecipes = async () => {
 };
 
 // CALL FUNCTION to SHOW THE DATA WHEN LOADING THE PAGE
+// IF there are no recipes yet (first time to visit website or deleted all recipes), call function to fetch api and show cards
+// ELSE show cards from local storage
 if (searchedRecipes.length === 0) {
   addNewRecipes();
 } else {
-  createCards1(searchedRecipes);
+  createCards(searchedRecipes);
 }
 
 // GETTING RID OF THE DATA THAT IS IN searchedRecipes and has a key save == true,
@@ -323,7 +104,7 @@ for (let i = 0; i < hasOrangeLayer.length; i++) {
     let index = searchedRecipes.findIndex((x) => x.id === hasOrangeLayer[i].id);
     searchedRecipes.splice(index, 1);
     localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
-    createCards1(searchedRecipes);
+    createCards(searchedRecipes);
     location.reload();
   }
 }
