@@ -1,6 +1,9 @@
 html {
   scroll-behavior: smooth;
 }
+.my-transparentBG {
+  background-color: rgba(0, 0, 0, 0);
+}
 
 .delete-modal-a {
   display: flex;

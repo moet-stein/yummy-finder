@@ -26,7 +26,7 @@
   </head>
   <body>
     <!-- NAVIGATION BAR -->
-    <nav class="blue-grey lighten-2">
+    <nav class="my-transparentBG">
       <div class="nav-wrapper">
         <a href="../index.html" class="brand-logo"
           ><img class="logo-image" src="../pics/logo-home.png" alt=""
@@ -50,12 +50,54 @@
       <li><a href="./videos.html">Videos</a></li>
     </ul>
     <!-- CONTAINER -->
+
+    <h2 class="center-align">Found Recipes</h2>
     <div class="row">
       <!-- FILTER FIELD -->
-      <div class="col s3">FILTER THINGS</div>
+      <div class="col s12 m3">
+        <div class="input-field col s12">
+          <h5>Vegetarian? Vegan?</h5>
+          <select id="vegeVegan">
+            <option value="" disabled selected>Choose</option>
+            <option value="all">All</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+          </select>
+          <!-- <label>Vegetarian? Vegan?</label> -->
+        </div>
+        <div class="col s12">
+          <h5>Intorelance Choice</h5>
+          <form id="glutenFree" action="#">
+            <p>
+              <label>
+                <input type="checkbox" value="glutenFree" />
+                <span>Gluten-free</span>
+              </label>
+            </p>
+          </form>
+          <form id="dairyFree" action="#">
+            <p>
+              <label>
+                <input type="checkbox" value="dairyFree" />
+                <span>Dairy-free</span>
+              </label>
+            </p>
+          </form>
+        </div>
+        <div class="col s12">
+          <h5>Very Health Meal?</h5>
+          <form action="#" id="healthyMeal">
+            <p>
+              <label>
+                <input type="checkbox" value="healthyMeal" />
+                <span>Yes!</span>
+              </label>
+            </p>
+          </form>
+        </div>
+      </div>
       <!-- RECIEPS SHOW FIELD -->
       <div class="col s9 center-align">
-        <h2>Found Recipes</h2>
         <!-- FOUND RECIPES -->
         <div class="container">
           <div class="row" id="cards">

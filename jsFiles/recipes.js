@@ -295,7 +295,7 @@ const addNewRecipes = async () => {
 const fetchRecipes = async () => {
   try {
     const res = await axios.get(
-      'https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&intolerances=gluten&sort=random&apiKey=' +
+      'https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&sort=random&apiKey=' +
         myKey
     );
     return res.data.results;
@@ -355,3 +355,35 @@ document.addEventListener('DOMContentLoaded', function () {
   var elems = document.querySelectorAll('.sidenav');
   var instances = M.Sidenav.init(elems, options);
 });
+
+// FILTER INIT
+document.addEventListener('DOMContentLoaded', function () {
+  var elems = document.querySelectorAll('select');
+  var instances = M.FormSelect.init(elems, options);
+});
+
+// vegan vegetarian
+document
+  .getElementById('vegeVegan')
+  .addEventListener('change', function (event) {
+    console.log(`event`, event.target.value);
+  });
+// glutenFree
+document
+  .getElementById('glutenFree')
+  .addEventListener('change', function (event) {
+    console.log(`event`, event.target.value);
+  });
+// dairyFree
+document
+  .getElementById('dairyFree')
+  .addEventListener('change', function (event) {
+    console.log(`event`, event.target.value);
+  });
+
+// healthyMeal
+document
+  .getElementById('healthyMeal')
+  .addEventListener('change', function (event) {
+    console.log(`event`, event.target.value);
+  });
