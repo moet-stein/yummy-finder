@@ -5,6 +5,10 @@ html {
   background-color: rgba(0, 0, 0, 0);
 }
 
+.my-card-height {
+  height: 440px;
+}
+
 .delete-modal-a {
   display: flex;
   justify-content: space-around;

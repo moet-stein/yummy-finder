@@ -12,7 +12,8 @@ const createCards = (recipes) => {
       'm12',
       colSize,
       'col-Div',
-      'id-' + recipes.id
+      'my-card-height',
+      'id-' + recipe.id
     );
     cards.appendChild(colDiv);
     //
