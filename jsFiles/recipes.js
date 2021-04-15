@@ -33,6 +33,151 @@ const storeData = (recipe, pushedTo, ingredients, preparation) => {
   pushedTo.push(recipeObject);
 };
 
+// let gfChekced = false;
+// let dfChecked = false;
+const checkboxes = {
+  glutenFree: false,
+  dairyFree: false,
+  veryHealthy: false,
+};
+
+// GLUTEN-FREE CHECKBOX, CHECK & UNCHECK
+const gfCheckbox = document.querySelector('input[name=glutenFree]');
+gfCheckbox.addEventListener('change', function () {
+  if (this.checked) {
+    checkboxes.glutenFree = true;
+    // filteringRecipes(searchedRecipes);
+  } else {
+    checkboxes.glutenFree = false;
+    // filteringRecipes(searchedRecipes);
+  }
+  filteringRecipes(searchedRecipes);
+});
+
+//  DAIRY-FREE CHECKBOX, CHECK & UNCHECK
+const dfCheckbox = document.querySelector('input[name=dairyFree]');
+dfCheckbox.addEventListener('change', function () {
+  if (this.checked) {
+    checkboxes.dairyFree = true;
+    // filteringRecipes(searchedRecipes);
+  } else {
+    checkboxes.dairyFree = false;
+    // filteringRecipes(searchedRecipes);
+  }
+  filteringRecipes(searchedRecipes);
+});
+
+//  very-heathy CHECKBOX, CHECK & UNCHECK
+const healthyCheckbox = document.querySelector('input[name=veryHealthy]');
+healthyCheckbox.addEventListener('change', function () {
+  if (this.checked) {
+    checkboxes.veryHealthy = true;
+    // filteringRecipes(searchedRecipes);
+  } else {
+    checkboxes.veryHealthy = false;
+    // filteringRecipes(searchedRecipes);
+  }
+  filteringRecipes(searchedRecipes);
+});
+
+const filteringRecipes = (recipes) => {
+  // console.log(recipes);
+  // let filteredRecipes = [...recipes];
+  removeHide(recipes);
+  if (checkboxes.glutenFree && checkboxes.dairyFree && checkboxes.veryHealthy) {
+    const glutenDairyHealthy = recipes.filter(
+      (recipe) =>
+        recipe.glutenFree === false ||
+        recipe.dairyFree === false ||
+        recipe.veryHealthy === false
+    );
+    hideOtherCards(glutenDairyHealthy);
+  } else if (
+    !checkboxes.glutenFree &&
+    checkboxes.dairyFree &&
+    checkboxes.veryHealthy
+  ) {
+    const dairyHealthy = recipes.filter(
+      (recipe) => recipe.dairyFree === false || recipe.veryHealthy === false
+    );
+    hideOtherCards(dairyHealthy);
+  } else if (
+    checkboxes.glutenFree &&
+    !checkboxes.dairyFree &&
+    checkboxes.veryHealthy
+  ) {
+    const glutenHealthy = recipes.filter(
+      (recipe) => recipe.glutenFree === false || recipe.veryHealthy === false
+    );
+    hideOtherCards(glutenHealthy);
+  } else if (
+    checkboxes.glutenFree &&
+    checkboxes.dairyFree &&
+    !checkboxes.veryHealthy
+  ) {
+    const glutenDairy = recipes.filter(
+      (recipe) => recipe.glutenFree === false || recipe.dairyFree === false
+    );
+    hideOtherCards(glutenDairy);
+  } else if (
+    checkboxes.glutenFree &&
+    !checkboxes.dairyFree &&
+    !checkboxes.veryHealthy
+  ) {
+    const onlyGluten = recipes.filter((recipe) => recipe.glutenFree === false);
+    hideOtherCards(onlyGluten);
+  } else if (
+    !checkboxes.glutenFree &&
+    checkboxes.dairyFree &&
+    !checkboxes.veryHealthy
+  ) {
+    const onlyDairy = recipes.filter((recipe) => recipe.dairyFree === false);
+    hideOtherCards(onlyDairy);
+  } else if (
+    !checkboxes.glutenFree &&
+    !checkboxes.dairyFree &&
+    checkboxes.veryHealthy
+  ) {
+    const onlyHealthy = recipes.filter(
+      (recipe) => recipe.veryHealthy === false
+    );
+    hideOtherCards(onlyHealthy);
+  } else {
+    removeHide(recipes);
+  }
+
+  // if (checkboxes.glutenFree === true && checkboxes.dairyFree === true) {
+  //   const noGfDf = recipes.filter((recipe) => {
+  //     return recipe.glutenFree === false || recipe.dairyFree === false;
+  //   });
+  //   removeHide(recipes);
+  //   hideOtherCards(noGfDf);
+  // } else if (checkboxes.glutenFree === true && checkboxes.dairyFree === false) {
+  //   const noGf = recipes.filter((recipe) => recipe.glutenFree === false);
+  //   removeHide(recipes);
+  //   hideOtherCards(noGf);
+  // } else if (checkboxes.dairyFree === true && checkboxes.glutenFree === false) {
+  //   const noDf = recipes.filter((recipe) => recipe.dairyFree === false);
+  //   removeHide(recipes);
+  //   hideOtherCards(noDf);
+  // } else {
+  //   removeHide(recipes);
+  // }
+};
+
+const hideOtherCards = (recipes) => {
+  recipes.forEach((x) => {
+    const card = document.getElementById(`colDiv-${x.id}`);
+    card.classList.add('my-hide-card');
+  });
+};
+const removeHide = (recipes) => {
+  recipes.forEach((x) => {
+    const card = document.getElementById(`colDiv-${x.id}`);
+    card.classList.remove('my-hide-card');
+  });
+};
+
 // GETTING RID OF THE DATA THAT IS IN searchedRecipes and has a key save == true,
 // But the id can't be found in the recipesData
 const removeDeletedCards = () => {
@@ -149,25 +294,6 @@ document.addEventListener('DOMContentLoaded', function () {
 // vegan vegetarian
 document
   .getElementById('vegeVegan')
-  .addEventListener('change', function (event) {
-    console.log(`event`, event.target.value);
-  });
-// glutenFree
-document
-  .getElementById('glutenFree')
-  .addEventListener('change', function (event) {
-    console.log(`event`, event.target.value);
-  });
-// dairyFree
-document
-  .getElementById('dairyFree')
-  .addEventListener('change', function (event) {
-    console.log(`event`, event.target.value);
-  });
-
-// healthyMeal
-document
-  .getElementById('healthyMeal')
   .addEventListener('change', function (event) {
     console.log(`event`, event.target.value);
   });

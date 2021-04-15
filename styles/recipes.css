@@ -56,3 +56,7 @@ body {
     height: 100%;
   }
 }
+
+.my-hide-card {
+  display: none;
+}
