@@ -76,7 +76,7 @@ const addNewRecipes = async () => {
       });
     }
     // Storing the searched recipes data into searchedRecipe at LocalStorage
-    storeData(recipes[i], searchedRecipes, ingredients, preparation);
+    storeData(recipe, searchedRecipes, ingredients, preparation);
   });
   // UPDATE LOCALSTORAGE'S searchedRecipes Data
   localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));

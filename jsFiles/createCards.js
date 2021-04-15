@@ -4,7 +4,7 @@ let onRecipesPage = true;
 const createCards = (recipes) => {
   recipes.forEach((recipe, index) => {
     let colDiv = document.createElement('div');
-    colDiv.setAttribute('id', 'colDiv-' + recipe.id);
+    colDiv.setAttribute('id', `colDiv-${recipe.id}`);
     let colSize = onRecipesPage ? 'l6' : 'l4';
     colDiv.classList.add(
       'col',
@@ -34,11 +34,11 @@ const createCards = (recipes) => {
       : createIcon(cardImage, 'delete_forever', recipe.id);
 
     // Element that will have orange overlayed after clicking favorite icon
-    const colDivId = document.getElementById('colDiv-' + recipe.id);
+    const colDivId = document.getElementById(`colDiv-${recipe.id}`);
     //  Clicked icon (favorite or delete)
-    const cardIcon = document.getElementById('cardIcon-' + recipe.id);
+    const cardIcon = document.getElementById(`cardIcon-${recipe.id}`);
     //   Clicked icon's parent a (favorite or delete)
-    const cardIconA = document.getElementById('cardIconA-' + recipe.id);
+    const cardIconA = document.getElementById(`cardIconA-${recipe.id}`);
 
     // IF THE USER IS ON THE SEARCH RECIPES PAGE
     // WORKS FOR SAVING RECIPES
@@ -46,6 +46,7 @@ const createCards = (recipes) => {
       cardIcon.addEventListener('click', () => {
         // Storing the clicked recipe data into localStorage recipesData
         storeSavedRecipes(recipe);
+        console.log(recipe);
         // OVERLAYING COLOR & DISABLE THE BUTTON FOR THE RECIPE THAT IS SAVED
         overlaySaved(colDivId, cardIcon, cardIconA);
 
@@ -60,7 +61,7 @@ const createCards = (recipes) => {
     // WORKS FOR DELETING RECIPE
     if (!onRecipesPage) {
       cardIconA.classList.add('modal-trigger');
-      cardIconA.setAttribute('href', '#deleteCard-' + recipe.id);
+      cardIconA.setAttribute('href', `#deleteCard-${recipe.id}`);
       createDeleteModal(cardImage, recipe, index);
     }
 
@@ -81,7 +82,7 @@ const createCards = (recipes) => {
     //   MODAL
     // 5-1-1
     const ingredientsA = document.createElement('a');
-    ingredientsA.setAttribute('href', '#showIngredients-' + recipe.id);
+    ingredientsA.setAttribute('href', `#showIngredients-${recipe.id}`);
     ingredientsA.classList.add('modal-trigger');
     ingredientsA.innerHTML = 'Ing. & Prep.';
     action.appendChild(ingredientsA);
@@ -90,7 +91,7 @@ const createCards = (recipes) => {
     //child <div class="modal" id="details">
     const detailsModal = document.createElement('div');
     detailsModal.classList.add('modal');
-    detailsModal.setAttribute('id', 'showIngredients-' + recipe.id);
+    detailsModal.setAttribute('id', `showIngredients-${recipe.id}`);
     action.appendChild(detailsModal);
     //<div class="modal-content">
     const detailsModalContent = document.createElement('div');
@@ -170,16 +171,17 @@ const createCards = (recipes) => {
     prepColHeader.innerHTML = 'Preparation';
     prepCollection.appendChild(prepColHeader);
     // PREPARATION LOOP
-    const prepColLi = document.createElement('li');
-    prepColLi.classList.add('collection-item');
-    prepCollection.appendChild(prepColLi);
+
     const prepArr = recipe.preparation;
     if (prepArr && prepArr.length > 0) {
       prepArr.forEach((prep, index) => {
+        const prepColLi = document.createElement('li');
+        prepColLi.classList.add('collection-item');
+        prepCollection.appendChild(prepColLi);
         //<span class="title">Boil water.</span>
         const prepContent = document.createElement('span');
         prepContent.classList.add('title');
-        prepContent.innerHTML = [index + 1] + '. ' + prep;
+        prepContent.innerHTML = `${index + 1} . ${prep}`;
         prepColLi.appendChild(prepContent);
       });
     } else {
@@ -197,7 +199,7 @@ const createCards = (recipes) => {
 const createDeleteModal = (parent, recipe, i) => {
   const deleteModal = document.createElement('div');
   deleteModal.classList.add('modal');
-  deleteModal.setAttribute('id', 'deleteCard-' + recipe.id);
+  deleteModal.setAttribute('id', `deleteCard-${recipe.id}`);
   parent.appendChild(deleteModal);
   //<div class="modal-content">
   const deleteModalCont = document.createElement('div');
@@ -221,10 +223,11 @@ const createDeleteModal = (parent, recipe, i) => {
   // <a id="deleting" class="btn orange">Delete</a>
   const deleteModalBtn = document.createElement('a');
   deleteModalBtn.setAttribute('id', 'deleting');
-  deleteModalBtn.setAttribute('onclick', 'deleteCard(' + i + ')');
+  // deleteModalBtn.setAttribute('onclick', 'deleteCard(' + i + ')');
   deleteModalBtn.classList.add('btn', 'orange');
   deleteModalBtn.innerHTML = 'DELETE';
   deleteModalFooter.appendChild(deleteModalBtn);
+  deleteModalBtn.addEventListener('click', () => deleteCard(i));
   // <a href="#" class="modal-close btn orange">Cancel</a>
   const deleteModalCancelBtn = document.createElement('a');
   deleteModalCancelBtn.classList.add('modal-close', 'btn', 'grey');
@@ -241,23 +244,25 @@ const deleteCard = (i) => {
 
 // DISPLAY NOT FOUND MESSAGE ON DETAILS MODAL
 const displayNotFound = (parent, message) => {
+  const prepColLi = document.createElement('li');
+  prepColLi.classList.add('collection-item');
+  parent.appendChild(prepColLi);
   const notFoundDiv = document.createElement('div');
   notFoundDiv.classList.add('collection-item');
   notFoundDiv.innerHTML = message;
-  parent.appendChild(notFoundDiv);
+  prepColLi.appendChild(notFoundDiv);
 };
 
 // CREAT ICON (EITHER FAVORITE OR DELETE DEPENDING ON THE PAGE)
 const createIcon = (parent, iconName, id) => {
   const iconA = document.createElement('a');
-  iconA.setAttribute('id', 'cardIconA-' + id);
-  //favorite.setAttribute('href', '#');
+  iconA.setAttribute('id', `cardIconA-${id}`);
   let iconColor = iconName === 'favorite' ? 'orange' : 'grey';
   iconA.classList.add('halfway-fab', 'btn-floating', iconColor, 'lighten-3');
   parent.appendChild(iconA);
   // 3-2-1
   const iconI = document.createElement('i');
-  iconI.setAttribute('id', 'cardIcon-' + id);
+  iconI.setAttribute('id', `cardIcon-${id}`);
   iconI.classList.add('material-icons');
   iconI.innerHTML = iconName;
   iconA.appendChild(iconI);
@@ -298,13 +303,8 @@ const overlaySaved = (parent, icon, iconA) => {
 
 // STORING SAVED RECIPE IN LOCAL STORAGE
 const storeSavedRecipes = (recipe) => {
-  storeData(
-    recipe,
-    recipesData,
-    recipe.ingredients ? recipe.ingredients : [],
-    recipe.preparation ? recipe.preparation : []
-  );
   recipe['saved'] = true;
+  recipesData.push(recipe);
   // STROING FAVORITE RECIPE DATA INTO LOCAL STORAGE
   localStorage.setItem('recipesData', JSON.stringify(recipesData));
   localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
