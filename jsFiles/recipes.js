@@ -1,6 +1,5 @@
 const myKey = config.MY_KEY;
 
-const cards = document.getElementById('cards');
 const newRecipesBtn = document.getElementById('newRecipes');
 
 // STORING SEARCHED RECIEPS in LOCAL STORAGE
@@ -34,6 +33,24 @@ const storeData = (recipe, pushedTo, ingredients, preparation) => {
   pushedTo.push(recipeObject);
 };
 
+// GETTING RID OF THE DATA THAT IS IN searchedRecipes and has a key save == true,
+// But the id can't be found in the recipesData
+const removeDeletedCards = () => {
+  let hasOrangeLayer = searchedRecipes.filter((recipe) => 'saved' in recipe);
+  let savedIdArr = recipesData.map((recipe) => recipe.id);
+  hasOrangeLayer.forEach((recipe) => {
+    let isThereRecipe = savedIdArr.includes(recipe.id);
+    if (!isThereRecipe) {
+      // IF there is no recipe in the recipesData(saved recipes), remove this recipe from searchedRecipe
+      let index = searchedRecipes.findIndex((x) => x.id === recipe.id);
+      searchedRecipes.splice(index, 1);
+      localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
+      createCards(searchedRecipes);
+      location.reload();
+    }
+  });
+};
+
 // ADD NEW RECIPES FUNCTIONS
 const addNewRecipes = async () => {
   // GETTING DATA FROM API (CALLING THE FUNCTION)
@@ -44,29 +61,30 @@ const addNewRecipes = async () => {
 
   // 1. STORE INGREDIENTS INFO into local storage
   //   res.data.results[0].analyzedInstructions[0].steps[0].ingredients[0].name
-  for (let i = 0; i < recipes.length; i++) {
+  recipes.forEach((recipe) => {
     let ingredients = [];
     let preparation = [];
-    if (recipes[i].analyzedInstructions.length > 0) {
-      const steps = recipes[i].analyzedInstructions[0].steps;
-      for (let j = 0; j < steps.length; j++) {
-        let ingredientsList = steps[j].ingredients;
-        let stepsList = steps[j].step;
+    if (recipe.analyzedInstructions.length > 0) {
+      const steps = recipe.analyzedInstructions[0].steps;
+      steps.forEach((step) => {
+        let ingredientsList = step.ingredients;
+        let stepsList = step.step;
         preparation.push(stepsList);
-        for (let k = 0; k < ingredientsList.length; k++) {
-          ingredients.push(ingredientsList[k].name);
-        }
-      }
+        ingredientsList.forEach((ing) => {
+          ingredients.push(ing.name);
+        });
+      });
     }
     // Storing the searched recipes data into searchedRecipe at LocalStorage
     storeData(recipes[i], searchedRecipes, ingredients, preparation);
-  }
+  });
   // UPDATE LOCALSTORAGE'S searchedRecipes Data
   localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
 
   // 2.
   // MAKE ELEMENTS BY DOM with searchedRecipes Data from localStorage
   createCards(searchedRecipes);
+  removeDeletedCards();
 };
 
 // Get an array of recipes with axios(and with async await func)
@@ -91,22 +109,7 @@ if (searchedRecipes.length === 0) {
   addNewRecipes();
 } else {
   createCards(searchedRecipes);
-}
-
-// GETTING RID OF THE DATA THAT IS IN searchedRecipes and has a key save == true,
-// But the id can't be found in the recipesData
-let hasOrangeLayer = searchedRecipes.filter((recipe) => 'saved' in recipe);
-let savedIdArr = recipesData.map((recipe) => recipe.id);
-for (let i = 0; i < hasOrangeLayer.length; i++) {
-  let isThereRecipe = savedIdArr.includes(hasOrangeLayer[i].id);
-  if (!isThereRecipe) {
-    // IF there is no recipe in the recipesData(saved recipes), remove this recipe from searchedRecipe
-    let index = searchedRecipes.findIndex((x) => x.id === hasOrangeLayer[i].id);
-    searchedRecipes.splice(index, 1);
-    localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
-    createCards(searchedRecipes);
-    location.reload();
-  }
+  removeDeletedCards();
 }
 
 // CLICKING THE BUTTON AND CALLING THE FUNC ABOVE(addNewRecipes)
@@ -117,30 +120,30 @@ newRecipesBtn.addEventListener('click', () => {
 });
 
 // MATERIALIZE FUNCTION
-var modalOptions = {
+const modalOptions = {
   opacity: 0.4,
   outDuration: 350,
 };
 
 // MODAL FOR RECIPES PAGE
 document.addEventListener('DOMContentLoaded', function () {
-  var elems = document.querySelectorAll('.modal');
-  var instances = M.Modal.init(elems, modalOptions);
+  const elems = document.querySelectorAll('.modal');
+  const instances = M.Modal.init(elems, modalOptions);
 });
 
 // SIDE NAV
-var options = {
+const options = {
   edge: 'left',
 };
 document.addEventListener('DOMContentLoaded', function () {
-  var elems = document.querySelectorAll('.sidenav');
-  var instances = M.Sidenav.init(elems, options);
+  const elems = document.querySelectorAll('.sidenav');
+  const instances = M.Sidenav.init(elems, options);
 });
 
 // FILTER INIT
 document.addEventListener('DOMContentLoaded', function () {
-  var elems = document.querySelectorAll('select');
-  var instances = M.FormSelect.init(elems, options);
+  const elems = document.querySelectorAll('select');
+  const instances = M.FormSelect.init(elems, options);
 });
 
 // vegan vegetarian

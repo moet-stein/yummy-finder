@@ -2,9 +2,9 @@ let onRecipesPage = true;
 
 // CREATING RECIPE CARDS FROM ARRAY (GOT DATA FROM LOCAL STORAGE)
 const createCards = (recipes) => {
-  for (let i = 0; i < recipes.length; i++) {
+  recipes.forEach((recipe, index) => {
     let colDiv = document.createElement('div');
-    colDiv.setAttribute('id', 'colDiv-' + recipes[i].id);
+    colDiv.setAttribute('id', 'colDiv-' + recipe.id);
     let colSize = onRecipesPage ? 'l6' : 'l4';
     colDiv.classList.add(
       'col',
@@ -12,10 +12,10 @@ const createCards = (recipes) => {
       'm12',
       colSize,
       'col-Div',
-      'id-' + recipes[i].id
+      'id-' + recipes.id
     );
     cards.appendChild(colDiv);
-    // 2
+    //
     const card = document.createElement('div');
     card.classList.add('card');
     colDiv.appendChild(card);
@@ -25,36 +25,33 @@ const createCards = (recipes) => {
     card.appendChild(cardImage);
     // 3-1
     const image = document.createElement('img');
-    image.setAttribute('src', recipes[i].image);
-    image.setAttribute('alt', recipes[i].title);
+    image.setAttribute('src', recipe.image);
+    image.setAttribute('alt', recipe.title);
     cardImage.appendChild(image);
-
     onRecipesPage
-      ? createIcon(cardImage, 'favorite', recipes[i].id)
-      : createIcon(cardImage, 'delete_forever', recipes[i].id);
+      ? createIcon(cardImage, 'favorite', recipe.id)
+      : createIcon(cardImage, 'delete_forever', recipe.id);
 
     // Element that will have orange overlayed after clicking favorite icon
-    const colDivId = document.getElementById('colDiv-' + recipes[i].id);
+    const colDivId = document.getElementById('colDiv-' + recipe.id);
     //  Clicked icon (favorite or delete)
-    const cardIcon = document.getElementById('cardIcon-' + recipes[i].id);
+    const cardIcon = document.getElementById('cardIcon-' + recipe.id);
     //   Clicked icon's parent a (favorite or delete)
-    const cardIconA = document.getElementById('cardIconA-' + recipes[i].id);
+    const cardIconA = document.getElementById('cardIconA-' + recipe.id);
 
     // IF THE USER IS ON THE SEARCH RECIPES PAGE
     // WORKS FOR SAVING RECIPES
     if (onRecipesPage) {
       cardIcon.addEventListener('click', () => {
         // Storing the clicked recipe data into localStorage recipesData
-        storeSavedRecipes(recipes[i]);
+        storeSavedRecipes(recipe);
         // OVERLAYING COLOR & DISABLE THE BUTTON FOR THE RECIPE THAT IS SAVED
         overlaySaved(colDivId, cardIcon, cardIconA);
 
-        cardIcon.removeEventListener('click', () =>
-          storeSavedRecipes(recipes[i])
-        );
+        cardIcon.removeEventListener('click', () => storeSavedRecipes(recipe));
       });
       // When reloading with saved recipe, overlay the recipe which has 'saved' key
-      if ('saved' in recipes[i]) {
+      if ('saved' in recipe) {
         overlaySaved(colDivId, cardIcon, cardIconA);
       }
     }
@@ -62,8 +59,8 @@ const createCards = (recipes) => {
     // WORKS FOR DELETING RECIPE
     if (!onRecipesPage) {
       cardIconA.classList.add('modal-trigger');
-      cardIconA.setAttribute('href', '#deleteCard-' + recipes[i].id);
-      createDeleteModal(cardImage, recipes[i], i);
+      cardIconA.setAttribute('href', '#deleteCard-' + recipe.id);
+      createDeleteModal(cardImage, recipe, index);
     }
 
     //4 Card content
@@ -73,7 +70,7 @@ const createCards = (recipes) => {
     // 4-1
     const title = document.createElement('span');
     title.classList.add('card-title', 'center-align');
-    title.innerHTML = recipes[i].title;
+    title.innerHTML = recipe.title;
     content.appendChild(title);
     // 5
     const action = document.createElement('div');
@@ -83,7 +80,7 @@ const createCards = (recipes) => {
     //   MODAL
     // 5-1-1
     const ingredientsA = document.createElement('a');
-    ingredientsA.setAttribute('href', '#showIngredients-' + recipes[i].id);
+    ingredientsA.setAttribute('href', '#showIngredients-' + recipe.id);
     ingredientsA.classList.add('modal-trigger');
     ingredientsA.innerHTML = 'Ing. & Prep.';
     action.appendChild(ingredientsA);
@@ -92,7 +89,7 @@ const createCards = (recipes) => {
     //child <div class="modal" id="details">
     const detailsModal = document.createElement('div');
     detailsModal.classList.add('modal');
-    detailsModal.setAttribute('id', 'showIngredients-' + recipes[i].id);
+    detailsModal.setAttribute('id', 'showIngredients-' + recipe.id);
     action.appendChild(detailsModal);
     //<div class="modal-content">
     const detailsModalContent = document.createElement('div');
@@ -111,7 +108,7 @@ const createCards = (recipes) => {
     //  <h4 class="green-text center-align">TITLE</h4>
     const detailsTitle = document.createElement('h4');
     detailsTitle.classList.add('green-text', 'center-align');
-    detailsTitle.innerHTML = recipes[i].title;
+    detailsTitle.innerHTML = recipe.title;
     detailsModalContent.appendChild(detailsTitle);
     //   parent detailsModalContent
     //child <div class="row">
@@ -132,26 +129,26 @@ const createCards = (recipes) => {
     ingColHeader.innerHTML = 'Ingredients';
     ingCollection.appendChild(ingColHeader);
 
-    // console.log(recipes[i]);
-    if (recipes[i].ingredients && recipes[i].ingredients.length > 0) {
+    // console.log(recipe);
+    if (recipe.ingredients && recipe.ingredients.length > 0) {
       // REMOVE DUPICATE ING. FROM INGREDIENTS ARR
-      const origIngArr = recipes[i].ingredients;
+      const origIngArr = recipe.ingredients;
       const uniIngArr = origIngArr.filter(
         (item, index) => origIngArr.indexOf(item) === index
       );
       // Collection items
-      for (let j = 0; j < uniIngArr.length; j++) {
+      uniIngArr.forEach((ing) => {
         const ingListsLi = document.createElement('li');
         ingListsLi.classList.add('collection-item');
         ingCollection.appendChild(ingListsLi);
         // first content for the collection item
         const ingName = document.createElement('span');
-        ingName.innerHTML = uniIngArr[j];
+        ingName.innerHTML = ing;
         ingListsLi.appendChild(ingName);
         if (!onRecipesPage) {
           createAddBtn(ingListsLi);
         }
-      }
+      });
     } else {
       displayNotFound(ingCollection, 'No Ingredients Info Found');
     }
@@ -172,29 +169,30 @@ const createCards = (recipes) => {
     prepColHeader.innerHTML = 'Preparation';
     prepCollection.appendChild(prepColHeader);
     // PREPARATION LOOP
-    const prepArr = recipes[i].preparation;
+    const prepColLi = document.createElement('li');
+    prepColLi.classList.add('collection-item');
+    prepCollection.appendChild(prepColLi);
+    const prepArr = recipe.preparation;
     if (prepArr && prepArr.length > 0) {
-      for (let j = 0; j < prepArr.length; j++) {
-        const prepColLi = document.createElement('li');
-        prepColLi.classList.add('collection-item');
-        prepCollection.appendChild(prepColLi);
+      prepArr.forEach((prep, index) => {
         //<span class="title">Boil water.</span>
         const prepContent = document.createElement('span');
         prepContent.classList.add('title');
-        prepContent.innerHTML = [j + 1] + '. ' + prepArr[j];
+        prepContent.innerHTML = [index + 1] + '. ' + prep;
         prepColLi.appendChild(prepContent);
-      }
+      });
     } else {
       displayNotFound(prepColLi, 'No Preparation Info Found');
     }
     const websiteA = document.createElement('a');
-    websiteA.setAttribute('href', recipes[i].sourceUrl);
+    websiteA.setAttribute('href', recipe.sourceUrl);
     websiteA.setAttribute('target', '_blank');
     websiteA.innerHTML = 'Recipe Website';
     action.appendChild(websiteA);
-  }
+  });
 };
 
+// CREATE DELETE MODAL FOR SAVED PAGE
 const createDeleteModal = (parent, recipe, i) => {
   const deleteModal = document.createElement('div');
   deleteModal.classList.add('modal');
@@ -240,6 +238,7 @@ const deleteCard = (i) => {
   location.reload();
 };
 
+// DISPLAY NOT FOUND MESSAGE ON DETAILS MODAL
 const displayNotFound = (parent, message) => {
   const notFoundDiv = document.createElement('div');
   notFoundDiv.classList.add('collection-item');
@@ -247,6 +246,7 @@ const displayNotFound = (parent, message) => {
   parent.appendChild(notFoundDiv);
 };
 
+// CREAT ICON (EITHER FAVORITE OR DELETE DEPENDING ON THE PAGE)
 const createIcon = (parent, iconName, id) => {
   const iconA = document.createElement('a');
   iconA.setAttribute('id', 'cardIconA-' + id);
@@ -262,6 +262,7 @@ const createIcon = (parent, iconName, id) => {
   iconA.appendChild(iconI);
 };
 
+// CREATING ADD(PLUS) BUTTON FOR ADDING INGREDIENTS TO SHOPPING LIST
 const createAddBtn = (parent) => {
   //child <a href="#" class="secondary-content">
   const addIngA = document.createElement('a');
@@ -278,6 +279,7 @@ const createAddBtn = (parent) => {
   addInI.appendChild(addInSpan);
 };
 
+// OVERLAY ORANGE LAYER ON THE SAVED RECIPE
 const overlaySaved = (parent, icon, iconA) => {
   const shadow = document.createElement('div');
   shadow.classList.add('overlay-favorite');
@@ -293,12 +295,13 @@ const overlaySaved = (parent, icon, iconA) => {
   iconA.classList.add('disabled');
 };
 
+// STORING SAVED RECIPE IN LOCAL STORAGE
 const storeSavedRecipes = (recipe) => {
   storeData(
     recipe,
     recipesData,
     recipe.ingredients ? recipe.ingredients : [],
-    recipe.preparation
+    recipe.preparation ? recipe.preparation : []
   );
   recipe['saved'] = true;
   // STROING FAVORITE RECIPE DATA INTO LOCAL STORAGE
