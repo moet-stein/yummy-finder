@@ -185,6 +185,9 @@ const createCards = (recipes) => {
         prepColLi.appendChild(prepContent);
       });
     } else {
+      const prepColLi = document.createElement('li');
+      prepColLi.classList.add('collection-item');
+      prepCollection.appendChild(prepColLi);
       displayNotFound(prepColLi, 'No Preparation Info Found');
     }
     const websiteA = document.createElement('a');
@@ -244,13 +247,10 @@ const deleteCard = (i) => {
 
 // DISPLAY NOT FOUND MESSAGE ON DETAILS MODAL
 const displayNotFound = (parent, message) => {
-  const prepColLi = document.createElement('li');
-  prepColLi.classList.add('collection-item');
-  parent.appendChild(prepColLi);
   const notFoundDiv = document.createElement('div');
   notFoundDiv.classList.add('collection-item');
   notFoundDiv.innerHTML = message;
-  prepColLi.appendChild(notFoundDiv);
+  parent.appendChild(notFoundDiv);
 };
 
 // CREAT ICON (EITHER FAVORITE OR DELETE DEPENDING ON THE PAGE)

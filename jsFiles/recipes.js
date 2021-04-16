@@ -33,8 +33,19 @@ const storeData = (recipe, pushedTo, ingredients, preparation) => {
   pushedTo.push(recipeObject);
 };
 
-// let gfChekced = false;
-// let dfChecked = false;
+let vegeVegan = 'all';
+
+// vegan vegetarian
+document
+  .getElementById('vegeVegan')
+  .addEventListener('change', function (event) {
+    vegeVegan = event.target.value;
+    // console.log(`event`, event.target.value);
+    console.log('vegeVegan variable:', vegeVegan);
+  });
+
+// By default no checkboxes are checked
+// This Boolean is toggled by the checkbox is cheched or unchecked
 const checkboxes = {
   glutenFree: false,
   dairyFree: false,
@@ -46,10 +57,8 @@ const gfCheckbox = document.querySelector('input[name=glutenFree]');
 gfCheckbox.addEventListener('change', function () {
   if (this.checked) {
     checkboxes.glutenFree = true;
-    // filteringRecipes(searchedRecipes);
   } else {
     checkboxes.glutenFree = false;
-    // filteringRecipes(searchedRecipes);
   }
   filteringRecipes(searchedRecipes);
 });
@@ -59,10 +68,8 @@ const dfCheckbox = document.querySelector('input[name=dairyFree]');
 dfCheckbox.addEventListener('change', function () {
   if (this.checked) {
     checkboxes.dairyFree = true;
-    // filteringRecipes(searchedRecipes);
   } else {
     checkboxes.dairyFree = false;
-    // filteringRecipes(searchedRecipes);
   }
   filteringRecipes(searchedRecipes);
 });
@@ -72,18 +79,18 @@ const healthyCheckbox = document.querySelector('input[name=veryHealthy]');
 healthyCheckbox.addEventListener('change', function () {
   if (this.checked) {
     checkboxes.veryHealthy = true;
-    // filteringRecipes(searchedRecipes);
   } else {
     checkboxes.veryHealthy = false;
-    // filteringRecipes(searchedRecipes);
   }
   filteringRecipes(searchedRecipes);
 });
 
 const filteringRecipes = (recipes) => {
-  // console.log(recipes);
-  // let filteredRecipes = [...recipes];
+  // First remove all the hide class from all the cards
   removeHide(recipes);
+  // Check checkboxes that are gluten- dairy-free and very healthy if they are true or false
+  // And make an array of the recipes that need to be hidden by filtering the original array
+  // And call the hideCards function with the newly created filtered array
   if (checkboxes.glutenFree && checkboxes.dairyFree && checkboxes.veryHealthy) {
     const glutenDairyHealthy = recipes.filter(
       (recipe) =>
@@ -91,7 +98,7 @@ const filteringRecipes = (recipes) => {
         recipe.dairyFree === false ||
         recipe.veryHealthy === false
     );
-    hideOtherCards(glutenDairyHealthy);
+    hideCards(glutenDairyHealthy);
   } else if (
     !checkboxes.glutenFree &&
     checkboxes.dairyFree &&
@@ -100,7 +107,7 @@ const filteringRecipes = (recipes) => {
     const dairyHealthy = recipes.filter(
       (recipe) => recipe.dairyFree === false || recipe.veryHealthy === false
     );
-    hideOtherCards(dairyHealthy);
+    hideCards(dairyHealthy);
   } else if (
     checkboxes.glutenFree &&
     !checkboxes.dairyFree &&
@@ -109,7 +116,7 @@ const filteringRecipes = (recipes) => {
     const glutenHealthy = recipes.filter(
       (recipe) => recipe.glutenFree === false || recipe.veryHealthy === false
     );
-    hideOtherCards(glutenHealthy);
+    hideCards(glutenHealthy);
   } else if (
     checkboxes.glutenFree &&
     checkboxes.dairyFree &&
@@ -118,21 +125,21 @@ const filteringRecipes = (recipes) => {
     const glutenDairy = recipes.filter(
       (recipe) => recipe.glutenFree === false || recipe.dairyFree === false
     );
-    hideOtherCards(glutenDairy);
+    hideCards(glutenDairy);
   } else if (
     checkboxes.glutenFree &&
     !checkboxes.dairyFree &&
     !checkboxes.veryHealthy
   ) {
     const onlyGluten = recipes.filter((recipe) => recipe.glutenFree === false);
-    hideOtherCards(onlyGluten);
+    hideCards(onlyGluten);
   } else if (
     !checkboxes.glutenFree &&
     checkboxes.dairyFree &&
     !checkboxes.veryHealthy
   ) {
     const onlyDairy = recipes.filter((recipe) => recipe.dairyFree === false);
-    hideOtherCards(onlyDairy);
+    hideCards(onlyDairy);
   } else if (
     !checkboxes.glutenFree &&
     !checkboxes.dairyFree &&
@@ -141,8 +148,9 @@ const filteringRecipes = (recipes) => {
     const onlyHealthy = recipes.filter(
       (recipe) => recipe.veryHealthy === false
     );
-    hideOtherCards(onlyHealthy);
+    hideCards(onlyHealthy);
   } else {
+    // If everything is false, just remove class for hideing the cards from all the recipes
     removeHide(recipes);
   }
 
@@ -151,21 +159,21 @@ const filteringRecipes = (recipes) => {
   //     return recipe.glutenFree === false || recipe.dairyFree === false;
   //   });
   //   removeHide(recipes);
-  //   hideOtherCards(noGfDf);
+  //   hideCards(noGfDf);
   // } else if (checkboxes.glutenFree === true && checkboxes.dairyFree === false) {
   //   const noGf = recipes.filter((recipe) => recipe.glutenFree === false);
   //   removeHide(recipes);
-  //   hideOtherCards(noGf);
+  //   hideCards(noGf);
   // } else if (checkboxes.dairyFree === true && checkboxes.glutenFree === false) {
   //   const noDf = recipes.filter((recipe) => recipe.dairyFree === false);
   //   removeHide(recipes);
-  //   hideOtherCards(noDf);
+  //   hideCards(noDf);
   // } else {
   //   removeHide(recipes);
   // }
 };
 
-const hideOtherCards = (recipes) => {
+const hideCards = (recipes) => {
   recipes.forEach((x) => {
     const card = document.getElementById(`colDiv-${x.id}`);
     card.classList.add('my-hide-card');
@@ -290,10 +298,3 @@ document.addEventListener('DOMContentLoaded', function () {
   const elems = document.querySelectorAll('select');
   const instances = M.FormSelect.init(elems, options);
 });
-
-// vegan vegetarian
-document
-  .getElementById('vegeVegan')
-  .addEventListener('change', function (event) {
-    console.log(`event`, event.target.value);
-  });
