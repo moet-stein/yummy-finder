@@ -33,59 +33,13 @@ const storeData = (recipe, pushedTo, ingredients, preparation) => {
   pushedTo.push(recipeObject);
 };
 
-let vegeVegan = 'all';
+// VEGETARIAN VEGAN DROPDOWN
+document.getElementById('vegeVegan').addEventListener('change', () => {
+  //event.target.value;
+  filteringRecipes(searchedRecipes);
+});
 
-// vegan vegetarian
-document
-  .getElementById('vegeVegan')
-  .addEventListener('change', function (event) {
-    vegeVegan = event.target.value;
-    // console.log(`event`, event.target.value);
-    console.log('vegeVegan variable:', vegeVegan);
-  });
-
-// By default no checkboxes are checked
-// This Boolean is toggled by the checkbox is cheched or unchecked
-const checkboxes = {
-  glutenFree: false,
-  dairyFree: false,
-  veryHealthy: false,
-};
-
-// GLUTEN-FREE CHECKBOX, CHECK & UNCHECK
-// const gfCheckbox = document.querySelector('input[name=glutenFree]');
-// gfCheckbox.addEventListener('change', function () {
-//   // if (this.checked) {
-//   //   checkboxes.glutenFree = true;
-//   // } else {
-//   //   checkboxes.glutenFree = false;
-//   // }
-
-//   filteringRecipes(searchedRecipes);
-// });
-
-//  DAIRY-FREE CHECKBOX, CHECK & UNCHECK
-// const dfCheckbox = document.querySelector('input[name=dairyFree]');
-// dfCheckbox.addEventListener('change', function () {
-//   if (this.checked) {
-//     checkboxes.dairyFree = true;
-//   } else {
-//     checkboxes.dairyFree = false;
-//   }
-//   filteringRecipes(searchedRecipes);
-// });
-
-//  very-heathy CHECKBOX, CHECK & UNCHECK
-// const healthyCheckbox = document.querySelector('input[name=veryHealthy]');
-// healthyCheckbox.addEventListener('change', function () {
-//   if (this.checked) {
-//     checkboxes.veryHealthy = true;
-//   } else {
-//     checkboxes.veryHealthy = false;
-//   }
-//   filteringRecipes(searchedRecipes);
-// });
-
+// READING CHECKBOXES
 document.querySelectorAll('input[name=checkbox]').forEach((x) => {
   x.addEventListener('change', () => {
     filteringRecipes(searchedRecipes);
@@ -93,15 +47,27 @@ document.querySelectorAll('input[name=checkbox]').forEach((x) => {
 });
 
 const filteringRecipes = (recipes) => {
-  var checkedBoxes = Array.from(
+  // CREATING ARRAY OF CHECKBOXES' VALUE
+  const checkedBoxes = Array.from(
     document.querySelectorAll('input[name=checkbox]:checked')
   );
   let checkedValue = checkedBoxes.map((x) => x.value);
+
+  // CREATING VEGE VEGAN VARIABLE
+  const vegeVegan = document.getElementById('vegeVegan').value;
+  // WHEN THE VEGETARIAN OR VEGAN IS CHOSEN, PUSH THE VALUE EACH TIME WHEN IT IS CLICKING INTO THE CHECKED VALUE
+  // SO THAT CHECKED VALUE ARRAY CAN HAVE ALL THE VALUE THAT NEEDS TO BE CHECKED AND FILTER THE ORIGINAL RECIPE ARRAY
+  if (vegeVegan === 'vegetarian' || vegeVegan === 'vegan') {
+    checkedValue.push(vegeVegan);
+  }
+
+  // FILTERING RECIPES; CREATING CARDS
+  let filteredRecipes = [];
   // If nothing is checked, just create cards with the original data
   if (checkedValue.length === 0) {
     createCards(recipes);
   } else {
-    let filteredRecipes = [];
+    // Loop through the checkbox values
     checkedValue.forEach((value) => {
       if (filteredRecipes.length === 0) {
         filteredRecipes = recipes.filter((recipe) => recipe[value]);
@@ -112,91 +78,7 @@ const filteringRecipes = (recipes) => {
     });
     createCards(filteredRecipes);
   }
-
-  //
-  //
-  //
-  //
-  // First remove all the hide class from all the cards
-  // removeHide(recipes);
-  // Check checkboxes that are gluten- dairy-free and very healthy if they are true or false
-  // And make an array of the recipes that need to be hidden by filtering the original array
-  // And call the hideCards function with the newly created filtered array
-  // if (checkboxes.glutenFree && checkboxes.dairyFree && checkboxes.veryHealthy) {
-  //   const glutenDairyHealthy = recipes.filter(
-  //     (recipe) =>
-  //       recipe.glutenFree === false ||
-  //       recipe.dairyFree === false ||
-  //       recipe.veryHealthy === false
-  //   );
-  //   hideCards(glutenDairyHealthy);
-  // } else if (
-  //   !checkboxes.glutenFree &&
-  //   checkboxes.dairyFree &&
-  //   checkboxes.veryHealthy
-  // ) {
-  //   const dairyHealthy = recipes.filter(
-  //     (recipe) => recipe.dairyFree === false || recipe.veryHealthy === false
-  //   );
-  //   hideCards(dairyHealthy);
-  // } else if (
-  //   checkboxes.glutenFree &&
-  //   !checkboxes.dairyFree &&
-  //   checkboxes.veryHealthy
-  // ) {
-  //   const glutenHealthy = recipes.filter(
-  //     (recipe) => recipe.glutenFree === false || recipe.veryHealthy === false
-  //   );
-  //   hideCards(glutenHealthy);
-  // } else if (
-  //   checkboxes.glutenFree &&
-  //   checkboxes.dairyFree &&
-  //   !checkboxes.veryHealthy
-  // ) {
-  //   const glutenDairy = recipes.filter(
-  //     (recipe) => recipe.glutenFree === false || recipe.dairyFree === false
-  //   );
-  //   hideCards(glutenDairy);
-  // } else if (
-  //   checkboxes.glutenFree &&
-  //   !checkboxes.dairyFree &&
-  //   !checkboxes.veryHealthy
-  // ) {
-  //   const onlyGluten = recipes.filter((recipe) => recipe.glutenFree === false);
-  //   hideCards(onlyGluten);
-  // } else if (
-  //   !checkboxes.glutenFree &&
-  //   checkboxes.dairyFree &&
-  //   !checkboxes.veryHealthy
-  // ) {
-  //   const onlyDairy = recipes.filter((recipe) => recipe.dairyFree === false);
-  //   hideCards(onlyDairy);
-  // } else if (
-  //   !checkboxes.glutenFree &&
-  //   !checkboxes.dairyFree &&
-  //   checkboxes.veryHealthy
-  // ) {
-  //   const onlyHealthy = recipes.filter(
-  //     (recipe) => recipe.veryHealthy === false
-  //   );
-  //   hideCards(onlyHealthy);
-  // } else {
-  //   // If everything is false, just remove class for hideing the cards from all the recipes
-  //   removeHide(recipes);
-  // }
-};
-
-const hideCards = (recipes) => {
-  recipes.forEach((x) => {
-    const card = document.getElementById(`colDiv-${x.id}`);
-    card.classList.add('my-hide-card');
-  });
-};
-const removeHide = (recipes) => {
-  recipes.forEach((x) => {
-    const card = document.getElementById(`colDiv-${x.id}`);
-    card.classList.remove('my-hide-card');
-  });
+  console.log(filteredRecipes);
 };
 
 // GETTING RID OF THE DATA THAT IS IN searchedRecipes and has a key save == true,
