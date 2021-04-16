@@ -2,6 +2,7 @@ let onRecipesPage = true;
 
 // CREATING RECIPE CARDS FROM ARRAY (GOT DATA FROM LOCAL STORAGE)
 const createCards = (recipes) => {
+  cards.innerHTML = '';
   recipes.forEach((recipe, index) => {
     let colDiv = document.createElement('div');
     colDiv.setAttribute('id', `colDiv-${recipe.id}`);

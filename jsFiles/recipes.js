@@ -53,122 +53,135 @@ const checkboxes = {
 };
 
 // GLUTEN-FREE CHECKBOX, CHECK & UNCHECK
-const gfCheckbox = document.querySelector('input[name=glutenFree]');
-gfCheckbox.addEventListener('change', function () {
-  if (this.checked) {
-    checkboxes.glutenFree = true;
-  } else {
-    checkboxes.glutenFree = false;
-  }
-  filteringRecipes(searchedRecipes);
-});
+// const gfCheckbox = document.querySelector('input[name=glutenFree]');
+// gfCheckbox.addEventListener('change', function () {
+//   // if (this.checked) {
+//   //   checkboxes.glutenFree = true;
+//   // } else {
+//   //   checkboxes.glutenFree = false;
+//   // }
+
+//   filteringRecipes(searchedRecipes);
+// });
 
 //  DAIRY-FREE CHECKBOX, CHECK & UNCHECK
-const dfCheckbox = document.querySelector('input[name=dairyFree]');
-dfCheckbox.addEventListener('change', function () {
-  if (this.checked) {
-    checkboxes.dairyFree = true;
-  } else {
-    checkboxes.dairyFree = false;
-  }
-  filteringRecipes(searchedRecipes);
-});
+// const dfCheckbox = document.querySelector('input[name=dairyFree]');
+// dfCheckbox.addEventListener('change', function () {
+//   if (this.checked) {
+//     checkboxes.dairyFree = true;
+//   } else {
+//     checkboxes.dairyFree = false;
+//   }
+//   filteringRecipes(searchedRecipes);
+// });
 
 //  very-heathy CHECKBOX, CHECK & UNCHECK
-const healthyCheckbox = document.querySelector('input[name=veryHealthy]');
-healthyCheckbox.addEventListener('change', function () {
-  if (this.checked) {
-    checkboxes.veryHealthy = true;
-  } else {
-    checkboxes.veryHealthy = false;
-  }
-  filteringRecipes(searchedRecipes);
+// const healthyCheckbox = document.querySelector('input[name=veryHealthy]');
+// healthyCheckbox.addEventListener('change', function () {
+//   if (this.checked) {
+//     checkboxes.veryHealthy = true;
+//   } else {
+//     checkboxes.veryHealthy = false;
+//   }
+//   filteringRecipes(searchedRecipes);
+// });
+
+document.querySelectorAll('input[name=checkbox]').forEach((x) => {
+  x.addEventListener('change', () => {
+    filteringRecipes(searchedRecipes);
+  });
 });
 
 const filteringRecipes = (recipes) => {
+  var checkedBoxes = Array.from(
+    document.querySelectorAll('input[name=checkbox]:checked')
+  );
+  let checkedValue = checkedBoxes.map((x) => x.value);
+  // If nothing is checked, just create cards with the original data
+  if (checkedValue.length === 0) {
+    createCards(recipes);
+  } else {
+    let filteredRecipes = [];
+    checkedValue.forEach((value) => {
+      if (filteredRecipes.length === 0) {
+        filteredRecipes = recipes.filter((recipe) => recipe[value]);
+      } else {
+        filteredRecipes = filteredRecipes.filter((recipe) => recipe[value]);
+      }
+      return filteredRecipes;
+    });
+    createCards(filteredRecipes);
+  }
+
+  //
+  //
+  //
+  //
   // First remove all the hide class from all the cards
-  removeHide(recipes);
+  // removeHide(recipes);
   // Check checkboxes that are gluten- dairy-free and very healthy if they are true or false
   // And make an array of the recipes that need to be hidden by filtering the original array
   // And call the hideCards function with the newly created filtered array
-  if (checkboxes.glutenFree && checkboxes.dairyFree && checkboxes.veryHealthy) {
-    const glutenDairyHealthy = recipes.filter(
-      (recipe) =>
-        recipe.glutenFree === false ||
-        recipe.dairyFree === false ||
-        recipe.veryHealthy === false
-    );
-    hideCards(glutenDairyHealthy);
-  } else if (
-    !checkboxes.glutenFree &&
-    checkboxes.dairyFree &&
-    checkboxes.veryHealthy
-  ) {
-    const dairyHealthy = recipes.filter(
-      (recipe) => recipe.dairyFree === false || recipe.veryHealthy === false
-    );
-    hideCards(dairyHealthy);
-  } else if (
-    checkboxes.glutenFree &&
-    !checkboxes.dairyFree &&
-    checkboxes.veryHealthy
-  ) {
-    const glutenHealthy = recipes.filter(
-      (recipe) => recipe.glutenFree === false || recipe.veryHealthy === false
-    );
-    hideCards(glutenHealthy);
-  } else if (
-    checkboxes.glutenFree &&
-    checkboxes.dairyFree &&
-    !checkboxes.veryHealthy
-  ) {
-    const glutenDairy = recipes.filter(
-      (recipe) => recipe.glutenFree === false || recipe.dairyFree === false
-    );
-    hideCards(glutenDairy);
-  } else if (
-    checkboxes.glutenFree &&
-    !checkboxes.dairyFree &&
-    !checkboxes.veryHealthy
-  ) {
-    const onlyGluten = recipes.filter((recipe) => recipe.glutenFree === false);
-    hideCards(onlyGluten);
-  } else if (
-    !checkboxes.glutenFree &&
-    checkboxes.dairyFree &&
-    !checkboxes.veryHealthy
-  ) {
-    const onlyDairy = recipes.filter((recipe) => recipe.dairyFree === false);
-    hideCards(onlyDairy);
-  } else if (
-    !checkboxes.glutenFree &&
-    !checkboxes.dairyFree &&
-    checkboxes.veryHealthy
-  ) {
-    const onlyHealthy = recipes.filter(
-      (recipe) => recipe.veryHealthy === false
-    );
-    hideCards(onlyHealthy);
-  } else {
-    // If everything is false, just remove class for hideing the cards from all the recipes
-    removeHide(recipes);
-  }
-
-  // if (checkboxes.glutenFree === true && checkboxes.dairyFree === true) {
-  //   const noGfDf = recipes.filter((recipe) => {
-  //     return recipe.glutenFree === false || recipe.dairyFree === false;
-  //   });
-  //   removeHide(recipes);
-  //   hideCards(noGfDf);
-  // } else if (checkboxes.glutenFree === true && checkboxes.dairyFree === false) {
-  //   const noGf = recipes.filter((recipe) => recipe.glutenFree === false);
-  //   removeHide(recipes);
-  //   hideCards(noGf);
-  // } else if (checkboxes.dairyFree === true && checkboxes.glutenFree === false) {
-  //   const noDf = recipes.filter((recipe) => recipe.dairyFree === false);
-  //   removeHide(recipes);
-  //   hideCards(noDf);
+  // if (checkboxes.glutenFree && checkboxes.dairyFree && checkboxes.veryHealthy) {
+  //   const glutenDairyHealthy = recipes.filter(
+  //     (recipe) =>
+  //       recipe.glutenFree === false ||
+  //       recipe.dairyFree === false ||
+  //       recipe.veryHealthy === false
+  //   );
+  //   hideCards(glutenDairyHealthy);
+  // } else if (
+  //   !checkboxes.glutenFree &&
+  //   checkboxes.dairyFree &&
+  //   checkboxes.veryHealthy
+  // ) {
+  //   const dairyHealthy = recipes.filter(
+  //     (recipe) => recipe.dairyFree === false || recipe.veryHealthy === false
+  //   );
+  //   hideCards(dairyHealthy);
+  // } else if (
+  //   checkboxes.glutenFree &&
+  //   !checkboxes.dairyFree &&
+  //   checkboxes.veryHealthy
+  // ) {
+  //   const glutenHealthy = recipes.filter(
+  //     (recipe) => recipe.glutenFree === false || recipe.veryHealthy === false
+  //   );
+  //   hideCards(glutenHealthy);
+  // } else if (
+  //   checkboxes.glutenFree &&
+  //   checkboxes.dairyFree &&
+  //   !checkboxes.veryHealthy
+  // ) {
+  //   const glutenDairy = recipes.filter(
+  //     (recipe) => recipe.glutenFree === false || recipe.dairyFree === false
+  //   );
+  //   hideCards(glutenDairy);
+  // } else if (
+  //   checkboxes.glutenFree &&
+  //   !checkboxes.dairyFree &&
+  //   !checkboxes.veryHealthy
+  // ) {
+  //   const onlyGluten = recipes.filter((recipe) => recipe.glutenFree === false);
+  //   hideCards(onlyGluten);
+  // } else if (
+  //   !checkboxes.glutenFree &&
+  //   checkboxes.dairyFree &&
+  //   !checkboxes.veryHealthy
+  // ) {
+  //   const onlyDairy = recipes.filter((recipe) => recipe.dairyFree === false);
+  //   hideCards(onlyDairy);
+  // } else if (
+  //   !checkboxes.glutenFree &&
+  //   !checkboxes.dairyFree &&
+  //   checkboxes.veryHealthy
+  // ) {
+  //   const onlyHealthy = recipes.filter(
+  //     (recipe) => recipe.veryHealthy === false
+  //   );
+  //   hideCards(onlyHealthy);
   // } else {
+  //   // If everything is false, just remove class for hideing the cards from all the recipes
   //   removeHide(recipes);
   // }
 };
