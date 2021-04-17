@@ -63,10 +63,3 @@
 .collection .collection-item.avatar .title {
   font-size: 23px;
 }
-/* SHOW AND HIDE */
-.hide {
-  display: none;
-}
-.show {
-  display: block;
-}

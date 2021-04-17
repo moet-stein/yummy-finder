@@ -1,7 +1,5 @@
 const myKey = config.MY_KEY;
 
-const newRecipesBtn = document.getElementById('newRecipes');
-
 // STORING SEARCHED RECIEPS in LOCAL STORAGE
 let searchedRecipes = localStorage.getItem('searchedRecipes')
   ? JSON.parse(localStorage.getItem('searchedRecipes'))
@@ -33,19 +31,24 @@ const storeData = (recipe, pushedTo, ingredients, preparation) => {
   pushedTo.push(recipeObject);
 };
 
+// *************** FILTERING *************************//
+
 // VEGETARIAN VEGAN DROPDOWN
+// Every time the dropdown is selected, the filtering function is called
 document.getElementById('vegeVegan').addEventListener('change', () => {
-  //event.target.value;
   filteringRecipes(searchedRecipes);
 });
 
 // READING CHECKBOXES
+// Every time any checkbox is checked or unchecked, the filtering function is called
 document.querySelectorAll('input[name=checkbox]').forEach((x) => {
   x.addEventListener('change', () => {
     filteringRecipes(searchedRecipes);
   });
 });
 
+// FILTERING
+// Listening all the values that have to filter with, and calling createCards function with the filtered recipes
 const filteringRecipes = (recipes) => {
   // CREATING ARRAY OF CHECKBOXES' VALUE
   const checkedBoxes = Array.from(
@@ -55,15 +58,16 @@ const filteringRecipes = (recipes) => {
 
   // CREATING VEGE VEGAN VARIABLE
   const vegeVegan = document.getElementById('vegeVegan').value;
-  // WHEN THE VEGETARIAN OR VEGAN IS CHOSEN, PUSH THE VALUE EACH TIME WHEN IT IS CLICKING INTO THE CHECKED VALUE
+  // WHEN THE VEGETARIAN OR VEGAN IS CHOSEN, PUSH THE VALUE INTO THE CHECKEDvALUE
   // SO THAT CHECKED VALUE ARRAY CAN HAVE ALL THE VALUE THAT NEEDS TO BE CHECKED AND FILTER THE ORIGINAL RECIPE ARRAY
   if (vegeVegan === 'vegetarian' || vegeVegan === 'vegan') {
     checkedValue.push(vegeVegan);
   }
 
   // FILTERING RECIPES; CREATING CARDS
+  // This filteredRecipes are updated each time of forEach loop
   let filteredRecipes = [];
-  // If nothing is checked, just create cards with the original data
+  // If nothing is checked (everthing is unchecked), just create cards with the original data
   if (checkedValue.length === 0) {
     createCards(recipes);
   } else {
@@ -80,7 +84,9 @@ const filteringRecipes = (recipes) => {
   }
   console.log(filteredRecipes);
 };
+//***********************/ FILTERING END **************************//
 
+//
 // GETTING RID OF THE DATA THAT IS IN searchedRecipes and has a key save == true,
 // But the id can't be found in the recipesData
 const removeDeletedCards = () => {
@@ -101,6 +107,9 @@ const removeDeletedCards = () => {
 
 // ADD NEW RECIPES FUNCTIONS
 const addNewRecipes = async () => {
+  searchedRecipes = [];
+  //localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
+  cards.innerHTML = '';
   // GETTING DATA FROM API (CALLING THE FUNCTION)
   const recipes = await fetchRecipes();
   console.log(recipes);
@@ -143,6 +152,7 @@ const fetchRecipes = async () => {
       'https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&sort=random&apiKey=' +
         myKey
     );
+
     return res.data.results;
     //return res.data.results;
   } catch (e) {
@@ -160,10 +170,12 @@ if (searchedRecipes.length === 0) {
   removeDeletedCards();
 }
 
+const newRecipesBtn = document.getElementById('newRecipes');
 // CLICKING THE BUTTON AND CALLING THE FUNC ABOVE(addNewRecipes)
 newRecipesBtn.addEventListener('click', () => {
-  searchedRecipes = [];
-  cards.innerHTML = '';
+  // searchedRecipes = [];
+  // localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
+  // cards.innerHTML = '';
   addNewRecipes();
 });
 
@@ -192,4 +204,17 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
   const elems = document.querySelectorAll('select');
   const instances = M.FormSelect.init(elems, options);
+});
+
+// PARALLAX
+document.addEventListener('DOMContentLoaded', function () {
+  const elems = document.querySelectorAll('.parallax');
+  const instances = M.Parallax.init(elems, options);
+});
+
+// CAROUSEL
+
+document.addEventListener('DOMContentLoaded', function () {
+  var elems = document.querySelectorAll('.carousel');
+  var instance = M.Carousel.init(elems, options);
 });

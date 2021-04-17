@@ -72,7 +72,12 @@ const createCards = (recipes) => {
     card.appendChild(content);
     // 4-1
     const title = document.createElement('span');
-    title.classList.add('card-title', 'center-align');
+    title.classList.add(
+      'card-title',
+      'center-align',
+      'green-text',
+      'text-darken-3'
+    );
     title.innerHTML = recipe.title;
     content.appendChild(title);
     // 5
