@@ -1,3 +1,18 @@
+// https://www.youtube.com/results?search_query=81bn4p8H3Kg
+
+const fetchCookingVideos = async () => {
+  try {
+    const res = await axios.get(
+      'https://api.spoonacular.com/food/videos/search?query=pasta&number=10&apiKey=' +
+        myKey
+    );
+    console.log(res.data);
+    // return res.data.results;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 var options = {
   edge: 'left',
 };
@@ -7,17 +22,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var elems = document.querySelectorAll('.sidenav');
   var instances = M.Sidenav.init(elems, options);
 });
-
-// // PARALLAX
-// document.addEventListener('DOMContentLoaded', function () {
-//   var elems = document.querySelectorAll('.parallax');
-//   var instances = M.Parallax.init(elems, options);
-// });
-
-// // COLLAPSIBLE
-// document.addEventListener('DOMContentLoaded', function () {
-//   var elem = document.querySelector('.collapsible.expandable');
-//   var instance = M.Collapsible.init(elem, {
-//     accordion: false,
-//   });
-// });
+// PARALLAX
+document.addEventListener('DOMContentLoaded', function () {
+  const elems = document.querySelectorAll('.parallax');
+  const instances = M.Parallax.init(elems, options);
+});

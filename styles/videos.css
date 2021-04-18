@@ -1,0 +1,32 @@
+.whitish {
+  background-color: rgba(167, 167, 167, 0.4);
+}
+.my-input-field {
+  height: 50px;
+  margin: 0;
+}
+
+.card .my-card-content h3 {
+  margin: 0px;
+}
+.card .my-card-content {
+  padding: 0px;
+  margin-top: 30px;
+}
+
+.card .my-card-action {
+  padding: 0px;
+}
+
+.my-play-icon {
+  font-size: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+  .my-video-title {
+    font-size: 25px;
+  }
+  .my-play-icon {
+    font-size: 40px;
+  }
+}

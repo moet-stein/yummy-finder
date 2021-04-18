@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Videos</title>
+    <title>Yummy Finder - Videos</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../pics/favicon.png" />
     <!-- Material Icons -->
@@ -12,44 +12,130 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-    <!-- Style.css -->
-    <link rel="stylesheet" href="../style.css" />
     <!-- Compiled and minified CSS -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
+    <!-- Style.css -->
+    <link rel="stylesheet" href="../style.css" />
+    <!-- Videos.css -->
+    <link rel="stylesheet" href="../styles/videos.css" />
+
     <!-- AXIOS -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <!-- NAVIGATION BAR -->
-    <nav class="blue-grey lighten-2">
-      <div class="nav-wrapper">
-        <a href="../index.html" class="brand-logo"
-          ><img class="logo-image" src="../pics/logo-home.png" alt=""
-        /></a>
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
-          ><i class="material-icons">menu</i></a
-        >
-        <ul class="right hide-on-med-and-down">
-          <li><a href="../index.html">Home</a></li>
-          <li><a href="./recipes.html">Search Recipes</a></li>
-          <li><a href="./saved.html">Saved</a></li>
-          <li class="active"><a href="#">Videos</a></li>
-        </ul>
+    <!-- PARALLEAX -->
+    <div class="parallax-container">
+      <!-- NAVIGATION BAR -->
+      <nav class="my-transparentBG">
+        <div class="nav-wrapper">
+          <a href="../index.html" class="brand-logo"
+            ><img class="logo-image" src="../pics/logo-home.png" alt=""
+          /></a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+            ><i class="material-icons">menu</i></a
+          >
+          <ul class="right hide-on-med-and-down">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="./recipes.html">Search Recipes</a></li>
+            <li><a href="./saved.html">Saved</a></li>
+            <li class="active"><a href="#">Videos</a></li>
+          </ul>
+        </div>
+      </nav>
+      <!-- SIDE NAV (PHONE SIZE) -->
+      <ul class="sidenav" id="mobile-demo">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="./recipes.html">Recipes</a></li>
+        <li><a href="./saved.html">Saved</a></li>
+        <li class="active"><a href="#">Videos</a></li>
+      </ul>
+      <!-- PARALLEAX BELOW NAVIGATION -->
+      <div class="section no-pad-bot">
+        <div class="container">
+          <br />
+          <br />
+          <h1 class="header center white-text my-font my-hero-header">
+            Search Cooking Videos
+          </h1>
+          <div class="row center">
+            <h5 class="header col s12 m6 offset-m3 light white-text">
+              Welcome to Yummy Finder! Search & Save Recipes, make your own
+              shopping list. Cooking Videos are also available!
+            </h5>
+          </div>
+          <br />
+          <br />
+        </div>
       </div>
-    </nav>
-    <!-- SIDE NAV (PHONE SIZE) -->
-    <ul class="sidenav" id="mobile-demo">
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="./recipes.html">Recipes</a></li>
-      <li><a href="./saved.html">Saved</a></li>
-      <li class="active"><a href="#">Videos</a></li>
-    </ul>
-    <div class="container">
-      <h1>Videos</h1>
+      <div class="parallax">
+        <!-- The video -->
+        <img src="../pics/food-video.gif" alt="" />
+        <div class="overlay whitish"></div>
+      </div>
     </div>
+    <!-- WHITE SECTION -->
+    <div class="section white">
+      <div class="row container">
+        <h3 class="header teal-text text-darken-3 center-align">
+          Get more cooking inspirations!
+        </h3>
+        <!-- <input
+          type="text"
+          placeholder="Type one word like pasta, rice, paprika to search videos!"
+        /> -->
+        <div class="row center-align">
+          <form class="col s12">
+            <div class="row my-input-field">
+              <div class="input-field col s12 m6 offset-m3">
+                <i class="material-icons prefix">search</i>
+                <textarea
+                  id="icon_prefix2"
+                  class="materialize-textarea"
+                ></textarea>
+                <label for="icon_prefix2"
+                  >One cooking related word to search videos!</label
+                >
+              </div>
+            </div>
+          </form>
+          <button class="waves-effect waves-light btn">Search</button>
+        </div>
+        <!-- VIDEOS -->
+        <div class="container">
+          <div class="row">
+            <!-- HERE COME CARDS FOR VIDEO -->
+            <div class="col s12">
+              <div class="card horizontal">
+                <div class="card-image">
+                  <img src="https://i.ytimg.com/vi/YTZGPCCB2FU/mqdefault.jpg" />
+                </div>
+                <div class="card-stacked">
+                  <div class="card-content my-card-content">
+                    <div class="center-align">
+                      <h3 class="teal-text my-video-title">8 One-Pot Pastas</h3>
+                      <div class="card-action my-card-action">
+                        <a
+                          href="https://www.youtube.com/watch?v=81bn4p8H3Kg"
+                          target="_blank"
+                          class="material-icons"
+                          ><i class="material-icons my-play-icon"
+                            >play_circle_outline</i
+                          ></a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- SCRIPT TAGS -->
     <!-- CONFIG FILE -->
     <script src="../config.js"></script>
