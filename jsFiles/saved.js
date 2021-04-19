@@ -4,6 +4,7 @@ let recipesData = JSON.parse(localStorage.getItem('recipesData'));
 // ON SAVED RECIPES PAGE
 onRecipesPage = false;
 // CALLING FUNCTION TO DISPLAY DATA FROM LOCAL STORAGE WHEN REFRESHING
+// WHEN THERE ARE NO DATA, SHOW BUTTON TO LEAD TO SEARCH RECIPE
 if (recipesData.length > 0) {
   const noFavorites = document.getElementById('noFavorites');
   noFavorites.classList.add('hidden');

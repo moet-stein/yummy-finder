@@ -80,10 +80,17 @@ const filteringRecipes = (recipes) => {
       }
       return filteredRecipes;
     });
-    createCards(filteredRecipes);
   }
-  console.log(filteredRecipes);
+  createCards(filteredRecipes);
+  // If there are no recipes after filtering, show the picture with no recipes found
+  const noRecipesFound = document.getElementById('noRecipesFound');
+  if (cards.innerHTML == '') {
+    noRecipesFound.classList.remove('no-recipes-hidden');
+  } else {
+    noRecipesFound.classList.add('no-recipes-hidden');
+  }
 };
+
 //***********************/ FILTERING END **************************//
 
 //
