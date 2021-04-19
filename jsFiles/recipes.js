@@ -80,11 +80,11 @@ const filteringRecipes = (recipes) => {
       }
       return filteredRecipes;
     });
+    createCards(filteredRecipes);
   }
-  createCards(filteredRecipes);
   // If there are no recipes after filtering, show the picture with no recipes found
   const noRecipesFound = document.getElementById('noRecipesFound');
-  if (cards.innerHTML == '') {
+  if (checkedValue.length > 0 && filteredRecipes.length === 0) {
     noRecipesFound.classList.remove('no-recipes-hidden');
   } else {
     noRecipesFound.classList.add('no-recipes-hidden');
@@ -156,8 +156,7 @@ const addNewRecipes = async () => {
 const fetchRecipes = async () => {
   try {
     const res = await axios.get(
-      'https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&sort=random&apiKey=' +
-        myKey
+      `https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&sort=random&apiKey=${myKey}`
     );
 
     return res.data.results;
