@@ -185,18 +185,6 @@ newRecipesBtn.addEventListener('click', () => {
   addNewRecipes();
 });
 
-// MATERIALIZE FUNCTION
-const modalOptions = {
-  opacity: 0.4,
-  outDuration: 350,
-};
-
-// MODAL FOR RECIPES PAGE
-document.addEventListener('DOMContentLoaded', function () {
-  const elems = document.querySelectorAll('.modal');
-  const instances = M.Modal.init(elems, modalOptions);
-});
-
 // SIDE NAV
 const options = {
   edge: 'left',

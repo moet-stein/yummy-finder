@@ -92,14 +92,15 @@ const createCards = (recipes) => {
       // 5-1-1
       const ingredientsA = document.createElement('a');
       ingredientsA.setAttribute('href', `#showIngredients-${recipe.id}`);
-      ingredientsA.classList.add('modal-trigger');
+      ingredientsA.setAttribute('id', `modalBtn-${recipe.id}`);
+      // ingredientsA.classList.add('modal-trigger');
       ingredientsA.innerHTML = 'Ing. & Prep.';
       action.appendChild(ingredientsA);
 
       //parent <div class="card-action">
       //child <div class="modal" id="details">
       const detailsModal = document.createElement('div');
-      detailsModal.classList.add('modal');
+      detailsModal.classList.add('myModal');
       detailsModal.setAttribute('id', `showIngredients-${recipe.id}`);
       action.appendChild(detailsModal);
       //<div class="modal-content">
@@ -108,7 +109,8 @@ const createCards = (recipes) => {
       detailsModal.appendChild(detailsModalContent);
       //   <a href="#" class="modal-close"><i class="material-icons">cancel</i></a>
       const detailsModalCloseA = document.createElement('a');
-      detailsModalCloseA.classList.add('modal-close', 'my-right-align');
+      detailsModalCloseA.classList.add('my-modal-close', 'my-right-align');
+      detailsModalCloseA.setAttribute('id', `modalClose-${recipe.id}`);
       detailsModalContent.appendChild(detailsModalCloseA);
       const detailsModalCloseI = document.createElement('i');
       detailsModalCloseI.classList.add('material-icons');
@@ -124,11 +126,11 @@ const createCards = (recipes) => {
       //   parent detailsModalContent
       //child <div class="row">
       const detailsRow = document.createElement('div');
-      detailsRow.classList.add('row');
+      detailsRow.classList.add('row', 'my-flex-responsive');
       detailsModalContent.appendChild(detailsRow);
       //<div class="col s6">
       const detailsCol = document.createElement('div');
-      detailsCol.classList.add('col', 's6');
+      detailsCol.classList.add('col', 's12', 'm6');
       detailsRow.appendChild(detailsCol);
       //<ul class="collection with-header">
       const ingCollection = document.createElement('ul');
@@ -168,7 +170,7 @@ const createCards = (recipes) => {
       //parent row detailsRow
       //child <div class="col s6">
       const prepCol = document.createElement('div');
-      prepCol.classList.add('col', 's6');
+      prepCol.classList.add('col', 's12', 'm6');
       detailsRow.appendChild(prepCol);
       //<ul class="collection with-header">
       const prepCollection = document.createElement('ul');
@@ -204,6 +206,32 @@ const createCards = (recipes) => {
       websiteA.setAttribute('target', '_blank');
       websiteA.innerHTML = 'Recipe Website';
       action.appendChild(websiteA);
+
+      // modal
+      const modal = document.getElementById(`showIngredients-${recipe.id}`);
+
+      // Get the button that opens the modal
+      const modalBtn = document.getElementById(`modalBtn-${recipe.id}`);
+
+      // Get the <span> element that closes the modal
+      const modalClose = document.getElementById(`modalClose-${recipe.id}`);
+
+      // When the user clicks on the button, open the modal
+      modalBtn.addEventListener('click', function () {
+        modal.style.display = 'block';
+      });
+
+      // When the user clicks on <span> (x), close the modal
+      modalClose.addEventListener('click', function () {
+        modal.style.display = 'none';
+      });
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.addEventListener('click', function (event) {
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      });
     });
   }
 };
@@ -268,7 +296,13 @@ const createIcon = (parent, iconName, id) => {
   const iconA = document.createElement('a');
   iconA.setAttribute('id', `cardIconA-${id}`);
   let iconColor = iconName === 'favorite' ? 'orange' : 'grey';
-  iconA.classList.add('halfway-fab', 'btn-floating', iconColor, 'lighten-3');
+  iconA.classList.add(
+    'halfway-fab',
+    'btn-floating',
+    iconColor,
+    'lighten-3',
+    'my-icon'
+  );
   parent.appendChild(iconA);
   // 3-2-1
   const iconI = document.createElement('i');

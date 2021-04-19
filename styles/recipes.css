@@ -14,12 +14,14 @@
 
 .my-filter {
   border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 div.sticky {
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 0;
+  z-index: 1;
 }
 
 .no-recipes {
@@ -39,11 +41,57 @@ div.sticky {
   margin-bottom: 20px;
 }
 
+/* +++++++++++++MODAL +++++++++++++*/
+/* The Modal (background) */
+.myModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 100; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  margin-top: 10px;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+/* .my-modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.my-modal-close:hover,
+.my-modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+} */
+
+/* ++++++++++++MODAL END++++++++++++++ */
+
 .my-action {
   display: flex;
   justify-content: center;
   align-items: center;
   line-height: 30px;
+}
+
+.my-add-ing-btn {
+  z-index: 1;
 }
 
 .my-add-ing-btn:hover {
@@ -81,6 +129,25 @@ div.sticky {
   }
   .overlay-favorite {
     height: 100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .my-filter {
+    display: flex;
+  }
+  .my-filter h5,
+  .my-filter input,
+  .my-filter span {
+    font-size: 18px;
+  }
+  .my-filter span {
+    padding-left: 21px !important;
+  }
+
+  .my-flex-responsive {
+    display: flex;
+    flex-direction: column;
   }
 }
 
