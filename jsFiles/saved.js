@@ -4,7 +4,13 @@ let recipesData = JSON.parse(localStorage.getItem('recipesData'));
 // ON SAVED RECIPES PAGE
 onRecipesPage = false;
 // CALLING FUNCTION TO DISPLAY DATA FROM LOCAL STORAGE WHEN REFRESHING
-createCards(recipesData);
+if (recipesData.length > 0) {
+  const noFavorites = document.getElementById('noFavorites');
+  noFavorites.classList.add('hidden');
+  createCards(recipesData);
+} else {
+  noFavorites.classList.remove('hidden');
+}
 
 // MODAL JS CODE
 const modalOptions = {
