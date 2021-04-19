@@ -15,6 +15,10 @@
 .my-filter {
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.9);
+  z-index: 2 !important;
+}
+a .my-icon {
+  z-index: 1;
 }
 
 div.sticky {
@@ -135,11 +139,13 @@ div.sticky {
 @media only screen and (max-width: 600px) {
   .my-filter {
     display: flex;
+    width: 100% !important;
+    padding: 0px !important;
   }
   .my-filter h5,
   .my-filter input,
   .my-filter span {
-    font-size: 18px;
+    font-size: 14px !important;
   }
   .my-filter span {
     padding-left: 21px !important;
@@ -148,6 +154,16 @@ div.sticky {
   .my-flex-responsive {
     display: flex;
     flex-direction: column;
+  }
+
+  .my-new-recipes {
+    align-self: flex-end;
+    width: 30px;
+    margin-right: 10px;
+    padding-left: 0px !important;
+  }
+  .no-padding {
+    padding: 0px !important;
   }
 }
 

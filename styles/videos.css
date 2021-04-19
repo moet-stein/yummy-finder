@@ -29,18 +29,27 @@
   font-size: 50px;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 820px) {
   .my-height {
     line-height: 20px;
     font-size: 10px;
   }
-}
-
-@media only screen and (max-width: 600px) {
   .my-video-title {
     font-size: 25px;
   }
   .my-play-icon {
     font-size: 40px;
   }
+  .my-search-bar-responsive {
+    width: 100% !important;
+  }
 }
+
+/* @media only screen and (max-width: 600px) {
+  .my-video-title {
+    font-size: 25px;
+  }
+  .my-play-icon {
+    font-size: 40px;
+  }
+} */
