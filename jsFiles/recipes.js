@@ -33,6 +33,21 @@ const storeData = (recipe, pushedTo, ingredients, preparation) => {
 
 // *************** FILTERING *************************//
 
+// const addEvents = (recipesData) => {
+//   // VEGETARIAN VEGAN DROPDOWN
+//   // Every time the dropdown is selected, the filtering function is called
+//   document.getElementById('vegeVegan').addEventListener('change', () => {
+//     filteringRecipes(recipesData);
+//   });
+
+//   // READING CHECKBOXES
+//   // Every time any checkbox is checked or unchecked, the filtering function is called
+//   document.querySelectorAll('input[name=checkbox]').forEach((x) => {
+//     x.addEventListener('change', () => {
+//       filteringRecipes(recipesData);
+//     });
+//   });
+// };
 // VEGETARIAN VEGAN DROPDOWN
 // Every time the dropdown is selected, the filtering function is called
 document.getElementById('vegeVegan').addEventListener('change', () => {
@@ -50,12 +65,12 @@ document.querySelectorAll('input[name=checkbox]').forEach((x) => {
 // FILTERING
 // Listening all the values that have to filter with, and calling createCards function with the filtered recipes
 const filteringRecipes = (recipes) => {
+  let checkedValue = [];
   // CREATING ARRAY OF CHECKBOXES' VALUE
   const checkedBoxes = Array.from(
     document.querySelectorAll('input[name=checkbox]:checked')
   );
-  let checkedValue = checkedBoxes.map((x) => x.value);
-
+  checkedBoxes.map((x) => checkedValue.push(x.value));
   // CREATING VEGE VEGAN VARIABLE
   const vegeVegan = document.getElementById('vegeVegan').value;
   // WHEN THE VEGETARIAN OR VEGAN IS CHOSEN, PUSH THE VALUE INTO THE CHECKEDvALUE
@@ -63,6 +78,7 @@ const filteringRecipes = (recipes) => {
   if (vegeVegan === 'vegetarian' || vegeVegan === 'vegan') {
     checkedValue.push(vegeVegan);
   }
+  console.log(checkedValue);
 
   // FILTERING RECIPES; CREATING CARDS
   // This filteredRecipes are updated each time of forEach loop
@@ -114,6 +130,7 @@ const removeDeletedCards = () => {
 
 // ADD NEW RECIPES FUNCTIONS
 const addNewRecipes = async () => {
+  resetFilter();
   searchedRecipes = [];
   //localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
   cards.innerHTML = '';
@@ -144,7 +161,6 @@ const addNewRecipes = async () => {
   });
   // UPDATE LOCALSTORAGE'S searchedRecipes Data
   localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
-
   // 2.
   // MAKE ELEMENTS BY DOM with searchedRecipes Data from localStorage
   createCards(searchedRecipes);
@@ -164,6 +180,14 @@ const fetchRecipes = async () => {
   } catch (e) {
     console.log(e);
   }
+};
+
+// RESET FILTER
+const resetFilter = () => {
+  document.getElementById('vegeVegan').options.selectedIndex = '0';
+  document
+    .querySelectorAll('input[name=checkbox]')
+    .forEach((checkbox) => (checkbox.checked = false));
 };
 
 // CALL FUNCTION to SHOW THE DATA WHEN LOADING THE PAGE
