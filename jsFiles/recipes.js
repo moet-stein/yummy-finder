@@ -33,34 +33,21 @@ const storeData = (recipe, pushedTo, ingredients, preparation) => {
 
 // *************** FILTERING *************************//
 
-// const addEvents = (recipesData) => {
-//   // VEGETARIAN VEGAN DROPDOWN
-//   // Every time the dropdown is selected, the filtering function is called
-//   document.getElementById('vegeVegan').addEventListener('change', () => {
-//     filteringRecipes(recipesData);
-//   });
-
-//   // READING CHECKBOXES
-//   // Every time any checkbox is checked or unchecked, the filtering function is called
-//   document.querySelectorAll('input[name=checkbox]').forEach((x) => {
-//     x.addEventListener('change', () => {
-//       filteringRecipes(recipesData);
-//     });
-//   });
-// };
-// VEGETARIAN VEGAN DROPDOWN
-// Every time the dropdown is selected, the filtering function is called
-document.getElementById('vegeVegan').addEventListener('change', () => {
-  filteringRecipes(searchedRecipes);
-});
-
-// READING CHECKBOXES
-// Every time any checkbox is checked or unchecked, the filtering function is called
-document.querySelectorAll('input[name=checkbox]').forEach((x) => {
-  x.addEventListener('change', () => {
-    filteringRecipes(searchedRecipes);
+const addEvents = (recipesData) => {
+  // VEGETARIAN VEGAN DROPDOWN
+  // Every time the dropdown is selected, the filtering function is called
+  document.getElementById('vegeVegan').addEventListener('change', () => {
+    filteringRecipes(recipesData);
   });
-});
+
+  // READING CHECKBOXES
+  // Every time any checkbox is checked or unchecked, the filtering function is called
+  document.querySelectorAll('input[name=checkbox]').forEach((x) => {
+    x.addEventListener('change', () => {
+      filteringRecipes(recipesData);
+    });
+  });
+};
 
 // FILTERING
 // Listening all the values that have to filter with, and calling createCards function with the filtered recipes
@@ -96,6 +83,7 @@ const filteringRecipes = (recipes) => {
       }
       return filteredRecipes;
     });
+    console.log(filteredRecipes);
     createCards(filteredRecipes);
   }
   // If there are no recipes after filtering, show the picture with no recipes found
@@ -161,6 +149,7 @@ const addNewRecipes = async () => {
   });
   // UPDATE LOCALSTORAGE'S searchedRecipes Data
   localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
+  addEvents(searchedRecipes);
   // 2.
   // MAKE ELEMENTS BY DOM with searchedRecipes Data from localStorage
   createCards(searchedRecipes);
@@ -197,6 +186,7 @@ if (searchedRecipes.length === 0) {
   addNewRecipes();
 } else {
   createCards(searchedRecipes);
+  addEvents(searchedRecipes);
   removeDeletedCards();
 }
 

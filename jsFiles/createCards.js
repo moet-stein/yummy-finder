@@ -2,6 +2,7 @@ let onRecipesPage = true;
 
 // CREATING RECIPE CARDS FROM ARRAY (GOT DATA FROM LOCAL STORAGE)
 const createCards = (recipes) => {
+  console.log(recipes);
   cards.innerHTML = '';
   if (recipes) {
     recipes.forEach((recipe, index) => {
