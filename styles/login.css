@@ -26,3 +26,19 @@ body {
   border-bottom: 2px solid #e91e63;
   box-shadow: none;
 }
+
+.my-btn {
+  margin-bottom: 20px;
+}
+
+.hide {
+  display: none;
+}
+
+.my-anchors {
+  margin: 10px;
+  transition: 0.3s;
+}
+.my-anchors:hover {
+  color: rgb(42, 42, 134);
+}

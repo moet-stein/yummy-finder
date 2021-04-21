@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- firebase auth ui -->
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css"
+    />
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="./pics/favicon.png" />
     <!-- Compiled and minified CSS -->
@@ -18,7 +25,7 @@
     />
     <!-- CSS -->
     <link rel="stylesheet" href="style.css" />
-    <title>Home</title>
+    <title>YummyFinder-Home</title>
   </head>
   <body>
     <!-- PARALLEAX -->
@@ -37,7 +44,22 @@
             <li><a href="./html/recipes.html">Search Recipes</a></li>
             <li><a href="./html/saved.html">Saved</a></li>
             <li><a href="./html/videos.html">Videos</a></li>
-            <li><a href="./html/login.html">Login</a></li>
+            <li>
+              <a
+                href="./html/login.html"
+                id="btnLogin"
+                class="hide grey lighten-3 teal-text text-lighten-1"
+                >Login</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html"
+                id="btnLogout"
+                class="hide grey lighten-3 red-text text-lighten-1"
+                >Logout</a
+              >
+            </li>
           </ul>
         </div>
       </nav>
@@ -47,6 +69,22 @@
         <li><a href="./html/recipes.html">Recipes</a></li>
         <li><a href="./html/saved.html">Saved</a></li>
         <li><a href="./html/videos.html">Videos</a></li>
+        <li>
+          <a
+            href="./html/login.html"
+            id="btnLoginSide"
+            class="hide teal-text text-lighten-2"
+            >Login</a
+          >
+        </li>
+        <li>
+          <a
+            href="index.html"
+            id="btnLogoutSide"
+            class="hide red-text text-lighten-2"
+            >Logout</a
+          >
+        </li>
       </ul>
       <!-- PARALLEAX BELOW NAVIGATION -->
       <div class="section no-pad-bot">
@@ -183,6 +221,24 @@
       </div>
     </div>
     <!-- SCRIPT TAGS -->
+    <!-- Config -->
+    <script src="./config.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    <!-- Materialize -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"
+    ></script>
+    <script src="./jsFiles/login.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- script.js -->

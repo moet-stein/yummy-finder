@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recipes</title>
+    <title>YummyFinder-Recipes</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../pics/favicon.png" />
     <!-- Material Icons -->
@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="../style.css" />
     <!-- Recipes.css -->
     <link rel="stylesheet" href="../styles/recipes.css" />
+    <!-- createcards.css -->
+    <!-- <link rel="stylesheet" href="../styles/createCards.css" /> -->
     <!-- Compiled and minified CSS -->
     <link
       rel="stylesheet"
@@ -23,6 +25,13 @@
     />
     <!-- AXIOS -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- firebase auth ui -->
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css"
+    />
   </head>
   <body>
     <!-- PARALLEAX -->
@@ -41,6 +50,22 @@
             <li class="active"><a href="#">Search Recipes</a></li>
             <li><a href="./saved.html">Saved</a></li>
             <li><a href="./videos.html">Videos</a></li>
+            <li>
+              <a
+                href="./login.html"
+                id="btnLogin"
+                class="hide grey lighten-3 teal-text text-lighten-1"
+                >Login</a
+              >
+            </li>
+            <li>
+              <a
+                href="recipes.html"
+                id="btnLogout"
+                class="hide grey lighten-3 red-text text-lighten-1"
+                >Logout</a
+              >
+            </li>
           </ul>
         </div>
       </nav>
@@ -50,6 +75,22 @@
         <li class="active"><a href="#">Recipes</a></li>
         <li><a href="./saved.html">Saved</a></li>
         <li><a href="./videos.html">Videos</a></li>
+        <li>
+          <a
+            href="./html/login.html"
+            id="btnLoginSide"
+            class="hide teal-text text-lighten-2"
+            >Login</a
+          >
+        </li>
+        <li>
+          <a
+            href="recipes.html"
+            id="btnLogoutSide"
+            class="hide red-text text-lighten-2"
+            >Logout</a
+          >
+        </li>
       </ul>
       <!-- PARALLEAX BELOW NAVIGATION -->
       <!-- <div class="section no-pad-bot">
@@ -199,8 +240,24 @@
     </div>
 
     <!-- SCRIPT TAGS -->
-    <!-- CONFIG FILE -->
+    <!-- Config -->
     <script src="../config.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    <!-- Materialize -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"
+    ></script>
+    <script src="../jsFiles/login.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Create cards js -->

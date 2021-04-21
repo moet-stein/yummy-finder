@@ -46,17 +46,43 @@ const createCards = (recipes) => {
       // IF THE USER IS ON THE SEARCH RECIPES PAGE
       // WORKS FOR SAVING RECIPES
       if (onRecipesPage) {
-        cardIcon.addEventListener('click', () => {
-          // Storing the clicked recipe data into localStorage recipesData
-          storeSavedRecipes(recipe);
-          console.log(recipe);
-          // OVERLAYING COLOR & DISABLE THE BUTTON FOR THE RECIPE THAT IS SAVED
-          overlaySaved(colDivId, cardIcon, cardIconA);
+        //<span class="popuptext" id="myPopup">A Simple Popup!</span>
+        const popModal = document.createElement('div');
+        popModal.classList.add('myModal');
+        popModal.setAttribute('id', `popup-${recipe.id}`);
+        cardImage.appendChild(popModal);
+        const popup = document.createElement('div');
+        popup.classList.add('modal-content');
+        // popup.setAttribute('id', ``);
+        popup.innerHTML = `Please login to save favorite recipes :)`;
+        popModal.appendChild(popup);
 
-          cardIcon.removeEventListener('click', () =>
-            storeSavedRecipes(recipe)
-          );
+        // cardIcon.addEventListener('click', () => {
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            cardIcon.addEventListener('click', () => {
+              // Storing the clicked recipe data into localStorage recipesData
+              storeSavedRecipes(recipe);
+              // OVERLAYING COLOR & DISABLE THE BUTTON FOR THE RECIPE THAT IS SAVED
+              overlaySaved(colDivId, cardIcon, cardIconA);
+            });
+            cardIcon.removeEventListener('click', () =>
+              storeSavedRecipes(recipe)
+            );
+          } else {
+            cardIcon.addEventListener('click', () => {
+              console.log('clicked-block');
+              popModal.style.display = 'block';
+            });
+            // When the user clicks anywhere outside of the modal, close it
+            window.addEventListener('click', function (event) {
+              if (event.target == popModal) {
+                popModal.style.display = 'none';
+              }
+            });
+          }
         });
+
         // When reloading with saved recipe, overlay the recipe which has 'saved' key
         if ('saved' in recipe) {
           overlaySaved(colDivId, cardIcon, cardIconA);
@@ -353,4 +379,46 @@ const storeSavedRecipes = (recipe) => {
   // STROING FAVORITE RECIPE DATA INTO LOCAL STORAGE
   localStorage.setItem('recipesData', JSON.stringify(recipesData));
   localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
+
+  // overlaySaved(div, i, a);
+
+  // cardIcon.removeEventListener('click', () =>
+  //   storeSavedRecipes(recipe))
 };
+
+// const showPopMessage = (btn, popup) => {
+//   // //<span class="popuptext" id="myPopup">A Simple Popup!</span>
+//   // const popup = document.createElement('span');
+//   // popup.classList.add('popuptext');
+//   // popup.setAttribute('id', `myPopup-${id}`);
+//   // popup.innerHTML = `Please login to save favorite recipes :)`;
+//   // btn.appendChild(popup);
+
+//   // When the user clicks on the button, open the modal
+//   btn.addEventListener('click', function () {
+//     popup.style.display = 'block';
+//   });
+
+//   // When the user clicks on <span> (x), close the modal
+//   btn.addEventListener('click', function () {
+//     popup.style.display = 'none';
+//   });
+
+//   // When the user clicks anywhere outside of the modal, close it
+//   window.addEventListener('click', function (event) {
+//     if (event.target == popup) {
+//       popup.style.display = 'none';
+//     }
+//   });
+// };
+
+// const callFuncWhenLoggedin = (func1, func2) => {
+//   // Add a real time listener
+//   firebase.auth().onAuthStateChanged((user) => {
+//     if (user) {
+//       func1;
+//     } else {
+//       func2;
+//     }
+//   });
+// };
