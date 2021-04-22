@@ -189,7 +189,7 @@ const createCards = (recipes) => {
           ingName.innerHTML = ing;
           ingListsLi.appendChild(ingName);
           if (!onRecipesPage) {
-            createAddBtn(ingListsLi, ing);
+            createAddBtn(ingListsLi, ing, recipe);
           }
         });
       } else {
@@ -374,24 +374,70 @@ const createIcon = (parent, iconName, id) => {
 };
 
 // CREATING ADD(PLUS) BUTTON FOR ADDING INGREDIENTS TO SHOPPING LIST
-const createAddBtn = (parent, ing) => {
+const createAddBtn = (parent, ing, recipe) => {
   //child <a href="#" class="secondary-content">
   const addIngA = document.createElement('a');
   addIngA.classList.add('secondary-content', 'my-pointer');
   parent.appendChild(addIngA);
   //<i class="material-icons">
   const addInI = document.createElement('i');
-  addInI.setAttribute('id', ing);
+  addInI.setAttribute('id', `${recipe.title}-${ing}`);
   addInI.classList.add('material-icons');
-  // eventlistener
-  addInI.addEventListener('click', () => saveIngredientFS(ing));
+
   addIngA.appendChild(addInI);
   //<span class="material-icons">add_circle_outline</span>
   const addInSpan = document.createElement('span');
   addInSpan.classList.add('material-icons');
   addInSpan.innerHTML = 'add_circle_outline';
   addInI.appendChild(addInSpan);
+  //
+  // if (checkIngSaved(`${recipe.title}-${ing}`) == true) {
+  //   addInSpan.innerHTML = 'check_circle';
+  //   addIngA.setAttribute('disabled', true);
+  //   addInI.setAttribute('disabled', true);
+  // } else {
+  //   addInSpan.innerHTML = 'add_circle_outline';
+  // }
+
+  // eventlistener
+  addInI.addEventListener('click', () => {
+    addInSpan.innerHTML = 'check_circle';
+    addIngA.classList.add('grey-text');
+    addIngA.classList.remove('my-pointer');
+    addIngA.setAttribute('disabled', '');
+    addInI.setAttribute('disabled', '');
+    saveIngredientFS(ing, `${recipe.title}-${ing}`);
+  });
+  db.collection('ingredients')
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        if (doc.data().ingID == `${recipe.title}-${ing}`) {
+          addInSpan.innerHTML = 'check_circle';
+          addIngA.classList.add('grey-text');
+          addIngA.classList.remove('my-pointer');
+          addIngA.setAttribute('disabled', '');
+          addInI.setAttribute('disabled', '');
+        }
+      });
+    });
 };
+
+// IF the ingID is the same like iconA id, i will show check icon and it's disabled to click
+// const checkIngSaved = (buttonID) => {
+//   db.collection('ingredients')
+//     .get()
+//     .then((querySnapshot) => {
+//       querySnapshot.forEach((doc) => {
+
+//         if (doc.data().ingID == buttonID) {
+//           addInSpan.innerHTML = 'check_circle';
+//           addIngA.setAttribute('disabled', true);
+//           addInI.setAttribute('disabled', true);
+//         }
+//       });
+//     });
+// };
 
 // OVERLAY ORANGE LAYER ON THE SAVED RECIPE
 const overlaySaved = (parent, icon, iconA) => {
@@ -435,12 +481,12 @@ const storeSavedRecipesFS = (recipe) => {
 };
 
 // // Save ingredients (on SavedRecipes page -> store the ingredients in firestore)
-const saveIngredientFS = (ing) => {
+const saveIngredientFS = (ing, ingID) => {
   const userID = firebase.auth().currentUser.uid;
   let data = {
     user: userID,
     ingredient: ing,
+    ingID: ingID,
   };
   db.collection('ingredients').doc(ing).set(data);
-  console.log(`${ing} is saved now`);
 };
