@@ -189,7 +189,7 @@ const createCards = (recipes) => {
           ingName.innerHTML = ing;
           ingListsLi.appendChild(ingName);
           if (!onRecipesPage) {
-            createAddBtn(ingListsLi);
+            createAddBtn(ingListsLi, ing);
           }
         });
       } else {
@@ -330,13 +330,6 @@ const createDeleteModal = (parent, recipe, modalBtn) => {
   });
 };
 
-// DELETING A CARD (FROM BROWSER AND LOCAL STORAGE) BY CLICKING THE DELETE_FOREVER BUTTON
-// const deleteCard = (i) => {
-//   recipesData.splice(i, 1);
-//   localStorage.setItem('recipesData', JSON.stringify(recipesData));
-//   location.reload();
-// };
-
 const deleteCard = (recipeTitle) => {
   db.collection('savedRecipes')
     .doc(recipeTitle)
@@ -381,14 +374,17 @@ const createIcon = (parent, iconName, id) => {
 };
 
 // CREATING ADD(PLUS) BUTTON FOR ADDING INGREDIENTS TO SHOPPING LIST
-const createAddBtn = (parent) => {
+const createAddBtn = (parent, ing) => {
   //child <a href="#" class="secondary-content">
   const addIngA = document.createElement('a');
-  addIngA.classList.add('secondary-content');
+  addIngA.classList.add('secondary-content', 'my-pointer');
   parent.appendChild(addIngA);
   //<i class="material-icons">
   const addInI = document.createElement('i');
+  addInI.setAttribute('id', ing);
   addInI.classList.add('material-icons');
+  // eventlistener
+  addInI.addEventListener('click', () => saveIngredientFS(ing));
   addIngA.appendChild(addInI);
   //<span class="material-icons">add_circle_outline</span>
   const addInSpan = document.createElement('span');
@@ -413,23 +409,10 @@ const overlaySaved = (parent, icon, iconA) => {
   iconA.classList.add('disabled');
 };
 
-// // STORING SAVED RECIPE IN LOCAL STORAGE
-// const storeSavedRecipes = (recipe) => {
-//   recipe['saved'] = true;
-//   recipesData.push(recipe);
-//   // STROING FAVORITE RECIPE DATA INTO LOCAL STORAGE
-//   localStorage.setItem('recipesData', JSON.stringify(recipesData));
-//   localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
-
-//   // overlaySaved(div, i, a);
-
-//   // cardIcon.removeEventListener('click', () =>
-//   //   storeSavedRecipes(recipe))
-// };
-
 const db = firebase.firestore();
 console.log(firebase);
 // Fire store
+// Save recipes -> store the recipe in firestore
 const storeSavedRecipesFS = (recipe) => {
   const userID = firebase.auth().currentUser.uid;
 
@@ -449,4 +432,15 @@ const storeSavedRecipesFS = (recipe) => {
     glutenFree: recipe.glutenFree,
   };
   db.collection('savedRecipes').doc(recipe.title).set(data);
+};
+
+// // Save ingredients (on SavedRecipes page -> store the ingredients in firestore)
+const saveIngredientFS = (ing) => {
+  const userID = firebase.auth().currentUser.uid;
+  let data = {
+    user: userID,
+    ingredient: ing,
+  };
+  db.collection('ingredients').doc(ing).set(data);
+  console.log(`${ing} is saved now`);
 };

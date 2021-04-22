@@ -65,3 +65,14 @@ html {
   justify-content: center;
   align-items: center;
 }
+
+.my-pointer:hover {
+  cursor: pointer;
+}
+
+.my-modal-content {
+  border: none;
+  background-color: #fafafa;
+  margin-bottom: 0px;
+  margin-top: 10px;
+}

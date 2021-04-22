@@ -59,6 +59,88 @@ const showSavedRecipes = () => {
 };
 showSavedRecipes();
 
+// GET ingredients specific for the user in array
+let savedIngsArr = [];
+const showShoppingList = () => {
+  db.collection('ingredients')
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        if (userID === doc.data().user) {
+          savedIngsArr.push(doc.data().ingredient);
+        }
+      });
+      createShoppingListDOM();
+    });
+};
+
+// Show the list of saved Ingredients specific for the user
+const createShoppingListDOM = () => {
+  const shoppingListModal = document.getElementById('shoppingListModal');
+
+  console.log(savedIngsArr);
+  //<div class="container"></div>
+  const shopContainer = document.createElement('div');
+  shopContainer.classList.add('container');
+  shoppingListModal.appendChild(shopContainer);
+  //  <ul class="collection center-align">
+  const shoppingListUl = document.createElement('ul');
+  shoppingListUl.classList.add('collection', 'center-align');
+  shopContainer.appendChild(shoppingListUl);
+  // <li class="collection-item">
+  //  <span>Ingredient Name</span>
+  //  <a class="secondary-content my-pointer">
+  //    <i id="Ingredient Name" class="material-icons">
+  //       <span class="material-icons">delete_forever</span>
+  //    </i >
+  //  </a >
+  //</li >;
+  savedIngsArr.forEach((ing) => {
+    //<li class="collection-item"></li>
+    const shoppingListLi = document.createElement('li');
+    shoppingListLi.classList.add('collection-item');
+    shoppingListUl.appendChild(shoppingListLi);
+    //  <span>Ingredient Name</span>
+    const ingName = document.createElement('span');
+    ingName.innerHTML = ing;
+    shoppingListLi.appendChild(ingName);
+    //<a class="secondary-content my-pointer">
+    const secCont = document.createElement('a');
+    secCont.classList.add('secondary-content', 'my-pointer');
+    shoppingListLi.appendChild(secCont);
+    //<i id="Ingredient Name" class="material-icons">
+    const deleteIcon = document.createElement('i');
+    deleteIcon.setAttribute('id', ing);
+    deleteIcon.classList.add('material-icons');
+    secCont.appendChild(deleteIcon);
+    // add event to delete the ingredient
+    deleteIcon.addEventListener('click', () => deleteIng());
+    //<span class="material-icons">delete_forever</span>
+    const deleteIconSpan = document.createElement('span');
+    deleteIconSpan.classList.add('material-icons');
+    deleteIconSpan.innerHTML = 'delete_forever';
+    deleteIcon.appendChild(deleteIconSpan);
+  });
+};
+
+const deleteIng = () => {
+  console.log('delete clicked');
+};
+
+const shoppingListBtn = document.getElementById('shoppingListIconA');
+shoppingListBtn.addEventListener('click', () => showShoppingList());
+// Save ingredients (on SavedRecipes page -> store the ingredients in firestore)
+const storeIngredientFS = (ingredient) => {
+  const userID = firebase.auth().currentUser.uid;
+  let data = {
+    user: userID,
+    ingredient: ingredient,
+  };
+  db.collection('ingredients').doc(ingredient).set(data);
+};
+
+// MATERIALIZE
+//***********************************************************************
 // MODAL JS CODE
 const modalOptions = {
   opacity: 0.4,

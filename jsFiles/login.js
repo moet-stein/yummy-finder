@@ -48,6 +48,7 @@ const logoutFunc = () => {
   const btnLogoutSide = document.getElementById('btnLogoutSide');
   const btnLogin = document.getElementById('btnLogin');
   const btnLoginSide = document.getElementById('btnLoginSide');
+
   btnLogout.addEventListener('click', (e) => {
     e.preventDefault();
     firebase.auth().signOut();
@@ -70,6 +71,11 @@ const logoutFunc = () => {
       btnLogoutSide.classList.add('hide');
       btnLogin.classList.remove('hide');
       btnLoginSide.classList.remove('hide');
+      if (document.title == 'YummyFinder-Saved') {
+        cards.innerHTML = '';
+        noFavorites.classList.remove('hidden');
+        savedRecipesUserName.classList.add('hidden');
+      }
     }
   });
 };
