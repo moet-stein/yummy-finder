@@ -33,16 +33,15 @@ const loginFunc = () => {
       // var uid = user.uid;
       console.log(user);
       btnLogout.classList.remove('hide');
+      if (document.title == 'YummyFinder-Login') {
+        window.location = '../index.html';
+      }
     } else {
       console.log('not logged in');
       btnLogout.classList.add('hide');
     }
   });
 };
-
-if (document.title == 'YummyFinder-Login') {
-  loginFunc();
-}
 
 const logoutFunc = () => {
   const btnLogout = document.getElementById('btnLogout');
@@ -75,6 +74,10 @@ const logoutFunc = () => {
   });
 };
 
+if (document.title == 'YummyFinder-Login') {
+  loginFunc();
+}
+
 if (
   document.title == 'YummyFinder-Recipes' ||
   document.title == 'YummyFinder-Home' ||
@@ -83,20 +86,3 @@ if (
 ) {
   logoutFunc();
 }
-
-// // Only logged-in user can save recipes
-// if (document.title == "YummyFinder-Recipes") {
-//     const callFuncWhenLoggedin = (func1, func2) => {
-//       // Add a real time listener
-//       firebase.auth().onAuthStateChanged((user) => {
-//         if (user) {
-//           // User is signed in, see docs for a list of available properties
-//           // https://firebase.google.com/docs/reference/js/firebase.User
-//           // var uid = user.uid;
-//             func1();
-//         } else {
-//             func2();
-//         }
-//       });
-//     }
-// }

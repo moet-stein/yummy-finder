@@ -4,6 +4,7 @@ let onRecipesPage = true;
 const createCards = (recipes) => {
   console.log(recipes);
   cards.innerHTML = '';
+
   if (recipes) {
     recipes.forEach((recipe, index) => {
       let colDiv = document.createElement('div');
@@ -62,12 +63,14 @@ const createCards = (recipes) => {
           if (user) {
             cardIcon.addEventListener('click', () => {
               // Storing the clicked recipe data into localStorage recipesData
-              storeSavedRecipes(recipe);
+              // storeSavedRecipes(recipe);
+              storeSavedRecipesFS(recipe);
               // OVERLAYING COLOR & DISABLE THE BUTTON FOR THE RECIPE THAT IS SAVED
               overlaySaved(colDivId, cardIcon, cardIconA);
             });
             cardIcon.removeEventListener('click', () =>
-              storeSavedRecipes(recipe)
+              // storeSavedRecipes(recipe)
+              storeSavedRecipesFS(recipe)
             );
           } else {
             cardIcon.addEventListener('click', () => {
@@ -93,7 +96,7 @@ const createCards = (recipes) => {
       if (!onRecipesPage) {
         cardIconA.classList.add('modal-trigger');
         cardIconA.setAttribute('href', `#deleteCard-${recipe.id}`);
-        createDeleteModal(cardImage, recipe, index);
+        createDeleteModal(cardImage, recipe, cardIconA);
       }
 
       //4 Card content
@@ -264,9 +267,9 @@ const createCards = (recipes) => {
 };
 
 // CREATE DELETE MODAL FOR SAVED PAGE
-const createDeleteModal = (parent, recipe, i) => {
+const createDeleteModal = (parent, recipe, modalBtn) => {
   const deleteModal = document.createElement('div');
-  deleteModal.classList.add('modal');
+  deleteModal.classList.add('myModal');
   deleteModal.setAttribute('id', `deleteCard-${recipe.id}`);
   parent.appendChild(deleteModal);
   //<div class="modal-content">
@@ -287,27 +290,65 @@ const createDeleteModal = (parent, recipe, i) => {
   // <div class="modal-footer">
   const deleteModalFooter = document.createElement('div');
   deleteModalFooter.classList.add('modal-footer', 'delete-modal-a');
-  deleteModal.appendChild(deleteModalFooter);
+  deleteModalCont.appendChild(deleteModalFooter);
   // <a id="deleting" class="btn orange">Delete</a>
   const deleteModalBtn = document.createElement('a');
   deleteModalBtn.setAttribute('id', 'deleting');
-  // deleteModalBtn.setAttribute('onclick', 'deleteCard(' + i + ')');
+  // deleteModalBtn.setAttribute('onclick', 'deleteCard(recipe.title));
   deleteModalBtn.classList.add('btn', 'orange');
   deleteModalBtn.innerHTML = 'DELETE';
   deleteModalFooter.appendChild(deleteModalBtn);
-  deleteModalBtn.addEventListener('click', () => deleteCard(i));
+  deleteModalBtn.addEventListener('click', () => deleteCard(recipe.title));
   // <a href="#" class="modal-close btn orange">Cancel</a>
   const deleteModalCancelBtn = document.createElement('a');
   deleteModalCancelBtn.classList.add('modal-close', 'btn', 'grey');
+  deleteModalCancelBtn.setAttribute('id', `modalClose-${recipe.id}`);
   deleteModalCancelBtn.innerHTML = 'CANCEL';
   deleteModalFooter.appendChild(deleteModalCancelBtn);
+
+  // modal
+  const modal = document.getElementById(`deleteCard-${recipe.id}`);
+
+  // Get the <span> element that closes the modal
+  const modalClose = document.getElementById(`modalClose-${recipe.id}`);
+
+  // When the user clicks on the button, open the modal
+  modalBtn.addEventListener('click', function () {
+    modal.style.display = 'block';
+  });
+
+  // When the user clicks on <span> (x), close the modal
+  modalClose.addEventListener('click', function () {
+    modal.style.display = 'none';
+  });
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.addEventListener('click', function (event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  });
 };
 
 // DELETING A CARD (FROM BROWSER AND LOCAL STORAGE) BY CLICKING THE DELETE_FOREVER BUTTON
-const deleteCard = (i) => {
-  recipesData.splice(i, 1);
-  localStorage.setItem('recipesData', JSON.stringify(recipesData));
-  location.reload();
+// const deleteCard = (i) => {
+//   recipesData.splice(i, 1);
+//   localStorage.setItem('recipesData', JSON.stringify(recipesData));
+//   location.reload();
+// };
+
+const deleteCard = (recipeTitle) => {
+  db.collection('savedRecipes')
+    .doc(recipeTitle)
+    .delete()
+    .then(() => {
+      console.log('Document successfully deleted!');
+
+      showSavedRecipes();
+    })
+    .catch((error) => {
+      console.error('Error removing document: ', error);
+    });
 };
 
 // DISPLAY NOT FOUND MESSAGE ON DETAILS MODAL
@@ -372,53 +413,40 @@ const overlaySaved = (parent, icon, iconA) => {
   iconA.classList.add('disabled');
 };
 
-// STORING SAVED RECIPE IN LOCAL STORAGE
-const storeSavedRecipes = (recipe) => {
-  recipe['saved'] = true;
-  recipesData.push(recipe);
-  // STROING FAVORITE RECIPE DATA INTO LOCAL STORAGE
-  localStorage.setItem('recipesData', JSON.stringify(recipesData));
-  localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
+// // STORING SAVED RECIPE IN LOCAL STORAGE
+// const storeSavedRecipes = (recipe) => {
+//   recipe['saved'] = true;
+//   recipesData.push(recipe);
+//   // STROING FAVORITE RECIPE DATA INTO LOCAL STORAGE
+//   localStorage.setItem('recipesData', JSON.stringify(recipesData));
+//   localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
 
-  // overlaySaved(div, i, a);
+//   // overlaySaved(div, i, a);
 
-  // cardIcon.removeEventListener('click', () =>
-  //   storeSavedRecipes(recipe))
+//   // cardIcon.removeEventListener('click', () =>
+//   //   storeSavedRecipes(recipe))
+// };
+
+const db = firebase.firestore();
+console.log(firebase);
+// Fire store
+const storeSavedRecipesFS = (recipe) => {
+  const userID = firebase.auth().currentUser.uid;
+
+  let data = {
+    user: userID,
+    id: recipe.id,
+    title: recipe.title,
+    image: recipe.image,
+    ingredients: recipe.ingredients,
+    preparation: recipe.preparation,
+    sourceUrl: recipe.sourceUrl,
+    saved: true,
+    vegan: recipe.vegan,
+    vegetarian: recipe.vegetarian,
+    veryHealthy: recipe.veryHealthy,
+    dairyFree: recipe.dairyFree,
+    glutenFree: recipe.glutenFree,
+  };
+  db.collection('savedRecipes').doc(recipe.title).set(data);
 };
-
-// const showPopMessage = (btn, popup) => {
-//   // //<span class="popuptext" id="myPopup">A Simple Popup!</span>
-//   // const popup = document.createElement('span');
-//   // popup.classList.add('popuptext');
-//   // popup.setAttribute('id', `myPopup-${id}`);
-//   // popup.innerHTML = `Please login to save favorite recipes :)`;
-//   // btn.appendChild(popup);
-
-//   // When the user clicks on the button, open the modal
-//   btn.addEventListener('click', function () {
-//     popup.style.display = 'block';
-//   });
-
-//   // When the user clicks on <span> (x), close the modal
-//   btn.addEventListener('click', function () {
-//     popup.style.display = 'none';
-//   });
-
-//   // When the user clicks anywhere outside of the modal, close it
-//   window.addEventListener('click', function (event) {
-//     if (event.target == popup) {
-//       popup.style.display = 'none';
-//     }
-//   });
-// };
-
-// const callFuncWhenLoggedin = (func1, func2) => {
-//   // Add a real time listener
-//   firebase.auth().onAuthStateChanged((user) => {
-//     if (user) {
-//       func1;
-//     } else {
-//       func2;
-//     }
-//   });
-// };

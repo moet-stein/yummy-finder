@@ -49,11 +49,22 @@
               border: 1px solid #eee;
             "
           >
-            <form class="col s12" method="post" action="#">
+            <form class="col s12" method="post" action="#" id="signupForm">
               <div class="row">
                 <div class="col s12"></div>
               </div>
-
+              <div class="row">
+                <div class="input-field col s12">
+                  <input
+                    class="validate"
+                    type="text"
+                    name="signup-name"
+                    id="signup-name"
+                    required
+                  />
+                  <label for="signup-name">Enter your username</label>
+                </div>
+              </div>
               <div class="row">
                 <div class="input-field col s12">
                   <input
@@ -61,6 +72,7 @@
                     type="email"
                     name="email"
                     id="email"
+                    required
                   />
                   <label for="email">Enter your email</label>
                 </div>
@@ -74,6 +86,7 @@
                     name="password"
                     id="password"
                     autocomplete="on"
+                    required
                   />
                   <label for="password">Enter your password</label>
                 </div>

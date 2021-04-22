@@ -74,18 +74,19 @@ const filteringRecipes = (recipes) => {
   if (checkedValue.length === 0) {
     createCards(recipes);
   } else {
-    // Loop through the checkbox values
-    checkedValue.forEach((value) => {
-      if (filteredRecipes.length === 0) {
-        filteredRecipes = recipes.filter((recipe) => recipe[value]);
-      } else {
-        filteredRecipes = filteredRecipes.filter((recipe) => recipe[value]);
-      }
-      return filteredRecipes;
-    });
-    console.log(filteredRecipes);
+    if (filteredRecipes.length === 0) {
+      filteredRecipes = recipes.filter((recipe) => recipe[checkedValue]);
+    } else {
+      checkedValue.forEach((value) => {
+        return (filteredRecipes = filteredRecipes.filter(
+          (recipe) => recipe[value]
+        ));
+      });
+    }
     createCards(filteredRecipes);
+    console.log(filteredRecipes);
   }
+
   // If there are no recipes after filtering, show the picture with no recipes found
   const noRecipesFound = document.getElementById('noRecipesFound');
   if (checkedValue.length > 0 && filteredRecipes.length === 0) {

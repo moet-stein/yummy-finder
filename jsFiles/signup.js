@@ -4,6 +4,9 @@ console.log(firebase);
 // Initialize the FirebaseUI Widget using Firebase.
 const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
+const db = firebase.firestore();
+
+const signupForm = document.querySelector('#signupForm');
 // SIGN-UP
 const signUpBtn = document.getElementById('signUp');
 signUpBtn.addEventListener('click', (event) => {
@@ -16,8 +19,13 @@ signUpBtn.addEventListener('click', (event) => {
     .createUserWithEmailAndPassword(emailInputValue, passwordInputValue)
     .then((userCredential) => {
       // Signed in
-      var user = userCredential.user;
-      console.log(user);
+      return db.collection('users').doc(userCredential.user.uid).set({
+        name: signupForm['signup-name'].value,
+        userID: userCredential.user.uid,
+      });
+    })
+    .then(() => {
+      window.location = '../index.html';
     })
     .catch((error) => {
       var errorCode = error.code;
