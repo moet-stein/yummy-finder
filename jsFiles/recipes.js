@@ -50,7 +50,7 @@ const storeData = (recipe, pushedTo, ingredients, preparation) => {
 
 // ADD NEW RECIPES FUNCTIONS
 const addNewRecipes = async () => {
-  resetFilter();
+  // resetFilter();
   // searchedRecipes = [];
   //localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
   cards.innerHTML = '';
@@ -61,7 +61,6 @@ const addNewRecipes = async () => {
     const noRecipesFound = document.getElementById('noRecipesFound');
     noRecipesFound.classList.add('no-recipes-hidden');
   }
-  console.log(recipesFromApi);
   // 1. first store the searched recipes into local storage
   // 2. make elements by DOM with the localStorage data 'searchedRecipes'
 
@@ -91,7 +90,6 @@ const addNewRecipes = async () => {
   // MAKE ELEMENTS BY DOM with searchedRecipes Data from localStorage
   createCards(searchedRecipes);
   addEvents(searchedRecipes);
-  filteringRecipes(searchedRecipes);
   // removeDeletedCards();
 };
 
@@ -143,6 +141,9 @@ const addEvents = (recipesData) => {
 };
 
 // FILTERING
+// let checkedValue = localStorage.getItem('checkedValue')
+//   ? JSON.parse(localStorage.getItem('checkedValue'))
+//   : [];
 // Listening all the values that have to filter with, and calling createCards function with the filtered recipes
 const filteringRecipes = (recipes) => {
   let checkedValue = [];
@@ -161,20 +162,18 @@ const filteringRecipes = (recipes) => {
 
   // FILTERING RECIPES; CREATING CARDS
   // This filteredRecipes are updated each time of forEach loop
-  let filteredRecipes = [];
+  let filteredRecipes = [...recipes];
   // If nothing is checked (everthing is unchecked), just create cards with the original data
+  console.log(checkedValue);
   if (checkedValue.length === 0) {
     createCards(recipes);
   } else {
-    if (filteredRecipes.length === 0) {
-      filteredRecipes = recipes.filter((recipe) => recipe[checkedValue]);
-    } else {
-      checkedValue.forEach((value) => {
-        return (filteredRecipes = filteredRecipes.filter(
-          (recipe) => recipe[value]
-        ));
+    checkedValue.forEach((value) => {
+      filteredRecipes = filteredRecipes.filter((recipe) => {
+        return recipe[value];
       });
-    }
+      console.log(filteredRecipes);
+    });
     createCards(filteredRecipes);
   }
 
