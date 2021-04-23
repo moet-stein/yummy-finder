@@ -39,7 +39,6 @@ const showSavedRecipes = () => {
           savedRecipes.push(doc.data());
         }
       });
-      console.log(savedRecipes);
       const noFavorites = document.getElementById('noFavorites');
       const savedRecipesUserName = document.getElementById(
         'savedRecipesUserName'

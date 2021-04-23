@@ -139,13 +139,21 @@ const createCards = (recipes) => {
       detailsModal.appendChild(detailsModalContent);
       //   <a href="#" class="modal-close"><i class="material-icons">cancel</i></a>
       const detailsModalCloseA = document.createElement('a');
-      detailsModalCloseA.classList.add('my-modal-close', 'my-right-align');
+      detailsModalCloseA.classList.add(
+        'my-modal-close',
+        'my-right-align',
+        'my-pointer'
+      );
       detailsModalCloseA.setAttribute('id', `modalClose-${recipe.id}`);
       detailsModalContent.appendChild(detailsModalCloseA);
       const detailsModalCloseI = document.createElement('i');
       detailsModalCloseI.classList.add('material-icons');
       detailsModalCloseI.innerHTML = 'cancel';
       detailsModalCloseA.appendChild(detailsModalCloseI);
+      detailsModalCloseA.addEventListener(
+        'click',
+        () => (detailsModal.style.display = 'none')
+      );
 
       //   parent detailsModalContent
       //  <h4 class="green-text center-align">TITLE</h4>
@@ -247,17 +255,17 @@ const createCards = (recipes) => {
       const modalClose = document.getElementById(`modalClose-${recipe.id}`);
 
       // When the user clicks on the button, open the modal
-      modalBtn.addEventListener('click', function () {
+      modalBtn.addEventListener('click', () => {
         modal.style.display = 'block';
       });
 
       // When the user clicks on <span> (x), close the modal
-      modalClose.addEventListener('click', function () {
+      modalClose.addEventListener('click', () => {
         modal.style.display = 'none';
       });
 
       // When the user clicks anywhere outside of the modal, close it
-      window.addEventListener('click', function (event) {
+      window.addEventListener('click', (event) => {
         if (event.target == modal) {
           modal.style.display = 'none';
         }
@@ -423,22 +431,6 @@ const createAddBtn = (parent, ing, recipe) => {
     });
 };
 
-// IF the ingID is the same like iconA id, i will show check icon and it's disabled to click
-// const checkIngSaved = (buttonID) => {
-//   db.collection('ingredients')
-//     .get()
-//     .then((querySnapshot) => {
-//       querySnapshot.forEach((doc) => {
-
-//         if (doc.data().ingID == buttonID) {
-//           addInSpan.innerHTML = 'check_circle';
-//           addIngA.setAttribute('disabled', true);
-//           addInI.setAttribute('disabled', true);
-//         }
-//       });
-//     });
-// };
-
 // OVERLAY ORANGE LAYER ON THE SAVED RECIPE
 const overlaySaved = (parent, icon, iconA) => {
   const shadow = document.createElement('div');
@@ -458,7 +450,7 @@ const overlaySaved = (parent, icon, iconA) => {
 const db = firebase.firestore();
 console.log(firebase);
 // Fire store
-// Save recipes -> store the recipe in firestore
+// Click the favorite button (searchRecipe page -> store the recipe in firestore)
 const storeSavedRecipesFS = (recipe) => {
   const userID = firebase.auth().currentUser.uid;
 
