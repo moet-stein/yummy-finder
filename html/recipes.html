@@ -156,10 +156,9 @@
             <div class="input-field col s12">
               <h5>Vegetarian? Vegan?</h5>
               <select id="vegeVegan">
-                <option value="choose" disabled selected>Choose</option>
-                <option value="all">All</option>
-                <option value="vegetarian">Vegetarian</option>
-                <option value="vegan">Vegan</option>
+                <option value="all" id="all">All</option>
+                <option value="vegetarian" id="vegetarian">Vegetarian</option>
+                <option value="vegan" id="vegan">Vegan</option>
               </select>
               <!-- <label>Vegetarian? Vegan?</label> -->
             </div>
@@ -168,7 +167,12 @@
               <!-- <form id="glutenFree" action="#"> -->
               <p>
                 <label>
-                  <input type="checkbox" value="glutenFree" name="checkbox" />
+                  <input
+                    type="checkbox"
+                    value="glutenFree"
+                    name="checkbox"
+                    id="glutenFree"
+                  />
                   <span class="black-text">Gluten-free</span>
                 </label>
               </p>
@@ -176,7 +180,12 @@
               <!-- <form id="dairyFree" action="#"> -->
               <p>
                 <label>
-                  <input type="checkbox" value="dairyFree" name="checkbox" />
+                  <input
+                    type="checkbox"
+                    value="dairyFree"
+                    name="checkbox"
+                    id="dairyFree"
+                  />
                   <span class="black-text">Dairy-free</span>
                 </label>
               </p>
@@ -187,7 +196,12 @@
               <!-- <form action="#" id="veryHealthy"> -->
               <p>
                 <label>
-                  <input type="checkbox" value="veryHealthy" name="checkbox" />
+                  <input
+                    type="checkbox"
+                    value="veryHealthy"
+                    name="checkbox"
+                    id="veryHealthy"
+                  />
                   <span class="black-text">Yes!</span>
                 </label>
               </p>

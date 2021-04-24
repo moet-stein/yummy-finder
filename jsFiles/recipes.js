@@ -90,6 +90,8 @@ const addNewRecipes = async () => {
   // MAKE ELEMENTS BY DOM with searchedRecipes Data from localStorage
   createCards(searchedRecipes);
   addEvents(searchedRecipes);
+  keepCheckboxes();
+  filteringRecipes(searchedRecipes);
   // removeDeletedCards();
 };
 
@@ -160,6 +162,8 @@ const filteringRecipes = (recipes) => {
     checkedValue.push(vegeVegan);
   }
 
+  localStorage.setItem('checkedValue', JSON.stringify(checkedValue));
+
   // FILTERING RECIPES; CREATING CARDS
   // This filteredRecipes are updated each time of forEach loop
   let filteredRecipes = [...recipes];
@@ -186,8 +190,35 @@ const filteringRecipes = (recipes) => {
   }
 };
 
+// get localstorage value for checkboxes and checked the checkboxes & filter along the values
+const keepCheckboxes = () => {
+  let checkedValue = localStorage.getItem('checkedValue')
+    ? JSON.parse(localStorage.getItem('checkedValue'))
+    : [];
+  console.log(checkedValue);
+  checkedValue.forEach((value) => {
+    if (
+      value === 'glutenFree' ||
+      value === 'dairyFree' ||
+      value === 'veryHealthy'
+    ) {
+      document.getElementById(value).checked = true;
+    } else {
+      const optionAll = document.getElementById('all');
+      optionAll.removeAttribute('selected');
+      optionAll.classList.remove('selected');
+      optionAll.removeAttribute('disabled');
+
+      document.getElementById(value).setAttribute('selected', true);
+      console.log('vegan or vege is checked');
+      // document.getElementById(value).setAttribute('disabled', true);
+    }
+  });
+};
+
 //***********************/ FILTERING END **************************//
 addNewRecipes();
+
 //
 // GETTING RID OF THE DATA THAT IS IN searchedRecipes and has a key save == true,
 // But the id can't be found in the recipesData
