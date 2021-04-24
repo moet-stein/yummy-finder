@@ -105,12 +105,16 @@ const createVideoCards = (videos) => {
     cardStacked.appendChild(cardContent);
     //  <div class="center-align">
     const centerAlign = document.createElement('div');
-    centerAlign.classList.add('center-align');
+    // centerAlign.classList.add('center-align');
     cardContent.appendChild(centerAlign);
     //<h3 class="teal-text my-video-title">8 One-Pot Pastas</h3>
     const videoTitle = document.createElement('h3');
     videoTitle.classList.add('teal-text', 'my-video-title');
-    videoTitle.innerHTML = video.shortTitle;
+    let title =
+      video.shortTitle.split(' ').length > 5
+        ? video.shortTitle.split(' ').slice(0, 5).join(' ') + '...'
+        : video.shortTitle;
+    videoTitle.innerHTML = title;
     centerAlign.appendChild(videoTitle);
     //<div class="card-action my-card-action center-align">
     const actionDiv = document.createElement('div');
@@ -130,16 +134,20 @@ const createVideoCards = (videos) => {
     playIcon.classList.add('material-icons', 'my-play-icon');
     playIcon.innerHTML = 'play_circle_outline';
     playA.appendChild(playIcon);
+    //
+    const viewLengthDiv = document.createElement('div');
+    viewLengthDiv.classList.add('my-view-length');
+    actionDiv.appendChild(viewLengthDiv);
     //<p class="teal-text text-darken-3 my-height-50"> Views: 1213468 </p>
     const views = document.createElement('p');
     views.classList.add('teal-text', 'text-darken-3', 'my-height');
     views.innerHTML = `Views: ${numberConverter(video.views)}`;
-    actionDiv.appendChild(views);
+    viewLengthDiv.appendChild(views);
     // <p class="teal-text text-darken-3 my-height">Length: 51 </p>
     const videoLength = document.createElement('p');
     videoLength.classList.add('teal-text', 'text-darken-3', 'my-height');
     videoLength.innerHTML = `Length: ${secondsConverter(video.length)}`;
-    actionDiv.appendChild(videoLength);
+    viewLengthDiv.appendChild(videoLength);
   });
 };
 

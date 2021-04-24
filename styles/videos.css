@@ -14,15 +14,32 @@
   margin-top: 10px;
 }
 
+.card .my-video-title {
+  font-size: 25px;
+  margin-left: 20px !important;
+}
+
+.card .card-image img {
+  width: 300px !important;
+  height: 200px;
+}
+
 .card .my-card-action {
   padding: 0px;
   display: flex;
   justify-content: space-around;
+  width: 70%;
+}
+
+.my-view-length {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .my-height {
   line-height: 60px;
-  font-size: 20px;
+  margin-left: 20px !important;
+  font-size: 17px;
 }
 
 .my-play-icon {
@@ -34,14 +51,26 @@
     line-height: 20px;
     font-size: 10px;
   }
-  .my-video-title {
-    font-size: 25px;
+  .card .my-video-title {
+    font-size: 18px;
   }
   .my-play-icon {
-    font-size: 40px;
+    font-size: 35px;
   }
   .my-search-bar-responsive {
     width: 100% !important;
+  }
+
+  .card .card-image img {
+    width: 150px !important;
+    height: 100px;
+  }
+
+  .card .my-card-action {
+    width: 100%;
+  }
+  .my-height {
+    margin: 0px !important;
   }
 }
 
