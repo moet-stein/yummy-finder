@@ -5,7 +5,7 @@ const createCards = (recipes) => {
   cards.innerHTML = '';
 
   if (recipes) {
-    recipes.forEach((recipe, index) => {
+    recipes.forEach((recipe) => {
       let colDiv = document.createElement('div');
       colDiv.setAttribute('id', `colDiv-${recipe.id}`);
       let colSize = onRecipesPage ? 'l6' : 'l4';
@@ -273,7 +273,7 @@ const createCards = (recipes) => {
   }
 };
 
-// CREATE DELETE MODAL FOR SAVED PAGE
+// CREATE DELETE MODAL (title: YummyFinder - Saved)
 const createDeleteModal = (parent, recipe, modalBtn) => {
   const deleteModal = document.createElement('div');
   deleteModal.classList.add('myModal');
@@ -337,6 +337,10 @@ const createDeleteModal = (parent, recipe, modalBtn) => {
   });
 };
 
+const db = firebase.firestore();
+console.log(firebase);
+
+//Deleting the card and data from firestore (title: YummyFinder - Saved)
 const deleteCard = (recipeTitle) => {
   db.collection('savedRecipes')
     .doc(recipeTitle)
@@ -359,7 +363,7 @@ const displayNotFound = (parent, message) => {
   parent.appendChild(notFoundDiv);
 };
 
-// CREAT ICON (EITHER FAVORITE OR DELETE DEPENDING ON THE PAGE)
+// CREAT ICON (EITHER FAVORITE OR DELETE ICON DEPENDING ON THE PAGE)
 const createIcon = (parent, iconName, id) => {
   const iconA = document.createElement('a');
   iconA.setAttribute('id', `cardIconA-${id}`);
@@ -380,7 +384,8 @@ const createIcon = (parent, iconName, id) => {
   iconA.appendChild(iconI);
 };
 
-// CREATING ADD(PLUS) BUTTON FOR ADDING INGREDIENTS TO SHOPPING LIST
+// CREATING ADD(PLUS) BUTTON FOR ADDING INGREDIENTS TO SHOPPING LIST ((title: YummyFinder - Saved))
+//SAVING INGREDIENT DATA IN FIRESTORE WHEN CLICKING
 const createAddBtn = (parent, ing, recipe) => {
   //child <a href="#" class="secondary-content">
   const addIngA = document.createElement('a');
@@ -398,13 +403,6 @@ const createAddBtn = (parent, ing, recipe) => {
   addInSpan.innerHTML = 'add_circle_outline';
   addInI.appendChild(addInSpan);
   //
-  // if (checkIngSaved(`${recipe.title}-${ing}`) == true) {
-  //   addInSpan.innerHTML = 'check_circle';
-  //   addIngA.setAttribute('disabled', true);
-  //   addInI.setAttribute('disabled', true);
-  // } else {
-  //   addInSpan.innerHTML = 'add_circle_outline';
-  // }
 
   // eventlistener
   addInI.addEventListener('click', () => {
@@ -430,6 +428,17 @@ const createAddBtn = (parent, ing, recipe) => {
     });
 };
 
+// // Save ingredients (on SavedRecipes page -> store the ingredients in firestore)
+const saveIngredientFS = (ing, ingID) => {
+  const userID = firebase.auth().currentUser.uid;
+  let data = {
+    user: userID,
+    ingredient: ing,
+    ingID: ingID,
+  };
+  db.collection('ingredients').doc(ing).set(data);
+};
+
 // OVERLAY ORANGE LAYER ON THE SAVED RECIPE
 const overlaySaved = (parent, icon, iconA) => {
   const shadow = document.createElement('div');
@@ -446,8 +455,6 @@ const overlaySaved = (parent, icon, iconA) => {
   iconA.classList.add('disabled');
 };
 
-const db = firebase.firestore();
-console.log(firebase);
 // Fire store
 // Click the favorite button (searchRecipe page -> store the recipe in firestore)
 const storeSavedRecipesFS = (recipe) => {
@@ -469,15 +476,4 @@ const storeSavedRecipesFS = (recipe) => {
     glutenFree: recipe.glutenFree,
   };
   db.collection('savedRecipes').doc(recipe.title).set(data);
-};
-
-// // Save ingredients (on SavedRecipes page -> store the ingredients in firestore)
-const saveIngredientFS = (ing, ingID) => {
-  const userID = firebase.auth().currentUser.uid;
-  let data = {
-    user: userID,
-    ingredient: ing,
-    ingID: ingID,
-  };
-  db.collection('ingredients').doc(ing).set(data);
 };

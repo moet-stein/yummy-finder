@@ -1,17 +1,5 @@
 const myKey = config.MY_KEY;
 
-// STORING SEARCHED RECIEPS in LOCAL STORAGE
-// let searchedRecipes = localStorage.getItem('searchedRecipes')
-//   ? JSON.parse(localStorage.getItem('searchedRecipes'))
-//   : [];
-let searchedRecipes = [];
-
-// STORING SAVED RECIPES  in LOCAl STORAGE
-// let recipesData = localStorage.getItem('recipesData')
-//   ? JSON.parse(localStorage.getItem('recipesData'))
-//   : [];
-// let recipesData = [];
-
 // Get an array of recipes with axios(and with async await func)
 // This data includes ID that can be used to request the data of ingredients as below (getInfredients())
 const fetchRecipes = async () => {
@@ -48,11 +36,9 @@ const storeData = (recipe, pushedTo, ingredients, preparation) => {
   pushedTo.push(recipeObject);
 };
 
+let searchedRecipes = [];
 // ADD NEW RECIPES FUNCTIONS
 const addNewRecipes = async () => {
-  // resetFilter();
-  // searchedRecipes = [];
-  //localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
   cards.innerHTML = '';
   // GETTING DATA FROM API (CALLING THE FUNCTION)
   const recipesFromApi = await fetchRecipes();
@@ -61,11 +47,8 @@ const addNewRecipes = async () => {
     const noRecipesFound = document.getElementById('noRecipesFound');
     noRecipesFound.classList.add('no-recipes-hidden');
   }
-  // 1. first store the searched recipes into local storage
-  // 2. make elements by DOM with the localStorage data 'searchedRecipes'
 
-  // 1. STORE INGREDIENTS INFO into local storage
-  //   res.data.results[0].analyzedInstructions[0].steps[0].ingredients[0].name
+  // 1. STORE INGREDIENTS INFO into an array so that it can be filtered
   recipesFromApi.forEach((recipe) => {
     let ingredients = [];
     let preparation = [];
@@ -83,9 +66,7 @@ const addNewRecipes = async () => {
     // Storing the searched recipes in the array 'searchedRecipes'
     storeData(recipe, searchedRecipes, ingredients, preparation);
   });
-  // UPDATE LOCALSTORAGE'S searchedRecipes Data
-  // localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
-  // addEvents(searchedRecipes);
+
   // 2.
   // MAKE ELEMENTS BY DOM with searchedRecipes Data from localStorage
   createCards(searchedRecipes);
@@ -95,32 +76,9 @@ const addNewRecipes = async () => {
   // removeDeletedCards();
 };
 
-// RESET FILTER
-const resetFilter = () => {
-  document.getElementById('vegeVegan').options.selectedIndex = '0';
-  document
-    .querySelectorAll('input[name=checkbox]')
-    .forEach((checkbox) => (checkbox.checked = false));
-};
-
-// CALL FUNCTION to SHOW THE DATA WHEN LOADING THE PAGE
-// IF there are no recipes yet (first time to visit website or deleted all recipes), call function to fetch api and show cards
-// ELSE show cards from local storage
-// if (searchedRecipes.length === 0) {
-//   addNewRecipes();
-// } else {
-//   createCards(searchedRecipes);
-//   addEvents(searchedRecipes);
-//   removeDeletedCards();
-// }
-// addNewRecipes();
-
 const newRecipesBtn = document.getElementById('newRecipes');
 // CLICKING THE BUTTON AND CALLING THE FUNC ABOVE(addNewRecipes)
 newRecipesBtn.addEventListener('click', () => {
-  // searchedRecipes = [];
-  // localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
-  // cards.innerHTML = '';
   addNewRecipes();
 });
 
@@ -143,9 +101,6 @@ const addEvents = (recipesData) => {
 };
 
 // FILTERING
-// let checkedValue = localStorage.getItem('checkedValue')
-//   ? JSON.parse(localStorage.getItem('checkedValue'))
-//   : [];
 // Listening all the values that have to filter with, and calling createCards function with the filtered recipes
 const filteringRecipes = (recipes) => {
   let checkedValue = [];
@@ -208,7 +163,6 @@ const keepCheckboxes = () => {
       optionAll.removeAttribute('selected');
       optionAll.classList.remove('selected');
       optionAll.removeAttribute('disabled');
-
       document.getElementById(value).setAttribute('selected', true);
       console.log('vegan or vege is checked');
       // document.getElementById(value).setAttribute('disabled', true);
@@ -217,26 +171,8 @@ const keepCheckboxes = () => {
 };
 
 //***********************/ FILTERING END **************************//
+//Showing recipes when loading page
 addNewRecipes();
-
-//
-// GETTING RID OF THE DATA THAT IS IN searchedRecipes and has a key save == true,
-// But the id can't be found in the recipesData
-// const removeDeletedCards = () => {
-//   let hasOrangeLayer = searchedRecipes.filter((recipe) => 'saved' in recipe);
-//   let savedIdArr = recipesData.map((recipe) => recipe.id);
-//   hasOrangeLayer.forEach((recipe) => {
-//     let isThereRecipe = savedIdArr.includes(recipe.id);
-//     if (!isThereRecipe) {
-//       // IF there is no recipe in the recipesData(saved recipes), remove this recipe from searchedRecipe
-//       let index = searchedRecipes.findIndex((x) => x.id === recipe.id);
-//       searchedRecipes.splice(index, 1);
-//       localStorage.setItem('searchedRecipes', JSON.stringify(searchedRecipes));
-//       createCards(searchedRecipes);
-//       location.reload();
-//     }
-//   });
-// };
 
 // MATERIALIZE///////////
 // SIDE NAV

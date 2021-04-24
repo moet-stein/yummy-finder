@@ -33,4 +33,3 @@ signUpBtn.addEventListener('click', (event) => {
       console.log(errorCode, errorMessage);
     });
 });
-// helloWorld123;

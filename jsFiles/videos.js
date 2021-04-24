@@ -1,5 +1,16 @@
 const myKey = config.MY_KEY;
-// https://www.youtube.com/results?search_query=81bn4p8H3Kg
+
+const fetchCookingVideos = async (value) => {
+  try {
+    const res = await axios.get(
+      `https://api.spoonacular.com/food/videos/search?query=${value}&number=10&apiKey=${myKey}`
+    );
+    return res.data.videos;
+    // return res.data.results;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 // RETIRVING TEXTAREA INPUT DATA
 const searchTextarea = document.getElementById('icon_prefix2');
@@ -15,17 +26,6 @@ searchBtn.addEventListener('click', async () => {
   createVideoCards(videos);
 });
 
-const fetchCookingVideos = async (value) => {
-  try {
-    const res = await axios.get(
-      `https://api.spoonacular.com/food/videos/search?query=${value}&number=10&apiKey=${myKey}`
-    );
-    return res.data.videos;
-    // return res.data.results;
-  } catch (e) {
-    console.log(e);
-  }
-};
 //  <div class="col s12">
 //    <div class="card horizontal">
 //      <div class="card-image">
