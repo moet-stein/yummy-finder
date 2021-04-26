@@ -51,6 +51,11 @@ html {
   height: 440px;
 }
 
+.my-card-margin {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
 .delete-modal-a {
   display: flex;
   justify-content: space-around;

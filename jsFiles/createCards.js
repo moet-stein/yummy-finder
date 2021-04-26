@@ -21,7 +21,7 @@ const createCards = (recipes) => {
       cards.appendChild(colDiv);
       //
       const card = document.createElement('div');
-      card.classList.add('card');
+      card.classList.add('card', 'my-card-margin');
       colDiv.appendChild(card);
       // 3
       const cardImage = document.createElement('div');
@@ -448,7 +448,7 @@ const overlaySaved = (parent, icon, iconA) => {
   // OVERLAY TEXT
   const overlayText = document.createElement('h2');
   overlayText.innerHTML = 'SAVED!';
-  overlayText.classList.add('saved-recipe');
+  overlayText.classList.add('saved-recipe', 'center-align');
   shadow.appendChild(overlayText);
   // CHANGE ICON AND DISABLE THE BUTTON
   icon.innerHTML = 'check_circle_outline';

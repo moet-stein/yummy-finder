@@ -83,7 +83,7 @@ const createShoppingListDOM = () => {
 
   // <h4 class="center-align">Shopping List</h4>
   const shoppingListTitle = document.createElement('h4');
-  shoppingListTitle.classList.add('center-align');
+  shoppingListTitle.classList.add('center-align', 'red-text', 'text-lighten-2');
   shoppingListTitle.innerHTML = 'Shopping List';
   shoppingListModal.appendChild(shoppingListTitle);
 

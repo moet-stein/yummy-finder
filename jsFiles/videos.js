@@ -20,6 +20,15 @@ let textareaValue = '';
 const getTextareaValue = () => {
   textareaValue = searchTextarea.value;
 };
+
+searchTextarea.addEventListener('keypress', async (e) => {
+  if (e.keyCode == 13) {
+    e.preventDefault();
+    getTextareaValue();
+    const videos = await fetchCookingVideos(textareaValue);
+    createVideoCards(videos);
+  }
+});
 searchBtn.addEventListener('click', async () => {
   getTextareaValue();
   const videos = await fetchCookingVideos(textareaValue);
@@ -108,13 +117,18 @@ const createVideoCards = (videos) => {
     // centerAlign.classList.add('center-align');
     cardContent.appendChild(centerAlign);
     //<h3 class="teal-text my-video-title">8 One-Pot Pastas</h3>
-    const videoTitle = document.createElement('h3');
+    const videoTitle = document.createElement('a');
     videoTitle.classList.add('teal-text', 'my-video-title');
     let title =
       video.shortTitle.split(' ').length > 5
         ? video.shortTitle.split(' ').slice(0, 5).join(' ') + '...'
         : video.shortTitle;
     videoTitle.innerHTML = title;
+    videoTitle.setAttribute(
+      'href',
+      `https://www.youtube.com/watch?v=${video.youTubeId}`
+    );
+    videoTitle.setAttribute('target', '_blank');
     centerAlign.appendChild(videoTitle);
     //<div class="card-action my-card-action center-align">
     const actionDiv = document.createElement('div');
@@ -124,7 +138,7 @@ const createVideoCards = (videos) => {
     const playA = document.createElement('a');
     playA.setAttribute(
       'href',
-      `https://www.youtube.com/results?search_query=${video.youTubeId}`
+      `https://www.youtube.com/watch?v=${video.youTubeId}`
     );
     playA.setAttribute('target', '_blank');
     playA.classList.add('material-icons');
