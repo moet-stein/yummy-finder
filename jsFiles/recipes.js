@@ -39,7 +39,7 @@ const storeData = (recipe, pushedTo, ingredients, preparation) => {
 let searchedRecipes = [];
 // ADD NEW RECIPES FUNCTIONS
 const addNewRecipes = async () => {
-  cards.innerHTML = '';
+  searchedRecipes = [];
   // GETTING DATA FROM API (CALLING THE FUNCTION)
   const recipesFromApi = await fetchRecipes();
 
@@ -145,7 +145,7 @@ const filteringRecipes = (recipes) => {
   }
 };
 
-// get localstorage value for checkboxes and checked the checkboxes & filter along the values
+// get localstorage value of checkboxes and checked the checkboxes & filter along the values
 const keepCheckboxes = () => {
   let checkedValue = localStorage.getItem('checkedValue')
     ? JSON.parse(localStorage.getItem('checkedValue'))
@@ -160,11 +160,17 @@ const keepCheckboxes = () => {
       document.getElementById(value).checked = true;
     } else {
       const optionAll = document.getElementById('all');
-      optionAll.removeAttribute('selected');
-      optionAll.classList.remove('selected');
-      optionAll.removeAttribute('disabled');
-      document.getElementById(value).setAttribute('selected', true);
+      console.log(optionAll.selected);
+      optionAll.setAttribute('selected', false);
+      console.log(optionAll.selected);
+      // optionAll.classList.remove('selected');
+      // optionAll.removeAttribute('disabled');
+      const selectedValue = document.getElementById(value);
+
+      selectedValue.setAttribute('selected', true);
+      // selectedValue.classList.add('selected');
       console.log('vegan or vege is checked');
+
       // document.getElementById(value).setAttribute('disabled', true);
     }
   });
@@ -185,10 +191,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // FILTER INIT
-document.addEventListener('DOMContentLoaded', function () {
-  const elems = document.querySelectorAll('select');
-  const instances = M.FormSelect.init(elems, options);
-});
+// document.addEventListener('DOMContentLoaded', function () {
+//   const elems = document.querySelectorAll('select');
+//   const instances = M.FormSelect.init(elems, options);
+// });
 
 // PARALLAX
 document.addEventListener('DOMContentLoaded', function () {

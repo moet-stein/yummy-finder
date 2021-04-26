@@ -23,10 +23,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
-    <!-- AXIOS -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- firebase auth ui -->
-    <script src="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.js"></script>
     <!-- <link
       type="text/css"
       rel="stylesheet"
@@ -155,8 +151,8 @@
           >
             <div class="input-field col s12" id="selector">
               <h5>Vegetarian? Vegan?</h5>
-              <select id="vegeVegan">
-                <option value="all" id="all">All</option>
+              <select id="vegeVegan" class="browser-default">
+                <option value="all" id="all" selected>All</option>
                 <option value="vegetarian" id="vegetarian">Vegetarian</option>
                 <option value="vegan" id="vegan">Vegan</option>
               </select>
@@ -252,6 +248,10 @@
     <!-- SCRIPT TAGS -->
     <!-- Config -->
     <script src="../config.js"></script>
+    <!-- AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- firebase auth ui -->
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.js"></script>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
 
