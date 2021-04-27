@@ -27,6 +27,12 @@ body {
   box-shadow: none;
 }
 
+.preview-obj {
+  width: 200px;
+  height: 180px;
+  border-radius: 50%;
+}
+
 .my-upload {
   display: flex;
   flex-direction: column;

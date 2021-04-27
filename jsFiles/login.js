@@ -4,6 +4,8 @@ console.log(firebase);
 // Initialize the FirebaseUI Widget using Firebase.
 const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
+const db = firebase.firestore();
+
 // Login(sign in)
 const loginFunc = () => {
   const loginBtn = document.getElementById('login');
@@ -45,6 +47,8 @@ const loginFunc = () => {
   });
 };
 
+let userID;
+let userName;
 const logoutFunc = () => {
   const btnLogout = document.getElementById('btnLogout');
   const btnLogoutSide = document.getElementById('btnLogoutSide');
@@ -53,6 +57,7 @@ const logoutFunc = () => {
   const acountImage = document.getElementById('acountImage');
   const sideAcountImage = document.getElementById('sideAcountImage');
   const sideImg = document.getElementById('sideImg');
+  const helloUser = document.getElementById('helloUser');
 
   btnLogout.addEventListener('click', (e) => {
     e.preventDefault();
@@ -66,24 +71,39 @@ const logoutFunc = () => {
   // Add a real time listener
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      firebase
-        .storage()
-        .ref(`users/${user.uid}/profile.jpg`)
-        .getDownloadURL()
-        .then((imgUrl) => {
-          acountImage.setAttribute('src', imgUrl);
-          sideImg.setAttribute('src', imgUrl);
+      userID = user.uid;
+      console.log(userID);
+
+      db.collection('users')
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (userID === doc.data().userID) {
+              userName = doc.data().name;
+            }
+          });
+        })
+        .then(() => {
+          firebase
+            .storage()
+            .ref(`users/${user.uid}/profile.jpg`)
+            .getDownloadURL()
+            .then((imgUrl) => {
+              acountImage.setAttribute('src', imgUrl);
+              sideImg.setAttribute('src', imgUrl);
+            });
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          // var uid = user.uid;
+          console.log(user);
+          btnLogout.classList.remove('hide');
+          btnLogoutSide.classList.remove('hide');
+          acountImage.classList.remove('hide');
+          sideAcountImage.classList.remove('hide');
+          helloUser.innerHTML = `Hello ${userName}`;
+          btnLogin.classList.add('hide');
+          btnLoginSide.classList.add('hide');
         });
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      // var uid = user.uid;
-      console.log(user);
-      btnLogout.classList.remove('hide');
-      btnLogoutSide.classList.remove('hide');
-      acountImage.classList.remove('hide');
-      sideAcountImage.classList.remove('hide');
-      btnLogin.classList.add('hide');
-      btnLoginSide.classList.add('hide');
     } else {
       console.log('not logged in');
       btnLogout.classList.add('hide');

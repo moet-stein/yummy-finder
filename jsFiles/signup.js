@@ -13,33 +13,31 @@ let file;
 const uploader = document.getElementById('uploader');
 const fileButton = document.getElementById('fileButton');
 
+const preview = document.getElementById('preview');
+
+function handleFiles(file) {
+  preview.innerHTML = '';
+
+  const previewImg = document.createElement('img');
+  previewImg.classList.add('preview-obj');
+  previewImg.file = file;
+  preview.appendChild(previewImg); // Assuming that "preview" is the div output where the content will be displayed.
+
+  const reader = new FileReader();
+  reader.onload = (function (aImg) {
+    return function (e) {
+      aImg.src = e.target.result;
+    };
+  })(previewImg);
+  reader.readAsDataURL(file);
+}
+
 fileButton.addEventListener('change', (e) => {
   // // GET FILE
   file = e.target.files[0];
-
-  // // // Create a sorage ref
-  // // const sotrageRef = firebase.storage().ref(`profile_images/${file.name}`);
-  // firebase
-  //   .storage()
-  //   .ref(`users/${userCredential.user.uid}/profile.jpg`)
-  //   .put(file)
-  //   .then(() => {
-  //     console.log('successfully uploaded');
-  //   });
-
-  // // Upload File
-  // const task = sotrageRef.put(file);
-  // // update Progress bar
-  // task.on(
-  //   'state_changed',
-  //   function progress(snapshot) {
-  //     let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //     uploader.value = percentage;
-  //   },
-  //   function error(err) {},
-  //   function complete() {}
-  // );
+  handleFiles(file);
 });
+
 // SIGN-UP
 const signUpBtn = document.getElementById('signUp');
 signUpBtn.addEventListener('click', (event) => {
