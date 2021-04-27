@@ -53,6 +53,9 @@
               >
             </li>
             <li>
+              <img class="acount-image" id="acountImage" />
+            </li>
+            <li>
               <a
                 href="index.html"
                 id="btnLogout"
@@ -65,6 +68,12 @@
       </nav>
       <!-- SIDE NAV (PHONE SIZE) -->
       <ul class="sidenav" id="mobile-demo">
+        <li>
+          <div id="sideAcountImage" class="center-align">
+            <h5 class="orange-text">Hello Avo</h5>
+            <img id="sideImg" class="acount-image" />
+          </div>
+        </li>
         <li class="active"><a href="#">Home</a></li>
         <li><a href="./html/recipes.html">Recipes</a></li>
         <li><a href="./html/saved.html">Saved</a></li>
@@ -249,6 +258,7 @@
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
     <!-- Materialize -->
     <script
       type="text/javascript"

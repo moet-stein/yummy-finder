@@ -34,8 +34,8 @@ body {
   align-items: center;
 }
 
-.my-progress {
-  width: 90%;
+.my-error-p {
+  width: 200px;
 }
 
 .my-fileBtn {
