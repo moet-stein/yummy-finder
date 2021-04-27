@@ -27,6 +27,21 @@ body {
   box-shadow: none;
 }
 
+.my-upload {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-progress {
+  width: 90%;
+}
+
+.my-fileBtn {
+  width: 70%;
+}
+
 .my-btn {
   margin-bottom: 20px;
 }

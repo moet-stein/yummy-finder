@@ -53,6 +53,24 @@
                 <div class="col s12"></div>
               </div>
               <div class="row">
+                <div class="input-field col s12 my-upload">
+                  <input
+                    class="waves-effect waves-light btn center-align my-fileBtn"
+                    type="file"
+                    value="upload"
+                    id="fileButton"
+                  />
+                  <!-- <progress
+                    value="0"
+                    max="100"
+                    id="uploader"
+                    class="my-progress"
+                  >
+                    0%
+                  </progress> -->
+                </div>
+              </div>
+              <div class="row">
                 <div class="input-field col s12">
                   <input
                     class="validate"
@@ -129,6 +147,7 @@
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
     <!-- Materialize -->
     <script
       type="text/javascript"

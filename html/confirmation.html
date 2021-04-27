@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="../styles/confirmation.css" />
+
+    <title>YummyFinder-Confirmation</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <h2 class="center-align teal-text" id="confMessage">
+          Thank you for signing up!
+        </h2>
+        <div class="col s8 offset-s2 m4 offset-m4">
+          <div class="card">
+            <div class="card-image">
+              <img id="profileImage" />
+              <!-- <span class="card-title">Card Title</span> -->
+            </div>
+            <div class="card-content teal-text text-darken-2 center-align">
+              <p>
+                Now you can save your favorite recipes and even create a
+                shopping list from the recipes!
+              </p>
+              <p>Enjoy Yummy Finder!</p>
+            </div>
+            <div class="card-action center-align">
+              <a href="../index.html">Homepage</a>
+              <a href="../html/recipes.html">Recipes</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../config.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="../jsFiles/confirmation.js"></script>
+  </body>
+</html>
