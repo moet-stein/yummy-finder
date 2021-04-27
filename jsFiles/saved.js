@@ -31,6 +31,20 @@ const getUserIDAndName = () => {
 const showSavedRecipes = () => {
   let savedRecipes = [];
   getUserIDAndName();
+
+  const savedProfileImage = document.getElementById('savedProfileImage');
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      firebase
+        .storage()
+        .ref(`users/${userID}/profile.jpg`)
+        .getDownloadURL()
+        .then((imgUrl) => {
+          savedProfileImage.setAttribute('src', imgUrl);
+        });
+    }
+  });
+
   db.collection('savedRecipes')
     .get()
     .then((querySnapshot) => {
@@ -43,16 +57,19 @@ const showSavedRecipes = () => {
       const savedRecipesUserName = document.getElementById(
         'savedRecipesUserName'
       );
+
       if (savedRecipes.length > 0) {
         cards.innerHTML = '';
         noFavorites.classList.add('hidden');
         savedRecipesUserName.classList.remove('hidden');
+        savedProfileImage.classList.remove('hidden');
         savedRecipesUserName.innerHTML = `${userName}'s Favorite Recipes`;
         createCards(savedRecipes);
       } else {
         cards.innerHTML = '';
         noFavorites.classList.remove('hidden');
         savedRecipesUserName.classList.add('hidden');
+        savedProfileImage.classList.add('hidden');
       }
     });
 };
@@ -139,12 +156,10 @@ const createShoppingListDOM = () => {
 };
 
 const deleteIng = (ing) => {
-  console.log('delete clicked');
   db.collection('ingredients')
     .doc(ing)
     .delete()
     .then(() => {
-      console.log(`${ing} successfully deleted!`);
       showShoppingList();
       showSavedRecipes();
     })

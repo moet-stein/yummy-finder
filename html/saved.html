@@ -127,7 +127,7 @@
     </div>
     <!-- SAVED RECIPES -->
     <div class="section my-saved-bg" id="savedRecipesContainer">
-      <div class="row container">
+      <div class="row container cards-container">
         <!-- CONRAINER -->
         <!-- SHOPPING LIST -->
         <div class="container">
@@ -162,12 +162,13 @@
           </div>
           <!-- Favorite recipes for the user -->
           <div class="container center-align">
-            <h4
+            <img id="savedProfileImage" class="profile-image hidden" />
+            <h3
               id="savedRecipesUserName"
               class="teal-text text-darken-3 hidden"
             >
               Azu's Favorite Recipes
-            </h4>
+            </h3>
           </div>
 
           <!-- No favorite recipes -> show this div -->
@@ -187,7 +188,7 @@
             >
           </div>
 
-          <div class="row" id="cards">
+          <div class="row all-cards" id="cards">
             <!-- CARD LOOP (EACH DATA IN LOCAL STORAGE) -->
           </div>
         </div>

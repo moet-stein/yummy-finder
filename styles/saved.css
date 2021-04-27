@@ -2,6 +2,12 @@ html {
   scroll-behavior: smooth;
 }
 
+.profile-image {
+  width: 100px;
+  height: 80px;
+  border-radius: 50%;
+}
+
 /* MODAL */
 .myModal {
   display: none; /* Hidden by default */
@@ -45,6 +51,14 @@ html {
 
 .hidden {
   display: none;
+}
+
+.cards-container {
+  margin-bottom: 150px;
+}
+
+div.col-Div {
+  margin-bottom: 40px;
 }
 
 .my-card-height {

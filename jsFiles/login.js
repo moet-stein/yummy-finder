@@ -19,7 +19,6 @@ const loginFunc = () => {
       .then((userCredential) => {
         // Signed in
         var user = userCredential.user;
-        //   console.log(user);
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -41,7 +40,6 @@ const loginFunc = () => {
         window.location = '../index.html';
       }
     } else {
-      console.log('not logged in');
       btnLogout.classList.add('hide');
     }
   });
@@ -73,7 +71,6 @@ const logoutFunc = () => {
         .ref(`users/${user.uid}/profile.jpg`)
         .getDownloadURL()
         .then((imgUrl) => {
-          console.log('i am supposed to show image');
           acountImage.setAttribute('src', imgUrl);
           sideImg.setAttribute('src', imgUrl);
         });
