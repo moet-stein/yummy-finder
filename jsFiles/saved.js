@@ -5,8 +5,7 @@ const cards = document.getElementById('cards');
 onRecipesPage = false;
 
 // get userID when the user is logged in
-let userID;
-let userName;
+
 const getUserIDAndName = () => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {

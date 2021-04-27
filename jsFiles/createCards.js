@@ -1,6 +1,6 @@
 let onRecipesPage = true;
 
-// CREATING RECIPE CARDS FROM ARRAY (GOT DATA FROM LOCAL STORAGE)
+// CREATING RECIPE CARDS FROM ARRAY
 const createCards = (recipes) => {
   cards.innerHTML = '';
 
@@ -337,7 +337,6 @@ const createDeleteModal = (parent, recipe, modalBtn) => {
   });
 };
 
-const db = firebase.firestore();
 console.log(firebase);
 
 //Deleting the card and data from firestore (title: YummyFinder - Saved)
