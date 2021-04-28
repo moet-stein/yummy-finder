@@ -89,7 +89,6 @@ const logoutFunc = () => {
             .ref(`users/${user.uid}/profile.jpg`)
             .getDownloadURL()
             .then((imgUrl) => {
-              console.log(imgUrl == '');
               acountImage.setAttribute('src', imgUrl);
               sideImg.setAttribute('src', imgUrl);
             });
@@ -117,6 +116,7 @@ const logoutFunc = () => {
         cards.innerHTML = '';
         noFavorites.classList.remove('hidden');
         savedRecipesUserName.classList.add('hidden');
+        savedProfileImage.classList.add('hidden');
       }
     }
   });

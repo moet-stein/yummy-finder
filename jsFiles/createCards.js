@@ -52,7 +52,12 @@ const createCards = (recipes) => {
         popModal.setAttribute('id', `popup-${recipe.id}`);
         cardImage.appendChild(popModal);
         const popup = document.createElement('div');
-        popup.classList.add('modal-content');
+        popup.classList.add(
+          'modal-content',
+          'red-text',
+          'text-ligten-2',
+          'center-align'
+        );
         // popup.setAttribute('id', ``);
         popup.innerHTML = `Please login to save favorite recipes :)`;
         popModal.appendChild(popup);
@@ -86,9 +91,18 @@ const createCards = (recipes) => {
         });
 
         // When reloading with saved recipe, overlay the recipe which has 'saved' key
-        if ('saved' in recipe) {
-          overlaySaved(colDivId, cardIcon, cardIconA);
-        }
+        // if ('saved' in recipe) {
+        //   overlaySaved(colDivId, cardIcon, cardIconA);
+        // }
+        db.collection('savedRecipes')
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              if (doc.data().id == recipe.id) {
+                overlaySaved(colDivId, cardIcon, cardIconA);
+              }
+            });
+          });
       }
       // IF THE USER IS ON THE SAVE RECIPES PAGE
       // WORKS FOR DELETING RECIPE
@@ -336,8 +350,6 @@ const createDeleteModal = (parent, recipe, modalBtn) => {
     }
   });
 };
-
-console.log(firebase);
 
 //Deleting the card and data from firestore (title: YummyFinder - Saved)
 const deleteCard = (recipeTitle) => {

@@ -3,37 +3,24 @@ firebase.initializeApp(firebaseConfig);
 console.log(firebase);
 // Initialize the FirebaseUI Widget using Firebase.
 const ui = new firebaseui.auth.AuthUI(firebase.auth());
-
 const db = firebase.firestore();
-
-const signupForm = document.querySelector('#signupForm');
 
 let file;
 
-const uploader = document.getElementById('uploader');
 const fileButton = document.getElementById('fileButton');
 const defaultImg = document.getElementById('defaultImg');
-
 const preview = document.getElementById('preview');
+const signupForm = document.querySelector('#signupForm');
 
-// window.onload(() => {
-//   const reader = new FileReader();
-//   reader.onload = (function (aImg) {
-//     return function (e) {
-//       aImg.src = e.target.result;
-//     };
-//   })(previewImg);
-//   reader.readAsDataURL(file);
-// })
-
-function handleFiles(file) {
+// uploading input image as a file and show on browser as preview
+const handleFiles = (file) => {
   defaultImg.remove();
   preview.innerHTML = '';
 
   const previewImg = document.createElement('img');
   previewImg.classList.add('preview-obj');
   previewImg.file = file;
-  preview.appendChild(previewImg); // Assuming that "preview" is the div output where the content will be displayed.
+  preview.appendChild(previewImg);
 
   const reader = new FileReader();
   reader.onload = (function (aImg) {
@@ -42,41 +29,14 @@ function handleFiles(file) {
     };
   })(previewImg);
   reader.readAsDataURL(file);
-}
+};
 
+// Listening to the uploaded file every time it's uploaded
 fileButton.addEventListener('change', (e) => {
   // // GET FILE
   file = e.target.files[0];
   handleFiles(file);
 });
-
-function getBlob(url) {
-  return new Promise(function (resolve, reject) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'blob';
-    xhr.onload = function (event) {
-      var blob = xhr.response;
-      resolve(blob);
-    };
-    xhr.onerror = reject();
-    xhr.open('GET', url);
-    xhr.send();
-  });
-}
-
-function storageURLForPhoto(oldURL, newName) {
-  getBlob(oldURL)
-    .then(function (blob) {
-      var picRef = firebase.storage().ref().child(newName);
-      return picRef.put(blob);
-    })
-    .then(function (snapshot) {
-      return snapshot.downloadURL;
-    })
-    .catch(function (e) {
-      console.log(e);
-    });
-}
 
 // SIGN-UP
 const signUpBtn = document.getElementById('signUp');
@@ -84,19 +44,15 @@ signUpBtn.addEventListener('click', (event) => {
   event.preventDefault();
   const emailInputValue = document.getElementById('email').value;
   const passwordInputValue = document.getElementById('password').value;
-  const defaultImg = document.getElementById('defaultImg');
+  // const defaultImg = document.getElementById('defaultImg');
   console.log(emailInputValue, passwordInputValue);
 
   firebase
     .auth()
     .createUserWithEmailAndPassword(emailInputValue, passwordInputValue)
     .then((userCredential) => {
+      // If there is no file uploaded by the user, create a file from the defaulImg's src and store the file(image) in firestore storage with userId
       if (file == undefined) {
-        // file = storageURLForPhoto(
-        //   'https://images.unsplash.com/photo-1606233980284-b661d12ef876?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80',
-        //   'profile.jpg'
-        // );
-
         fetch(defaultImg.src)
           .then((res) => res.blob())
           .then((blob) => {
@@ -113,8 +69,10 @@ signUpBtn.addEventListener('click', (event) => {
                   name: signupForm['signup-name'].value,
                   userID: userCredential.user.uid,
                 });
-              });
+              })
+              .then(() => (window.location = './confirmation.html'));
           });
+        // If the user uploaded a profile image, just get the file object that was created when the user uploaded it.
       } else {
         console.log(file);
         firebase
@@ -126,10 +84,9 @@ signUpBtn.addEventListener('click', (event) => {
               name: signupForm['signup-name'].value,
               userID: userCredential.user.uid,
             });
-          });
+          })
+          .then(() => (window.location = './confirmation.html'));
       }
-
-      // .then(() => (window.location = './confirmation.html'));
     })
     .catch((error) => {
       var errorCode = error.code;
