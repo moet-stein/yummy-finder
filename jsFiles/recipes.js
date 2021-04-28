@@ -5,7 +5,7 @@ const myKey = config.MY_KEY;
 const fetchRecipes = async () => {
   try {
     const res = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&sort=random&apiKey=${myKey}`
+      `https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&number=30&sort=random&apiKey=${myKey}`
     );
     // searchedRecipes = [];
     return res.data.results;
