@@ -148,9 +148,20 @@ div.sticky {
   .overlay-favorite {
     height: 100%;
   }
-  .my-carousel-item {
-    width: 550px !important;
-    height: 550px !important;
+
+  .carousel {
+    margin-top: 30px;
+  }
+  .carousel .carousel-item {
+    padding-top: 70px;
+    width: 75% !important;
+  }
+
+  /* .carousel .carousel-item > img {
+    width: 120% !important;
+  } */
+  .input-field h5 {
+    font-size: 1.4rem;
   }
 }
 

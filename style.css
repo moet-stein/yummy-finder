@@ -36,6 +36,16 @@
   margin-right: 10px;
 }
 
+.my-home-bg {
+  background-color: #f7f7fc;
+  opacity: 1;
+  background-image: radial-gradient(#f6ba42 1.05px, transparent 1.05px),
+    radial-gradient(#f6ba42 1.05px, #f7f7fc 1.05px);
+  background-size: 42px 42px;
+  background-position: 0 0, 21px 21px;
+  z-index: -1;
+}
+
 /* Responsive for image on Home page */
 @media only screen and (max-width: 600px) {
   .parallax img {

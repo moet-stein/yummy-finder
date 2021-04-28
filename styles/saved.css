@@ -95,3 +95,15 @@ div.col-Div {
   margin-bottom: 0px;
   margin-top: 10px;
 }
+
+.logo-saved {
+  width: 200px;
+  height: 200px;
+  border-radius: 40%;
+}
+
+@media only screen and (max-width: 600px) {
+  .my-card-height {
+    width: 385px !important;
+  }
+}
