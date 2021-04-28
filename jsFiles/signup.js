@@ -60,32 +60,12 @@ signUpBtn.addEventListener('click', (event) => {
             console.log(file);
           })
           .then(() => {
-            firebase
-              .storage()
-              .ref(`users/${userCredential.user.uid}/profile.jpg`)
-              .put(file)
-              .then(() => {
-                return db.collection('users').doc(userCredential.user.uid).set({
-                  name: signupForm['signup-name'].value,
-                  userID: userCredential.user.uid,
-                });
-              })
-              .then(() => (window.location = './confirmation.html'));
+            storeInStorage(userCredential);
           });
         // If the user uploaded a profile image, just get the file object that was created when the user uploaded it.
       } else {
         console.log(file);
-        firebase
-          .storage()
-          .ref(`users/${userCredential.user.uid}/profile.jpg`)
-          .put(file)
-          .then(() => {
-            return db.collection('users').doc(userCredential.user.uid).set({
-              name: signupForm['signup-name'].value,
-              userID: userCredential.user.uid,
-            });
-          })
-          .then(() => (window.location = './confirmation.html'));
+        storeInStorage(userCredential);
       }
     })
     .catch((error) => {
@@ -94,3 +74,17 @@ signUpBtn.addEventListener('click', (event) => {
       console.log(errorCode, errorMessage);
     });
 });
+
+const storeInStorage = (userCredential) => {
+  firebase
+    .storage()
+    .ref(`users/${userCredential.user.uid}/profile.jpg`)
+    .put(file)
+    .then(() => {
+      return db.collection('users').doc(userCredential.user.uid).set({
+        name: signupForm['signup-name'].value,
+        userID: userCredential.user.uid,
+      });
+    })
+    .then(() => (window.location = './confirmation.html'));
+};
