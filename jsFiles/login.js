@@ -89,6 +89,7 @@ const logoutFunc = () => {
             .ref(`users/${user.uid}/profile.jpg`)
             .getDownloadURL()
             .then((imgUrl) => {
+              console.log(imgUrl == '');
               acountImage.setAttribute('src', imgUrl);
               sideImg.setAttribute('src', imgUrl);
             });
