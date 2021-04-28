@@ -1,5 +1,3 @@
-// To get the data, I need to parse the string
-// let recipesData = JSON.parse(localStorage.getItem('recipesData'));
 const cards = document.getElementById('cards');
 // ON SAVED RECIPES PAGE
 onRecipesPage = false;
@@ -27,10 +25,14 @@ const getUserIDAndName = () => {
     });
 };
 
+// Show saved recipes that are saved from the user who is logged-in
 const showSavedRecipes = () => {
   let savedRecipes = [];
+  // Get user id to show the profile icon, and user name to show the name on the browser
+  //By calling the function, globally declared userID and userName can be re-declared for the logged-in user
   getUserIDAndName();
 
+  //Show profile icon of the user on the main page
   const savedProfileImage = document.getElementById('savedProfileImage');
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -44,6 +46,7 @@ const showSavedRecipes = () => {
     }
   });
 
+  //Go on looping through the saved recipes in firestore, and find the recipes that have the logged-in userId.
   db.collection('savedRecipes')
     .get()
     .then((querySnapshot) => {
@@ -72,6 +75,8 @@ const showSavedRecipes = () => {
       }
     });
 };
+//function called when the user is landing on this page,
+//and also when the user delete a recipe
 showSavedRecipes();
 
 // GET ingredients specific for the user in array
@@ -154,6 +159,7 @@ const createShoppingListDOM = () => {
   }
 };
 
+// Delete ingredient function
 const deleteIng = (ing) => {
   db.collection('ingredients')
     .doc(ing)

@@ -8,12 +8,13 @@ const createCards = (recipes) => {
     recipes.forEach((recipe) => {
       let colDiv = document.createElement('div');
       colDiv.setAttribute('id', `colDiv-${recipe.id}`);
-      let colSize = onRecipesPage ? 'l6' : 'l4';
+      let colSizeM = onRecipesPage ? 'm12' : 'm6';
+      let colSizeL = onRecipesPage ? 'l6' : 'l4';
       colDiv.classList.add(
         'col',
         's12',
-        'm12',
-        colSize,
+        colSizeM,
+        colSizeL,
         'col-Div',
         'my-card-height',
         'id-' + recipe.id
@@ -23,11 +24,11 @@ const createCards = (recipes) => {
       const card = document.createElement('div');
       card.classList.add('card', 'my-card-margin');
       colDiv.appendChild(card);
-      // 3
+      //
       const cardImage = document.createElement('div');
       cardImage.classList.add('card-image');
       card.appendChild(cardImage);
-      // 3-1
+      //
       const image = document.createElement('img');
       image.setAttribute('src', recipe.image);
       image.setAttribute('alt', recipe.title);
@@ -44,7 +45,7 @@ const createCards = (recipes) => {
       const cardIconA = document.getElementById(`cardIconA-${recipe.id}`);
 
       // IF THE USER IS ON THE SEARCH RECIPES PAGE
-      // WORKS FOR SAVING RECIPES
+      // CAN SAVE RECIPES
       if (onRecipesPage) {
         //<span class="popuptext" id="myPopup">A Simple Popup!</span>
         const popModal = document.createElement('div');
@@ -62,19 +63,19 @@ const createCards = (recipes) => {
         popup.innerHTML = `Please login to save favorite recipes :)`;
         popModal.appendChild(popup);
 
-        // cardIcon.addEventListener('click', () => {
+        // if the user is logged-in, he can save the recipe when clicking favorite icon.
+        // if not logged-in, he will see the pop-up that is created above.
         firebase.auth().onAuthStateChanged((user) => {
           if (user) {
+            let userID = user.uid;
             cardIcon.addEventListener('click', () => {
               // Storing the clicked recipe data into localStorage recipesData
-              // storeSavedRecipes(recipe);
-              storeSavedRecipesFS(recipe);
+              storeSavedRecipesFS(recipe, userID);
               // OVERLAYING COLOR & DISABLE THE BUTTON FOR THE RECIPE THAT IS SAVED
               overlaySaved(colDivId, cardIcon, cardIconA);
             });
             cardIcon.removeEventListener('click', () =>
-              // storeSavedRecipes(recipe)
-              storeSavedRecipesFS(recipe)
+              storeSavedRecipesFS(recipe, userID)
             );
           } else {
             cardIcon.addEventListener('click', () => {
@@ -82,7 +83,7 @@ const createCards = (recipes) => {
               popModal.style.display = 'block';
             });
             // When the user clicks anywhere outside of the modal, close it
-            window.addEventListener('click', function (event) {
+            window.addEventListener('click', (event) => {
               if (event.target == popModal) {
                 popModal.style.display = 'none';
               }
@@ -90,10 +91,7 @@ const createCards = (recipes) => {
           }
         });
 
-        // When reloading with saved recipe, overlay the recipe which has 'saved' key
-        // if ('saved' in recipe) {
-        //   overlaySaved(colDivId, cardIcon, cardIconA);
-        // }
+        //  IF any recipe (showed on the browser) has the same id like saved recipes in firestore storage, overlay the orange filter.
         db.collection('savedRecipes')
           .get()
           .then((querySnapshot) => {
@@ -105,7 +103,7 @@ const createCards = (recipes) => {
           });
       }
       // IF THE USER IS ON THE SAVE RECIPES PAGE
-      // WORKS FOR DELETING RECIPE
+      // USER CAN DELETE RECIPE
       if (!onRecipesPage) {
         cardIconA.classList.add('modal-trigger');
         cardIconA.setAttribute('href', `#deleteCard-${recipe.id}`);
@@ -193,7 +191,6 @@ const createCards = (recipes) => {
       ingColHeader.innerHTML = 'Ingredients';
       ingCollection.appendChild(ingColHeader);
 
-      // console.log(recipe);
       if (recipe.ingredients && recipe.ingredients.length > 0) {
         // REMOVE DUPICATE ING. FROM INGREDIENTS ARR
         const origIngArr = recipe.ingredients;
@@ -416,6 +413,7 @@ const createAddBtn = (parent, ing, recipe) => {
   //
 
   // eventlistener
+  // When plus icon is clicked, save the ingredient
   addInI.addEventListener('click', () => {
     addInSpan.innerHTML = 'check_circle';
     addIngA.classList.add('grey-text');
@@ -424,6 +422,8 @@ const createAddBtn = (parent, ing, recipe) => {
     addInI.setAttribute('disabled', '');
     saveIngredientFS(ing, `${recipe.title}-${ing}`);
   });
+  // if the ingredient's id match between the one from saved recipe and firebase stored saved ingredient,
+  //show the checked icon instead of plus
   db.collection('ingredients')
     .get()
     .then((querySnapshot) => {
@@ -468,9 +468,8 @@ const overlaySaved = (parent, icon, iconA) => {
 
 // Fire store
 // Click the favorite button (searchRecipe page -> store the recipe in firestore)
-const storeSavedRecipesFS = (recipe) => {
-  const userID = firebase.auth().currentUser.uid;
-
+const storeSavedRecipesFS = (recipe, userID) => {
+  // const userID = firebase.auth().currentUser.uid;
   let data = {
     user: userID,
     id: recipe.id,

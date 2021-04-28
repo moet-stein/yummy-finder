@@ -3,7 +3,7 @@ const myKey = config.MY_KEY;
 const fetchCookingVideos = async (value) => {
   try {
     const res = await axios.get(
-      `https://api.spoonacular.com/food/videos/search?query=${value}&number=10&apiKey=${myKey}`
+      `https://api.spoonacular.com/food/videos/search?query=${value}&number=20&apiKey=${myKey}`
     );
     return res.data.videos;
     // return res.data.results;
