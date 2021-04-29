@@ -25,6 +25,8 @@ const getUserIDAndName = () => {
     });
 };
 
+const loader = document.getElementById('loader');
+
 // Show saved recipes that are saved from the user who is logged-in
 const showSavedRecipes = () => {
   let savedRecipes = [];
@@ -54,6 +56,7 @@ const showSavedRecipes = () => {
         if (doc.data().user === userID) {
           savedRecipes.push(doc.data());
         }
+        loader.classList.add('hide-loader');
       });
       const noFavorites = document.getElementById('noFavorites');
       const savedRecipesUserName = document.getElementById(
@@ -129,7 +132,6 @@ const createShoppingListDOM = () => {
       );
       noIngMessage.innerHTML = 'No Ingredients Saved';
       shopContainer.appendChild(noIngMessage);
-      console.log('no ingredients saved');
       const noIngMesP = document.createElement('p');
       noIngMesP.innerHTML =
         'You can save ingredients from saved recipe! Try clicking the plus button next to the ingredient name to save :)';
@@ -139,7 +141,6 @@ const createShoppingListDOM = () => {
         'teal-text',
         'text-lighten-3'
       );
-
       shopContainer.appendChild(noIngMesP);
     } else {
       //  <ul class="collection center-align">

@@ -1,5 +1,7 @@
 const myKey = config.MY_KEY;
 
+const loader = document.getElementById('loader');
+
 // Get an array of recipes with axios(and with async await func)
 // This data includes ID that can be used to request the data of ingredients as below (getInfredients())
 const fetchRecipes = async () => {
@@ -7,6 +9,7 @@ const fetchRecipes = async () => {
     const res = await axios.get(
       `https://api.spoonacular.com/recipes/complexSearch?addRecipeInformation=true&number=30&sort=random&apiKey=${myKey}`
     );
+    loader.classList.add('hide-loader');
     // searchedRecipes = [];
     return res.data.results;
     //return res.data.results;
