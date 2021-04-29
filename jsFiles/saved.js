@@ -116,6 +116,17 @@ const createShoppingListDOM = () => {
     noUserMessage.classList.add('align-center', 'teal-text');
     noUserMessage.innerHTML = 'Please login to make your own shopping list';
     shoppingListTitle.appendChild(noUserMessage);
+    const loginBtn = document.createElement('a');
+    loginBtn.classList.add(
+      'waves-effect',
+      'waves-light',
+      'btn',
+      'teal',
+      'lighten-1'
+    );
+    loginBtn.innerHTML = 'LOGIN';
+    loginBtn.setAttribute('href', '../html/login.html');
+    shoppingListTitle.appendChild(loginBtn);
   } else {
     //<div class="container"></div>
     const shopContainer = document.createElement('div');
