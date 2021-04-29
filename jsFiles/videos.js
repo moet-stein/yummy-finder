@@ -18,7 +18,8 @@ let textareaValue = '';
 
 const onlyOneWordMessage = document.getElementById('onlyOneWordMessage');
 searchTextarea.addEventListener('input', () => {
-  if (searchTextarea.value.split(' ').length >= 2) {
+  let inputArr = searchTextarea.value.split(' ');
+  if (inputArr.length >= 2 && inputArr[1].length > 0) {
     onlyOneWordMessage.classList.remove('hidden');
   } else {
     onlyOneWordMessage.classList.add('hidden');
@@ -92,85 +93,92 @@ const secondsConverter = (d) => {
 const createVideoCards = (videos) => {
   const videosRow = document.getElementById('videosRow');
   videosRow.innerHTML = '';
-  videos.forEach((video) => {
-    // <div class="col s12">
-    const colDiv = document.createElement('div');
-    colDiv.classList.add('col', 's12');
-    videosRow.appendChild(colDiv);
-    // <div class="card horizontal">
-    const cardHorizontal = document.createElement('div');
-    cardHorizontal.classList.add('card', 'horizontal');
-    colDiv.appendChild(cardHorizontal);
-    // <div class="card-image">
-    const cardImage = document.createElement('div');
-    cardImage.classList.add('card-image');
-    cardHorizontal.appendChild(cardImage);
-    // <img src="https://i.ytimg.com/vi/YTZGPCCB2FU/mqdefault.jpg" />
-    const videoImage = document.createElement('img');
-    let videoThumbnail = video.thumbnail
-      ? video.thumbnail
-      : '../pics/no-thumbnail.png';
-    videoImage.setAttribute('src', videoThumbnail);
-    cardImage.appendChild(videoImage);
-    // <div class="card-stacked">
-    const cardStacked = document.createElement('div');
-    cardStacked.classList.add('card-stacked');
-    cardHorizontal.appendChild(cardStacked);
-    // <div class="card-content my-card-content">
-    const cardContent = document.createElement('div');
-    cardContent.classList.add('card-content', 'my-card-content');
-    cardStacked.appendChild(cardContent);
-    //  <div class="center-align">
-    const centerAlign = document.createElement('div');
-    // centerAlign.classList.add('center-align');
-    cardContent.appendChild(centerAlign);
-    //<h3 class="teal-text my-video-title">8 One-Pot Pastas</h3>
-    const videoTitle = document.createElement('a');
-    videoTitle.classList.add('teal-text', 'my-video-title');
-    let title =
-      video.shortTitle.split(' ').length > 5
-        ? video.shortTitle.split(' ').slice(0, 5).join(' ') + '...'
-        : video.shortTitle;
-    videoTitle.innerHTML = title;
-    videoTitle.setAttribute(
-      'href',
-      `https://www.youtube.com/watch?v=${video.youTubeId}`
-    );
-    videoTitle.setAttribute('target', '_blank');
-    centerAlign.appendChild(videoTitle);
-    //<div class="card-action my-card-action center-align">
-    const actionDiv = document.createElement('div');
-    actionDiv.classList.add('card-action', 'my-card-action', 'center-align');
-    centerAlign.appendChild(actionDiv);
-    //<a href="https://www.youtube.com/watch?v=81bn4p8H3Kg" target="_blank" class="material-icons" >
-    const playA = document.createElement('a');
-    playA.setAttribute(
-      'href',
-      `https://www.youtube.com/watch?v=${video.youTubeId}`
-    );
-    playA.setAttribute('target', '_blank');
-    playA.classList.add('material-icons');
-    actionDiv.appendChild(playA);
-    //<i class="material-icons my-play-icon">play_circle_outline</i>
-    const playIcon = document.createElement('i');
-    playIcon.classList.add('material-icons', 'my-play-icon');
-    playIcon.innerHTML = 'play_circle_outline';
-    playA.appendChild(playIcon);
-    //
-    const viewLengthDiv = document.createElement('div');
-    viewLengthDiv.classList.add('my-view-length');
-    actionDiv.appendChild(viewLengthDiv);
-    //<p class="teal-text text-darken-3 my-height-50"> Views: 1213468 </p>
-    const views = document.createElement('p');
-    views.classList.add('teal-text', 'text-darken-3', 'my-height');
-    views.innerHTML = `Views: ${numberConverter(video.views)}`;
-    viewLengthDiv.appendChild(views);
-    // <p class="teal-text text-darken-3 my-height">Length: 51 </p>
-    const videoLength = document.createElement('p');
-    videoLength.classList.add('teal-text', 'text-darken-3', 'my-height');
-    videoLength.innerHTML = `Length: ${secondsConverter(video.length)}`;
-    viewLengthDiv.appendChild(videoLength);
-  });
+  if (videos.length == 0) {
+    const noVideoMessage = document.createElement('h4');
+    noVideoMessage.classList.add('center-align', 'pink-text', 'text-darken-1');
+    noVideoMessage.innerHTML = 'Sorry, no videos found with the word.';
+    videosRow.appendChild(noVideoMessage);
+  } else {
+    videos.forEach((video) => {
+      // <div class="col s12">
+      const colDiv = document.createElement('div');
+      colDiv.classList.add('col', 's12');
+      videosRow.appendChild(colDiv);
+      // <div class="card horizontal">
+      const cardHorizontal = document.createElement('div');
+      cardHorizontal.classList.add('card', 'horizontal');
+      colDiv.appendChild(cardHorizontal);
+      // <div class="card-image">
+      const cardImage = document.createElement('div');
+      cardImage.classList.add('card-image');
+      cardHorizontal.appendChild(cardImage);
+      // <img src="https://i.ytimg.com/vi/YTZGPCCB2FU/mqdefault.jpg" />
+      const videoImage = document.createElement('img');
+      let videoThumbnail = video.thumbnail
+        ? video.thumbnail
+        : '../pics/no-thumbnail.png';
+      videoImage.setAttribute('src', videoThumbnail);
+      cardImage.appendChild(videoImage);
+      // <div class="card-stacked">
+      const cardStacked = document.createElement('div');
+      cardStacked.classList.add('card-stacked');
+      cardHorizontal.appendChild(cardStacked);
+      // <div class="card-content my-card-content">
+      const cardContent = document.createElement('div');
+      cardContent.classList.add('card-content', 'my-card-content');
+      cardStacked.appendChild(cardContent);
+      //  <div class="center-align">
+      const centerAlign = document.createElement('div');
+      // centerAlign.classList.add('center-align');
+      cardContent.appendChild(centerAlign);
+      //<h3 class="teal-text my-video-title">8 One-Pot Pastas</h3>
+      const videoTitle = document.createElement('a');
+      videoTitle.classList.add('teal-text', 'my-video-title');
+      let title =
+        video.shortTitle.split(' ').length > 5
+          ? video.shortTitle.split(' ').slice(0, 5).join(' ') + '...'
+          : video.shortTitle;
+      videoTitle.innerHTML = title;
+      videoTitle.setAttribute(
+        'href',
+        `https://www.youtube.com/watch?v=${video.youTubeId}`
+      );
+      videoTitle.setAttribute('target', '_blank');
+      centerAlign.appendChild(videoTitle);
+      //<div class="card-action my-card-action center-align">
+      const actionDiv = document.createElement('div');
+      actionDiv.classList.add('card-action', 'my-card-action', 'center-align');
+      centerAlign.appendChild(actionDiv);
+      //<a href="https://www.youtube.com/watch?v=81bn4p8H3Kg" target="_blank" class="material-icons" >
+      const playA = document.createElement('a');
+      playA.setAttribute(
+        'href',
+        `https://www.youtube.com/watch?v=${video.youTubeId}`
+      );
+      playA.setAttribute('target', '_blank');
+      playA.classList.add('material-icons');
+      actionDiv.appendChild(playA);
+      //<i class="material-icons my-play-icon">play_circle_outline</i>
+      const playIcon = document.createElement('i');
+      playIcon.classList.add('material-icons', 'my-play-icon');
+      playIcon.innerHTML = 'play_circle_outline';
+      playA.appendChild(playIcon);
+      //
+      const viewLengthDiv = document.createElement('div');
+      viewLengthDiv.classList.add('my-view-length');
+      actionDiv.appendChild(viewLengthDiv);
+      //<p class="teal-text text-darken-3 my-height-50"> Views: 1213468 </p>
+      const views = document.createElement('p');
+      views.classList.add('teal-text', 'text-darken-3', 'my-height');
+      views.innerHTML = `Views: ${numberConverter(video.views)}`;
+      viewLengthDiv.appendChild(views);
+      // <p class="teal-text text-darken-3 my-height">Length: 51 </p>
+      const videoLength = document.createElement('p');
+      videoLength.classList.add('teal-text', 'text-darken-3', 'my-height');
+      videoLength.innerHTML = `Length: ${secondsConverter(video.length)}`;
+      viewLengthDiv.appendChild(videoLength);
+    });
+  }
 };
 
 // MATEIALIZE INIT//
