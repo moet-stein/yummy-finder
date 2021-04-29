@@ -150,7 +150,6 @@ const keepCheckboxes = () => {
   let checkedValue = localStorage.getItem('checkedValue')
     ? JSON.parse(localStorage.getItem('checkedValue'))
     : [];
-  console.log(checkedValue);
   checkedValue.forEach((value) => {
     if (
       value === 'glutenFree' ||
@@ -160,18 +159,9 @@ const keepCheckboxes = () => {
       document.getElementById(value).checked = true;
     } else {
       const optionAll = document.getElementById('all');
-      console.log(optionAll.selected);
       optionAll.setAttribute('selected', false);
-      console.log(optionAll.selected);
-      // optionAll.classList.remove('selected');
-      // optionAll.removeAttribute('disabled');
       const selectedValue = document.getElementById(value);
-
       selectedValue.setAttribute('selected', true);
-      // selectedValue.classList.add('selected');
-      console.log('vegan or vege is checked');
-
-      // document.getElementById(value).setAttribute('disabled', true);
     }
   });
 };

@@ -118,44 +118,69 @@ const createShoppingListDOM = () => {
     const shopContainer = document.createElement('div');
     shopContainer.classList.add('container');
     shoppingListModal.appendChild(shopContainer);
-    //  <ul class="collection center-align">
-    const shoppingListUl = document.createElement('ul');
-    shoppingListUl.classList.add('collection', 'center-align');
-    shopContainer.appendChild(shoppingListUl);
-    // <li class="collection-item">
-    //  <span>Ingredient Name</span>
-    //  <a class="secondary-content my-pointer">
-    //    <i id="Ingredient Name" class="material-icons">
-    //       <span class="material-icons">delete_forever</span>
-    //    </i >
-    //  </a >
-    //</li >;
-    savedIngsArr.forEach((ing) => {
-      //<li class="collection-item"></li>
-      const shoppingListLi = document.createElement('li');
-      shoppingListLi.classList.add('collection-item');
-      shoppingListUl.appendChild(shoppingListLi);
+
+    if (savedIngsArr.length == 0) {
+      const noIngMessage = document.createElement('h4');
+      noIngMessage.classList.add(
+        'collection-item',
+        'center-align',
+        'pink-text',
+        'text-lighten-2'
+      );
+      noIngMessage.innerHTML = 'No Ingredients Saved';
+      shopContainer.appendChild(noIngMessage);
+      console.log('no ingredients saved');
+      const noIngMesP = document.createElement('p');
+      noIngMesP.innerHTML =
+        'You can save ingredients from saved recipe! Try clicking the plus button next to the ingredient name to save :)';
+      noIngMesP.classList.add(
+        'collection-item',
+        'center-align',
+        'teal-text',
+        'text-lighten-3'
+      );
+
+      shopContainer.appendChild(noIngMesP);
+    } else {
+      //  <ul class="collection center-align">
+      const shoppingListUl = document.createElement('ul');
+      shoppingListUl.classList.add('collection', 'center-align');
+      shopContainer.appendChild(shoppingListUl);
+      // <li class="collection-item">
       //  <span>Ingredient Name</span>
-      const ingName = document.createElement('span');
-      ingName.innerHTML = ing;
-      shoppingListLi.appendChild(ingName);
-      //<a class="secondary-content my-pointer">
-      const secCont = document.createElement('a');
-      secCont.classList.add('secondary-content', 'my-pointer');
-      shoppingListLi.appendChild(secCont);
-      //<i id="Ingredient Name" class="material-icons">
-      const deleteIcon = document.createElement('i');
-      deleteIcon.setAttribute('id', ing);
-      deleteIcon.classList.add('material-icons');
-      secCont.appendChild(deleteIcon);
-      // add event to delete the ingredient
-      deleteIcon.addEventListener('click', () => deleteIng(ing));
-      //<span class="material-icons">delete_forever</span>
-      const deleteIconSpan = document.createElement('span');
-      deleteIconSpan.classList.add('material-icons');
-      deleteIconSpan.innerHTML = 'delete_forever';
-      deleteIcon.appendChild(deleteIconSpan);
-    });
+      //  <a class="secondary-content my-pointer">
+      //    <i id="Ingredient Name" class="material-icons">
+      //       <span class="material-icons">delete_forever</span>
+      //    </i >
+      //  </a >
+      //</li >;
+      savedIngsArr.forEach((ing) => {
+        //<li class="collection-item"></li>
+        const shoppingListLi = document.createElement('li');
+        shoppingListLi.classList.add('collection-item');
+        shoppingListUl.appendChild(shoppingListLi);
+        //  <span>Ingredient Name</span>
+        const ingName = document.createElement('span');
+        ingName.innerHTML = ing;
+        shoppingListLi.appendChild(ingName);
+        //<a class="secondary-content my-pointer">
+        const secCont = document.createElement('a');
+        secCont.classList.add('secondary-content', 'my-pointer');
+        shoppingListLi.appendChild(secCont);
+        //<i id="Ingredient Name" class="material-icons">
+        const deleteIcon = document.createElement('i');
+        deleteIcon.setAttribute('id', ing);
+        deleteIcon.classList.add('material-icons');
+        secCont.appendChild(deleteIcon);
+        // add event to delete the ingredient
+        deleteIcon.addEventListener('click', () => deleteIng(ing));
+        //<span class="material-icons">delete_forever</span>
+        const deleteIconSpan = document.createElement('span');
+        deleteIconSpan.classList.add('material-icons');
+        deleteIconSpan.innerHTML = 'delete_forever';
+        deleteIcon.appendChild(deleteIconSpan);
+      });
+    }
   }
 };
 

@@ -90,14 +90,14 @@ div.sticky {
   float: right;
   font-size: 28px;
   font-weight: bold;
-}
+}*/
 
 .my-modal-close:hover,
 .my-modal-close:focus {
-  color: black;
+  color: rgb(182, 109, 0);
   text-decoration: none;
   cursor: pointer;
-} */
+}
 
 /* ++++++++++++MODAL END++++++++++++++ */
 
