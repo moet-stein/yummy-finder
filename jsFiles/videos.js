@@ -6,7 +6,6 @@ const fetchCookingVideos = async (value) => {
       `https://api.spoonacular.com/food/videos/search?query=${value}&number=20&apiKey=${myKey}`
     );
     return res.data.videos;
-    // return res.data.results;
   } catch (e) {
     console.log(e);
   }
@@ -16,6 +15,15 @@ const fetchCookingVideos = async (value) => {
 const searchTextarea = document.getElementById('icon_prefix2');
 const searchBtn = document.getElementById('searchBtn');
 let textareaValue = '';
+
+const onlyOneWordMessage = document.getElementById('onlyOneWordMessage');
+searchTextarea.addEventListener('input', () => {
+  if (searchTextarea.value.split(' ').length >= 2) {
+    onlyOneWordMessage.classList.remove('hidden');
+  } else {
+    onlyOneWordMessage.classList.add('hidden');
+  }
+});
 
 const getTextareaValue = () => {
   textareaValue = searchTextarea.value;
