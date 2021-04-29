@@ -10,6 +10,7 @@
   background-size: 42px 42px;
   background-position: 0 0, 21px 21px;
   z-index: -1;
+  padding-top: 60px;
 }
 .my-input-field {
   height: 50px;

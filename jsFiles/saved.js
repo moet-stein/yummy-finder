@@ -30,10 +30,10 @@ const loader = document.getElementById('loader');
 // Show saved recipes that are saved from the user who is logged-in
 const showSavedRecipes = () => {
   let savedRecipes = [];
+
   // Get user id to show the profile icon, and user name to show the name on the browser
   //By calling the function, globally declared userID and userName can be re-declared for the logged-in user
   getUserIDAndName();
-
   //Show profile icon of the user on the main page
   const savedProfileImage = document.getElementById('savedProfileImage');
   firebase.auth().onAuthStateChanged((user) => {
@@ -112,7 +112,7 @@ const createShoppingListDOM = () => {
   shoppingListModal.appendChild(shoppingListTitle);
 
   if (userID.length == 0) {
-    const noUserMessage = document.createElement('h4');
+    const noUserMessage = document.createElement('h5');
     noUserMessage.classList.add('align-center', 'teal-text');
     noUserMessage.innerHTML = 'Please login to make your own shopping list';
     shoppingListTitle.appendChild(noUserMessage);
