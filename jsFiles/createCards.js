@@ -77,6 +77,16 @@ const createCards = (recipes) => {
             cardIcon.removeEventListener('click', () =>
               storeSavedRecipesFS(recipe, userID)
             );
+            //  IF any recipe (showed on the browser) has the same id like saved recipes in firestore storage, overlay the orange filter.
+            db.collection('savedRecipes')
+              .get()
+              .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                  if (doc.data().id == recipe.id && doc.data().user == userID) {
+                    overlaySaved(colDivId, cardIcon, cardIconA);
+                  }
+                });
+              });
           } else {
             cardIcon.addEventListener('click', () => {
               console.log('clicked-block');
@@ -90,17 +100,6 @@ const createCards = (recipes) => {
             });
           }
         });
-
-        //  IF any recipe (showed on the browser) has the same id like saved recipes in firestore storage, overlay the orange filter.
-        db.collection('savedRecipes')
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              if (doc.data().id == recipe.id) {
-                overlaySaved(colDivId, cardIcon, cardIconA);
-              }
-            });
-          });
       }
       // IF THE USER IS ON THE SAVE RECIPES PAGE
       // USER CAN DELETE RECIPE
