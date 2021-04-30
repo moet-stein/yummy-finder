@@ -103,6 +103,7 @@ const createVideoCards = (videos) => {
       // <div class="col s12">
       const colDiv = document.createElement('div');
       colDiv.classList.add('col', 's12');
+
       videosRow.appendChild(colDiv);
       // <div class="card horizontal">
       const cardHorizontal = document.createElement('div');
@@ -112,13 +113,28 @@ const createVideoCards = (videos) => {
       const cardImage = document.createElement('div');
       cardImage.classList.add('card-image');
       cardHorizontal.appendChild(cardImage);
+      // <img
+      //         id="myBtn"
+      //         src="https://i.ytimg.com/vi/YTZGPCCB2FU/mqdefault.jpg"
+      //       />
+      //       <div id="myModal" class="modal">
+      //         <iframe
+      //           id="iframe"
+      //           class="modal-content"
+      //           width="420"
+      //           height="315"
+      //         >
+      //         </iframe>
+      //       </div>
       // <img src="https://i.ytimg.com/vi/YTZGPCCB2FU/mqdefault.jpg" />
       const videoImage = document.createElement('img');
       let videoThumbnail = video.thumbnail
         ? video.thumbnail
         : '../pics/no-thumbnail.png';
       videoImage.setAttribute('src', videoThumbnail);
+      // videoImage.setAttribute('id', `myVideoBtn-${video.youTubeId}`);
       cardImage.appendChild(videoImage);
+
       // <div class="card-stacked">
       const cardStacked = document.createElement('div');
       cardStacked.classList.add('card-stacked');
@@ -139,11 +155,14 @@ const createVideoCards = (videos) => {
           ? video.shortTitle.split(' ').slice(0, 5).join(' ') + '...'
           : video.shortTitle;
       videoTitle.innerHTML = title;
-      videoTitle.setAttribute(
-        'href',
-        `https://www.youtube.com/watch?v=${video.youTubeId}`
-      );
-      videoTitle.setAttribute('target', '_blank');
+      // videoTitle.setAttribute(
+      //   'href',
+      //   `https://www.youtube.com/watch?v=${video.youTubeId}`
+      // );
+      // videoTitle.setAttribute('target', '_blank');
+      // videoTitle.addEventListener('click', () => {
+      //   modal.style.display = 'block';
+      // });
       centerAlign.appendChild(videoTitle);
       //<div class="card-action my-card-action center-align">
       const actionDiv = document.createElement('div');
@@ -151,12 +170,16 @@ const createVideoCards = (videos) => {
       centerAlign.appendChild(actionDiv);
       //<a href="https://www.youtube.com/watch?v=81bn4p8H3Kg" target="_blank" class="material-icons" >
       const playA = document.createElement('a');
-      playA.setAttribute(
-        'href',
-        `https://www.youtube.com/watch?v=${video.youTubeId}`
-      );
-      playA.setAttribute('target', '_blank');
-      playA.classList.add('material-icons');
+      // playA.setAttribute(
+      //   'href',
+      //   `https://www.youtube.com/watch?v=${video.youTubeId}`
+      // );
+      // playA.setAttribute('target', '_blank');
+      // playA.addEventListener('click', () => {
+      //   modal.style.display = 'block';
+      // });
+      playA.setAttribute('id', `myVideoBtn-${video.youTubeId}`);
+      playA.classList.add('material-icons', 'play-icon');
       actionDiv.appendChild(playA);
       //<i class="material-icons my-play-icon">play_circle_outline</i>
       const playIcon = document.createElement('i');
@@ -177,6 +200,51 @@ const createVideoCards = (videos) => {
       videoLength.classList.add('teal-text', 'text-darken-3', 'my-height');
       videoLength.innerHTML = `Length: ${secondsConverter(video.length)}`;
       viewLengthDiv.appendChild(videoLength);
+
+      //<div id="myModal" class="modal">
+      const videoModal = document.createElement('div');
+      videoModal.setAttribute('id', `myVideoModal-${video.youTubeId}`);
+      videoModal.classList.add('videoModal', 'center-align', 'row');
+      colDiv.appendChild(videoModal);
+      //<span class="close">&times;</span>
+      const closeBtn = document.createElement('i');
+      closeBtn.classList.add(
+        'material-icons',
+        'col',
+        's11',
+        'right-align',
+        'close'
+      );
+      closeBtn.innerHTML = 'cancel';
+      videoModal.appendChild(closeBtn);
+      //  <iframe
+      //    width="420"
+      //    height="315"
+      //    src="https://www.youtube.com/embed/81bn4p8H3Kg"
+      //  ></iframe>;
+      const videoIframe = document.createElement('iframe');
+      videoIframe.classList.add('modal-content');
+      videoIframe.setAttribute(
+        'src',
+        `https://www.youtube.com/embed/${video.youTubeId}`
+      );
+      videoModal.appendChild(videoIframe);
+
+      var btn = document.getElementById(`myVideoBtn-${video.youTubeId}`);
+
+      btn.onclick = function () {
+        videoModal.style.display = 'block';
+      };
+
+      videoModal.addEventListener('click', (event) => {
+        event.target.style.display = 'none';
+        var videoIframeSrc = videoIframe.src;
+        videoIframe.src = videoIframeSrc;
+      });
+
+      closeBtn.addEventListener('click', () => {
+        videoModal.style.display = 'none';
+      });
     });
   }
 };
