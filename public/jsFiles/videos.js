@@ -149,7 +149,7 @@ const createVideoCards = (videos) => {
       cardContent.appendChild(centerAlign);
       //<h3 class="teal-text my-video-title">8 One-Pot Pastas</h3>
       const videoTitle = document.createElement('a');
-      videoTitle.classList.add('teal-text', 'my-video-title');
+      videoTitle.classList.add('teal-text', 'text-darken-1', 'my-video-title');
       let title =
         video.shortTitle.split(' ').length > 5
           ? video.shortTitle.split(' ').slice(0, 5).join(' ') + '...'
