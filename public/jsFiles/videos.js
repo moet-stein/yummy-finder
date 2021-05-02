@@ -193,12 +193,12 @@ const createVideoCards = (videos) => {
       //<p class="teal-text text-darken-3 my-height-50"> Views: 1213468 </p>
       const views = document.createElement('p');
       views.classList.add('teal-text', 'text-darken-3', 'my-height');
-      views.innerHTML = `Views: ${numberConverter(video.views)}`;
+      views.innerHTML = `${numberConverter(video.views)} views`;
       viewLengthDiv.appendChild(views);
       // <p class="teal-text text-darken-3 my-height">Length: 51 </p>
       const videoLength = document.createElement('p');
       videoLength.classList.add('teal-text', 'text-darken-3', 'my-height');
-      videoLength.innerHTML = `Length: ${secondsConverter(video.length)}`;
+      videoLength.innerHTML = `${secondsConverter(video.length)}`;
       viewLengthDiv.appendChild(videoLength);
 
       //<div id="myModal" class="modal">
