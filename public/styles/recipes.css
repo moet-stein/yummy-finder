@@ -149,18 +149,22 @@ div.sticky {
     height: 100%;
   }
 
-  .carousel {
+  /* .carousel {
     margin-top: 80px;
   }
   .carousel .carousel-item {
     padding-top: 30px;
     padding-bottom: 300px !important ;
     width: 75% !important;
-  }
+  } */
 
   /* .carousel .carousel-item > img {
     width: 120% !important;
   } */
+  .carousel .carousel-item {
+    width: 500px !important;
+    height: 400px !important;
+  }
   .input-field h5 {
     font-size: 1.4rem;
   }
@@ -194,6 +198,10 @@ div.sticky {
   }
   .no-padding {
     padding: 0px !important;
+  }
+  .carousel .carousel-item {
+    width: 300px !important;
+    height: 200px !important;
   }
 }
 
