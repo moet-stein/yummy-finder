@@ -181,4 +181,8 @@ div.col-Div {
   .my-card-height {
     width: 385px !important;
   }
+  .my-card-margin {
+    width: 300px !important;
+    margin-left: 20px;
+  }
 }
