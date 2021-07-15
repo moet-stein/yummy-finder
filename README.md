@@ -66,7 +66,7 @@ Also enjoy cooking videos on this website.
 ---
 
 <figure class="video_container">
-    <video controls="true">
+    <video controls="true" allowfullscreen="true">
     <source src="./RMimgs/save.mp4" type="video/mp4">
     </video>
 </figure>
