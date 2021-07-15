@@ -42,9 +42,12 @@ Also enjoy cooking videos on this website.
 
 ### Home Page / Recipes Search
 
-| Jump to the page you want to visit<br />by clicking the buttons   |              Search Recipes after<br /> your preferences              |
-| ----------------------------------------------------------------- | :-------------------------------------------------------------------: |
-| <img src="./RMimgs/home.gif" alt="Home" width="350" height="250"> | <img src="./RMimgs/search.gif" alt="Search" width="350" height="250"> |
+| Jump to the page you want to visit<br />by clicking the buttons | Search Recipes after<br /> your preferences |
+| --------------------------------------------------------------- | :-----------------------------------------: |
+
+| <video width="320" height="240" autoplay>
+<source src="./RMimgs/home.mp4" type="video/mp4">
+</video>| <img src="./RMimgs/search.gif" alt="Search" width="350" height="250"> |
 
 <br/>
 
@@ -54,6 +57,7 @@ Also enjoy cooking videos on this website.
 | -------------------------- | :--------------------------------------------: |
 
 | <video width="320" height="240" autoplay>
+
 <source src="./RMimgs/save.mp4" type="video/mp4">
 </video> | <img src="./RMimgs/video.gif" alt="Upload" width="350" height="200"> |
 
