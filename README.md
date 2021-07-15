@@ -46,6 +46,7 @@ Also enjoy cooking videos on this website.
 | --------------------------------------------------------------- | :-----------------------------------------: |
 
 | <video width="320" height="240" autoplay>
+
 <source src="./RMimgs/home.mp4" type="video/mp4">
 </video>| <img src="./RMimgs/search.gif" alt="Search" width="350" height="250"> |
 
@@ -56,9 +57,11 @@ Also enjoy cooking videos on this website.
 | Save your favorite recipes | Input search term to <br/> find cooking videos |
 | -------------------------- | :--------------------------------------------: |
 
-| <video width="320" height="240" autoplay>
-
+| <figure class="video_container">
+<video controls="true">
 <source src="./RMimgs/save.mp4" type="video/mp4">
-</video> | <img src="./RMimgs/video.gif" alt="Upload" width="350" height="200"> |
+</video>
+
+</figure> | <img src="./RMimgs/video.gif" alt="Upload" width="350" height="200"> |
 
 ---
