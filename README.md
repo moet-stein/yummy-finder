@@ -32,7 +32,9 @@ Also enjoy cooking videos on this website.
 <!-- PROJECT LOGO -->
 <br/>
 <p align="center">
-   <video autoplay width="300" src="https://user-images.githubusercontent.com/66197018/125809680-776b65b8-c74a-424f-b4db-3c4bb666b44a.mp4" />
+  <video controls autoplay>
+   <source src="https://user-images.githubusercontent.com/66197018/125809680-776b65b8-c74a-424f-b4db-3c4bb666b44a.mp4" />
+  </video>
 </p>
 
 <p align="center">
