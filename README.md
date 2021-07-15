@@ -32,9 +32,7 @@ Also enjoy cooking videos on this website.
 <!-- PROJECT LOGO -->
 <br/>
 <p align="center">
-  <video controls autoplay>
-   <source src="https://user-images.githubusercontent.com/66197018/125809680-776b65b8-c74a-424f-b4db-3c4bb666b44a.mp4" />
-  </video>
+   <video src="https://user-images.githubusercontent.com/66197018/125809680-776b65b8-c74a-424f-b4db-3c4bb666b44a.mp4" />
 </p>
 
 <p align="center">
@@ -59,11 +57,7 @@ Also enjoy cooking videos on this website.
 | Save your favorite recipes | Input search term to <br/> find cooking videos |
 | -------------------------- | :--------------------------------------------: |
 
-| <figure class="video_container">
-<video controls="true">
-
-<source src="./RMimgs/save.mp4" type="video/mp4">
-</video></figure> | <img src="./RMimgs/video.gif" alt="Upload" width="350" height="200"> |
+|<video src="https://user-images.githubusercontent.com/66197018/125810838-7b158e13-82bf-4bd0-abc9-fedce19dd031.mp4" />| <img src="./RMimgs/video.gif" alt="Upload" width="350" height="200"> |
 
 ---
 
