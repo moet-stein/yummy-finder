@@ -30,7 +30,7 @@ Also enjoy cooking videos on this website.
 <!-- PROJECT LOGO -->
 <br/>
 <p align="center">
-    <img src="./RMimgs/home.png" alt="Home" width="500" height="350" >
+    <img src="./RMimgs/home.mp4" alt="Home" width="500" height="350" >
 </p>
 
 <p align="center">
@@ -50,6 +50,6 @@ Also enjoy cooking videos on this website.
 
 | Save your favorite recipes                                              |            Input search term to <br/> find cooking videos            |
 | ----------------------------------------------------------------------- | :------------------------------------------------------------------: |
-| <img src="./RMimgs/save.gif" alt="LikesSaves" width="350" height="200"> | <img src="./RMimgs/video.gif" alt="Upload" width="350" height="200"> |
+| <img src="./RMimgs/save.mp4" alt="LikesSaves" width="350" height="200"> | <img src="./RMimgs/video.gif" alt="Upload" width="350" height="200"> |
 
 ---
