@@ -32,7 +32,7 @@ Also enjoy cooking videos on this website.
 <!-- PROJECT LOGO -->
 <br/>
 <p align="center">
-   <video src="https://user-images.githubusercontent.com/66197018/125809680-776b65b8-c74a-424f-b4db-3c4bb666b44a.mp4" />
+   <video autoplay width="200" src="https://user-images.githubusercontent.com/66197018/125809680-776b65b8-c74a-424f-b4db-3c4bb666b44a.mp4" />
 </p>
 
 <p align="center">
@@ -47,7 +47,7 @@ Also enjoy cooking videos on this website.
 
 | <video width="320" height="240" autoplay>
 
-<source src="./RMimgs/home.mp4" type="video/mp4">
+<source  autoplay width="200" src="./RMimgs/home.mp4" type="video/mp4">
 </video>| <img src="./RMimgs/search.gif" alt="Search" width="350" height="250"> |
 
 <br/>
