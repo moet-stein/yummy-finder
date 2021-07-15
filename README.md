@@ -59,9 +59,14 @@ Also enjoy cooking videos on this website.
 
 | <figure class="video_container">
 <video controls="true">
-<source src="./RMimgs/save.mp4" type="video/mp4">
-</video>
 
-</figure> | <img src="./RMimgs/video.gif" alt="Upload" width="350" height="200"> |
+<source src="./RMimgs/save.mp4" type="video/mp4">
+</video></figure> | <img src="./RMimgs/video.gif" alt="Upload" width="350" height="200"> |
 
 ---
+
+<figure class="video_container">
+    <video controls="true">
+    <source src="./RMimgs/save.mp4" type="video/mp4">
+    </video>
+</figure>
