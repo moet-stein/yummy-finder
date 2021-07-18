@@ -29,46 +29,35 @@ Also enjoy cooking videos on this website.
 
 <!-- PROJECT LOGO -->
 
+### Home
+
 <p align="center">
-    <img src="./RMimgs/home.png" alt="Home" width="300" height="400" >
+    <img src="./RMimgs/home.png" alt="Home" width="350" height="250" >
 </p>
 
 <br/>
+
+### Signup/ Login Function
 
 <p align="center">
     <img src="./RMimgs/signup.png" alt="Signup" width="300" height="400" >
-     <img src="./RMimgs/login.png" alt="Login" width="300" height="400" >
+    <img src="./RMimgs/login.png" alt="Login" width="300" height="400" >
 </p>
 
-### Home Page / Recipes Search
-
-<p align="center">
-   <video autoplay width="200" src="https://user-images.githubusercontent.com/66197018/125809680-776b65b8-c74a-424f-b4db-3c4bb666b44a.mp4" />
-</p>
+### Recipe Search
 
 <p>Search Recipes after your preferences </p>
 <p align="center">
- <img src="./RMimgs/search.gif" alt="Search" width="350" height="250"> 
+ <img src="./RMimgs/search.gif" alt="Search" width="400" height="350"> 
 </p>
-
-<!-- | Jump to the page you want to visit<br />by clicking the buttons | Search Recipes after<br /> your preferences |
-| --------------------------------------------------------------- | :-----------------------------------------: |
-
-|<img src="./RMimgs/home.mp4" type="video/mp4" width="350" height="250">| <img src="./RMimgs/search.gif" alt="Search" width="350" height="250"> | -->
 
 <br/>
 
-### Save Recipes & Ingredients/ Search for cooking videos
+### Make a Shopping List
 
 | Save your favorite recipes | Input search term to <br/> find cooking videos |
 | -------------------------- | :--------------------------------------------: |
 
-|<img src="./RMimgs/save.gif" alt="Save" width="350" height="200" />| <img src="./RMimgs/video.gif" alt="Upload" width="350" height="200"> |
+|<img src="./RMimgs/savIng1.png" alt="SavIng1" width="350" height="200" />| <img src="./RMimgs/savIng2.png" alt="SavIng2" width="350" height="200"> |
 
 ---
-
-<!-- <figure class="video_container">
-    <video controls="true" allowfullscreen="true">
-    <source src="./RMimgs/save.mp4" type="video/mp4">
-    </video>
-</figure> -->
