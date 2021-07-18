@@ -55,8 +55,12 @@ Also enjoy cooking videos on this website.
 
 ### Make a Shopping List
 
-| Save your favorite recipes                                                |             Input search term to <br/> find cooking videos              |
+| Save Ingredients from your saved recipes                                  |                   See your shopping list and organize                   |
 | ------------------------------------------------------------------------- | :---------------------------------------------------------------------: |
 | <img src="./RMimgs/savIng1.png" alt="SavIng1" width="350" height="200" /> | <img src="./RMimgs/savIng2.png" alt="SavIng2" width="350" height="200"> |
 
----
+### Search for a Cooking Video
+
+<p align="center">
+ <img src="./RMimgs/video.png" alt="Search" width="500" height="350"> 
+</p>
