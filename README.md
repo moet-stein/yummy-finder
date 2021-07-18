@@ -32,7 +32,7 @@ Also enjoy cooking videos on this website.
 ### Home
 
 <p align="center">
-    <img src="./RMimgs/home.png" alt="Home" width="350" height="250" >
+    <img src="./RMimgs/home.png" alt="Home" width="400" height="250" >
 </p>
 
 <br/>
@@ -48,16 +48,15 @@ Also enjoy cooking videos on this website.
 
 <p>Search Recipes after your preferences </p>
 <p align="center">
- <img src="./RMimgs/search.gif" alt="Search" width="400" height="350"> 
+ <img src="./RMimgs/search.gif" alt="Search" width="500" height="350"> 
 </p>
 
 <br/>
 
 ### Make a Shopping List
 
-| Save your favorite recipes | Input search term to <br/> find cooking videos |
-| -------------------------- | :--------------------------------------------: |
-
-|<img src="./RMimgs/savIng1.png" alt="SavIng1" width="350" height="200" />| <img src="./RMimgs/savIng2.png" alt="SavIng2" width="350" height="200"> |
+| Save your favorite recipes                                                |             Input search term to <br/> find cooking videos              |
+| ------------------------------------------------------------------------- | :---------------------------------------------------------------------: |
+| <img src="./RMimgs/savIng1.png" alt="SavIng1" width="350" height="200" /> | <img src="./RMimgs/savIng2.png" alt="SavIng2" width="350" height="200"> |
 
 ---
