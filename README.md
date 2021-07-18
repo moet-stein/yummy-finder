@@ -12,8 +12,8 @@
 <p align="center">
  Javascript + Firebase (Authentication + Firestore + Storage) App<br/>
  Using Spoonacular API<br/>
+  <a href="https://spoonacular.com/food-api/docs">Spoonacular API</a><br/>
  Project Duration: 4 weeks <br/>
- <a href="https://spoonacular.com/food-api/docs">Spoonacular API</a><br/>
 </p>
 
 ### Summary
@@ -28,6 +28,11 @@ Also enjoy cooking videos on this website.
 ---
 
 <!-- PROJECT LOGO -->
+
+<p align="center">
+    <img src="./RMimgs/home.png" alt="Home" width="300" height="400" >
+</p>
+
 <br/>
 
 <p align="center">
